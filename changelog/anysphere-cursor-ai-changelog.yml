@@ -41,7 +41,7 @@ entries:
 - breaking: false
   highlights:
   - Log in from the browser in TypeScript. Cursor.auth.login() opens a browser login, mints an API key, and stores it in ~/.cursor/sdk/auth.json
-    ; Cursor.auth.status() and Cursor.auth.logout() round it out.
+    .
   version: 1.0.27
 - breaking: false
   highlights:
@@ -72,5 +72,5 @@ entries:
     ahead of time, so the first send() against that workspace starts immediately.
   version: 1.0.26
 current_version: 1.0.31
-note: Versioning scheme follows semantic versioning (major.minor.patch).
+note: Versioning scheme uses semantic versioning with three numeric components.
 docs: https://cursor.com/docs/sdk/changelog

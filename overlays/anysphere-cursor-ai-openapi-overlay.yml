@@ -1,0 +1,7 @@
+generated: 2026-09-25
+method: derived
+source: openapi/anysphere-cursor-ai-openapi.yaml
+type: Overlay
+overlay:
+  version: 1.0.0
+  actions: []

@@ -1,429 +1,429 @@
 generated: '2026-09-25'
 method: derived
 generator: derive-vocabulary.py
-source: openapi/anysphere-cursor-ai-openapi.yaml
+source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml
 vocabulary:
   name: Anysphere Cursor Ai Domain Vocabulary
   description: 'Terms declared by Anysphere Cursor Ai''s own API contract: its resource groups, objects and enumerations, with the contract''s
     definitions. Derived, not authored.'
   version: '2026-09-25'
   terms:
-  - term: AddAppInstallationRepositoriesRequest
-    definition: 'Object declared by the contract with fields: namespaceSlug, installationId, repoIds.'
+  - term: OriginGroup
+    definition: Public Origin group identity (`grp_…`). Currently id-only.
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/AddAppInstallationRepositoriesRequest
-  - term: AddAppSigningKeyRequest
-    definition: 'Object declared by the contract with fields: appId, publicKey.'
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/OriginGroup
+  - term: RulesetBypassActor
+    definition: A principal that may bypass ruleset enforcement. Identity is a typed `actor` oneof (user, team, app, or Origin role), not a parallel
+      kind enum plus opaque JSON payload.
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/AddAppSigningKeyRequest
-  - term: AddPullRequestLabelsRequest
-    definition: 'Object declared by the contract with fields: identifier, pullNumber, labels.'
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RulesetBypassActor
+  - term: Ruleset
+    definition: 'A named bundle of branch, merge, and push protections for one repository. This is a stable caller-facing projection: repository
+      coordinates live on the request path (and are hoisted once on list responses), not on each ruleset.'
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/AddPullRequestLabelsRequest
-  - term: AddPullRequestLabelsResponse
-    definition: 'Object declared by the contract with fields: labels.'
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/Ruleset
+  - term: ListCheckSuitesForCommitResponse
+    definition: 'Object declared by the contract with fields: checkSuites, nextPageToken.'
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/AddPullRequestLabelsResponse
-  - term: AddSshCertificateAuthorityRequest
-    definition: 'Object declared by the contract with fields: ownerSlug, publicKey, name.'
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListCheckSuitesForCommitResponse
+  - term: CheckRunAnnotation
+    definition: Persisted append-only annotation. Non-inline annotations omit `location`.
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/AddSshCertificateAuthorityRequest
-  - term: App
-    definition: An Origin app.
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/CheckRunAnnotation
+  - term: Label
+    definition: 'Object declared by the contract with fields: id, name, color, description.'
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/App
-  - term: AppDefaultScopesReplace
-    definition: Clean-replace wrapper for `UpdateAppRequest.default_scopes`.
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/Label
+  - term: RulesetOriginRoleBypassActor
+    definition: Bypass granted to holders of a policy-backed Origin role. Payload role is one of `namespace_admin`, `repository_admin`, or `repository_write`.
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/AppDefaultScopesReplace
-  - term: AppDisplayMetadata
-    definition: Non-sensitive display fields for an app in a namespace catalog.
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RulesetOriginRoleBypassActor
+  - term: MergePullRequestResponse
+    definition: 'Object declared by the contract with fields: mergeCommitSha, mergedPullNumbers, pullRequest.'
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/AppDisplayMetadata
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/MergePullRequestResponse
   - term: AppEventsReplace
     definition: Clean-replace wrapper for `UpdateAppRequest.events`.
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/AppEventsReplace
-  - term: AppInstallation
-    definition: An installation of an Origin app into a target owner entity.
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/AppEventsReplace
+  - term: PullRequestStackMembership
+    definition: 'Membership of a pull request in a stack: a chain of dependent pull requests in one repository, each stacked on the one it builds
+      upon.'
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/AppInstallation
-  - term: AppInstallationRedirectUrisReplace
-    definition: Clean-replace wrapper for `UpdateAppRequest.installation_redirect_uris`.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/AppInstallationRedirectUrisReplace
-  - term: AppSigningKey
-    definition: An app signing key. Only the key's identity is returned; the key material is write-only.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/AppSigningKey
-  - term: BatchGetContentsRequest
-    definition: 'Object declared by the contract with fields: identifier, paths, ref.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/BatchGetContentsRequest
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/PullRequestStackMembership
   - term: BatchGetContentsResponse
     definition: 'Object declared by the contract with fields: results, resolvedCommitSha.'
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/BatchGetContentsResponse
-  - term: BatchGetContentsResult
-    definition: The outcome for one requested path in a BatchGetContents response.
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/BatchGetContentsResponse
+  - term: ListNamespaceAppsResponse
+    definition: 'Object declared by the contract with fields: apps, nextPageToken.'
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/BatchGetContentsResult
-  - term: BatchRedeliverWebhookDeliveriesRequest
-    definition: 'Object declared by the contract with fields: deliveryIds.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/BatchRedeliverWebhookDeliveriesRequest
-  - term: BatchRedeliverWebhookDeliveriesResponse
-    definition: 'Object declared by the contract with fields: results.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/BatchRedeliverWebhookDeliveriesResponse
-  - term: BatchRedeliverWebhookDeliveryResult
-    definition: The outcome for one requested delivery id.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/BatchRedeliverWebhookDeliveryResult
-  - term: BatchUpsertCheckRunsRequest
-    definition: 'Object declared by the contract with fields: identifier, headSha, checkSuite, checkRuns.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/BatchUpsertCheckRunsRequest
-  - term: BatchUpsertCheckRunsResponse
-    definition: 'Object declared by the contract with fields: checkSuite, checkRuns, results.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/BatchUpsertCheckRunsResponse
-  - term: Blob
-    definition: A Git blob object.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/Blob
-  - term: Branch
-    definition: A repository branch and the commit at its tip.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/Branch
-  - term: BranchCommit
-    definition: The commit a branch points at.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/BranchCommit
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListNamespaceAppsResponse
   - term: CheckRun
     definition: A persisted check run, as returned by `PostCheckRun`. All fields are server-owned; the writable shape is `CheckRunInput`. Each
       `(check_suite, key, external_id)` is one run attempt. Within a suite, the current attempt for a `key` — the one `ListCheckRunsForSuite`,
       `ListCheckRunsForCommit`, and the pull request's CI state and required checks use — is the run with the newest `external_updated_at`; ti
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRun
-  - term: CheckRunAnnotation
-    definition: Persisted append-only annotation. Non-inline annotations omit `location`.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRunAnnotation
-  - term: CheckRunAnnotationColumnRange
-    definition: Optional paired columns for a single-line annotation range.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRunAnnotationColumnRange
-  - term: CheckRunAnnotationInput
-    definition: Content fields follow common Checks API annotation semantics. Origin groups source coordinates in optional `location`, allowing
-      run-level annotations to omit it.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRunAnnotationInput
-  - term: CheckRunAnnotationLocation
-    definition: Optional source location for a check-run annotation. `path`, `start_line`, and `end_line` are required whenever the enclosing
-      annotation supplies this message. `path` is canonical and repository-relative, lines and columns are positive 1-based inclusive coordinates,
-      and `columns` is supported only for a single-line range.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRunAnnotationLocation
-  - term: CheckRunInput
-    definition: A single check run to report. Combined with `CheckSuiteInput`, this is upserted in one request.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRunInput
-  - term: CheckRunOutput
-    definition: Human-readable output reported for a check run.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRunOutput
-  - term: CheckRunReference
-    definition: Identity and display coordinates of a check run, for embedding in resources that a `repository:checks` read does not gate. Everything
-      else about the run (status, conclusion, output, details URL) is `GetCheckRun`.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRunReference
-  - term: CheckRunRerequestedWebhookPayload
-    definition: 'repository.check_run.rerequested webhook payload, delivered only to the app that owns the check run. Answer by posting a fresh
-      run for the same head SHA and key — a new run (new external_id) or an update of the re-requested run. The stamped run reads `status: rerequested`
-      (its conclusion and timings are the superseded result) until the answering post clears `rerequested_at`. Each accepted re-reque'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRunRerequestedWebhookPayload
-  - term: CheckRunWebhookPayload
-    definition: Committed snapshot for an Origin check-run lifecycle event.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRunWebhookPayload
-  - term: CheckRunWriteResult
-    definition: 'One check-run write in a `BatchUpsertCheckRuns` response: the stored run after the call and what the write did to it.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRunWriteResult
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/CheckRun
   - term: CheckSuite
     definition: A persisted check suite, as returned by `PostCheckRun`. All fields are server-owned; the writable shape is `CheckSuiteInput`.
       Each `(actor, key, external_id)` reported against a commit is one suite attempt. Where the API shows a commit's current suites (`ListCheckSuitesForCommit`,
       `ListCheckRunsForCommit`, and the pull request's CI state and required checks), the current attempt per `(actor, key)`
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckSuite
-  - term: CheckSuiteInput
-    definition: 'Object declared by the contract with fields: key, name, detailsUrl, externalId.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckSuiteInput
-  - term: CheckSuiteReference
-    definition: 'Object declared by the contract with fields: id.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckSuiteReference
-  - term: CodeownerApprovalBlocker
-    definition: 'Object declared by the contract with fields: requirements.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CodeownerApprovalBlocker
-  - term: CodeownerRequirement
-    definition: One owner set that still needs an approval.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CodeownerRequirement
-  - term: CommentThread
-    definition: 'A pull request comment thread as stored: identity, the version it was filed against, its diff anchor, and resolution state. A
-      thread takes one of three shapes: general discussion (no diff anchor), file-level (`path` and `side` set with no line range), or line-anchored
-      (`path`, `side`, and `start_line` set, optionally with `end_line`).'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CommentThread
-  - term: Commit
-    definition: A commit with identity fields (`sha`, `parents`) at the top level and git-object metadata nested under `commit`. File diffs live
-      in the paginated `ListCommitFiles` collection.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/Commit
-  - term: CommitAuthor
-    definition: Git identity and timestamp for a commit's author or committer. This is the identity recorded in the commit object, not a linked
-      user account.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CommitAuthor
-  - term: CommitComparison
-    definition: A comparison summary without nested commit lists or URL fields. File diffs live in the paginated `ListComparisonFiles` collection.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CommitComparison
-  - term: CommitDetail
-    definition: Git-object metadata for a commit.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CommitDetail
-  - term: CommitFile
-    definition: A single file changed by a commit. Populated only on `GetCommit`.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CommitFile
-  - term: CommitFileChange
-    definition: One file change in a commit created from files. Exactly one of `content` and `delete` must be set.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CommitFileChange
-  - term: CommitParent
-    definition: A parent commit reference. Only the SHA is exposed (URLs omitted).
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CommitParent
-  - term: CommitSignature
-    definition: Name and email recorded for a commit author or committer.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CommitSignature
-  - term: CommitStats
-    definition: Aggregate line stats for a commit's diff against its base. Populated only on `GetCommit`, not in list responses.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CommitStats
-  - term: CommitTree
-    definition: The git tree a commit points at.
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CommitTree
-  - term: CompareCommitsRequest
-    definition: 'Object declared by the contract with fields: identifier, basehead.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CompareCommitsRequest
-  - term: Content
-    definition: 'Repository file or directory content. For a file (`type` = "file"): `encoding` and `content` are populated (base64). For a directory
-      (`type` = "dir"): `entries` lists immediate children.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/Content
-  - term: CreateAppRequest
-    definition: 'Object declared by the contract with fields: namespaceSlug, displayName, publicKey, webhookUrl, events, description, websiteUrl,
-      installationRedirectUris, defaultScopes.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreateAppRequest
-  - term: CreateCheckRunAnnotationsRequest
-    definition: 'Object declared by the contract with fields: identifier, checkRunId, annotations.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreateCheckRunAnnotationsRequest
-  - term: CreateCheckRunAnnotationsResponse
-    definition: 'Object declared by the contract with fields: annotations.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreateCheckRunAnnotationsResponse
-  - term: CreateCommitFromFilesRequest
-    definition: 'Object declared by the contract with fields: identifier, targetBranch, expectedHeadSha, message, author, committer, files.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreateCommitFromFilesRequest
-  - term: CreateCommitFromFilesResponse
-    definition: 'Object declared by the contract with fields: sha, treeSha, previousHeadSha.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreateCommitFromFilesResponse
-  - term: CreateGitRefRequest
-    definition: 'Object declared by the contract with fields: identifier, ref, sha.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreateGitRefRequest
-  - term: CreateInstallationAccessTokenRequest
-    definition: 'Object declared by the contract with fields: installationId, scopes, repositoryIds.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreateInstallationAccessTokenRequest
-  - term: CreateLabelRequest
-    definition: 'Object declared by the contract with fields: identifier, name, color, description.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreateLabelRequest
-  - term: CreatePullRequestCommentRequest
-    definition: 'Object declared by the contract with fields: identifier, pullNumber, body, threadId, inline, file, versionNumber.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreatePullRequestCommentRequest
-  - term: CreatePullRequestRequest
-    definition: 'Object declared by the contract with fields: identifier, title, body, head, base, draft, parentPullRequest.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreatePullRequestRequest
-  - term: CreatePullRequestReviewRequest
-    definition: 'Object declared by the contract with fields: identifier, pullNumber, verdict, body, versionNumber, comments.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreatePullRequestReviewRequest
-  - term: CreateRepoRequest
-    definition: 'Object declared by the contract with fields: ownerSlug, repo.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreateRepoRequest
-  - term: CreateRulesetRequest
-    definition: 'Object declared by the contract with fields: identifier, name, description, enforcement, kind, includedRefNames, excludedRefNames,
-      rules, bypassActors.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CreateRulesetRequest
-  - term: DeleteAppInstallationRequest
-    definition: 'Object declared by the contract with fields: installationId.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/DeleteAppInstallationRequest
-  - term: DeleteGitRefRequest
-    definition: 'Object declared by the contract with fields: identifier, ref.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/DeleteGitRefRequest
-  - term: DeleteLabelRequest
-    definition: 'Object declared by the contract with fields: identifier, labelName.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/DeleteLabelRequest
-  - term: DeleteNamespaceGrantRequest
-    definition: 'Object declared by the contract with fields: ownerSlug, user, group, teamGroup.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/DeleteNamespaceGrantRequest
-  - term: DeletePullRequestCommentRequest
-    definition: 'Object declared by the contract with fields: identifier, commentId.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/DeletePullRequestCommentRequest
-  - term: DeleteRepositoryGrantRequest
-    definition: 'Object declared by the contract with fields: identifier, user, group, teamGroup.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/DeleteRepositoryGrantRequest
-  - term: DeleteRulesetRequest
-    definition: 'Object declared by the contract with fields: identifier, rulesetId.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/DeleteRulesetRequest
-  - term: DeleteSshCertificateAuthorityRequest
-    definition: 'Object declared by the contract with fields: ownerSlug, certificateAuthorityId.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/DeleteSshCertificateAuthorityRequest
-  - term: DetachRepoMirrorRequest
-    definition: 'Object declared by the contract with fields: identifier.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/DetachRepoMirrorRequest
-  - term: DismissPullRequestReviewRequest
-    definition: 'Object declared by the contract with fields: identifier, pullNumber, reviewId, message.'
-    tags:
-    - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/DismissPullRequestReviewRequest
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/CheckSuite
   - term: FileCommentAnchor
     definition: 'Anchor for a new file-level comment thread on the whole file in the pull request version''s diff. The side is derived from the
       file''s change kind, matching the review UI: the base version for deleted files, the head version otherwise. It comes back on the thread''s
       `side` field.'
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/FileCommentAnchor
-  - term: ForceRepoMirrorCutoverRequest
-    definition: 'Object declared by the contract with fields: identifier.'
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/FileCommentAnchor
+  - term: PullRequestReviewDismissal
+    definition: Records that a submitted review no longer counts toward the pull request's review state.
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/ForceRepoMirrorCutoverRequest
-  - term: GetActiveMirrorTransitionJobRequest
-    definition: 'Object declared by the contract with fields: identifier.'
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/PullRequestReviewDismissal
+  - term: CommitDetail
+    definition: Git-object metadata for a commit.
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/GetActiveMirrorTransitionJobRequest
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/CommitDetail
+  - term: ListNamespacesResponse
+    definition: 'Object declared by the contract with fields: namespaces, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListNamespacesResponse
+  - term: Branch
+    definition: A repository branch and the commit at its tip.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/Branch
+  - term: ListCheckRunsForCommitResponse
+    definition: 'Object declared by the contract with fields: checkRuns, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListCheckRunsForCommitResponse
+  - term: InstallationReference
+    definition: 'Stable identity for an app installation: the installation id plus the owner entity it is installed into, matching AppInstallation.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/InstallationReference
+  - term: OriginServiceAccountActor
+    definition: 'Object declared by the contract with fields: id.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/OriginServiceAccountActor
+  - term: RepositoryReference
+    definition: Stable identity and display coordinates for a repository.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RepositoryReference
+  - term: OriginActor
+    definition: A user, app, or service account that performed an externally visible action.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/OriginActor
+  - term: RateLimitStatus
+    definition: Rate limit status for the authenticated principal.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RateLimitStatus
+  - term: BatchRedeliverWebhookDeliveryResult
+    definition: The outcome for one requested delivery id.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/BatchRedeliverWebhookDeliveryResult
+  - term: RulesetBypassActorInput
+    definition: Input for one bypass actor when creating a ruleset. Does not include the server-assigned bypass-actor id.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RulesetBypassActorInput
+  - term: AppDisplayMetadata
+    definition: Non-sensitive display fields for an app in a namespace catalog.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/AppDisplayMetadata
+  - term: ListCheckRunAnnotationsResponse
+    definition: 'Object declared by the contract with fields: annotations, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListCheckRunAnnotationsResponse
+  - term: ListPullRequestCommitsResponse
+    definition: 'Object declared by the contract with fields: commits, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListPullRequestCommitsResponse
+  - term: RulesetRuleInput
+    definition: Input for one rule when creating a ruleset. Does not include the server-assigned rule id.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RulesetRuleInput
+  - term: MergeConflictBlocker
+    definition: 'Object declared by the contract with fields: conflictedPaths, truncated, inheritedFromDownstack.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/MergeConflictBlocker
+  - term: Commit
+    definition: A commit with identity fields (`sha`, `parents`) at the top level and git-object metadata nested under `commit`. File diffs live
+      in the paginated `ListCommitFiles` collection.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/Commit
+  - term: ListCommitFilesResponse
+    definition: 'Object declared by the contract with fields: files, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListCommitFilesResponse
+  - term: ListNamespaceGrantsResponse
+    definition: 'Object declared by the contract with fields: grants, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListNamespaceGrantsResponse
+  - term: SyncMirrorResponse
+    definition: 'Object declared by the contract with fields: synced.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/SyncMirrorResponse
+  - term: Blob
+    definition: A Git blob object.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/Blob
+  - term: CheckSuiteReference
+    definition: 'Object declared by the contract with fields: id.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/CheckSuiteReference
+  - term: CheckRunOutput
+    definition: Human-readable output reported for a check run.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/CheckRunOutput
+  - term: AppSigningKey
+    definition: An app signing key. Only the key's identity is returned; the key material is write-only.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/AppSigningKey
+  - term: ListCheckRunsForSuiteResponse
+    definition: 'Object declared by the contract with fields: checkRuns, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListCheckRunsForSuiteResponse
+  - term: CommitAuthor
+    definition: Git identity and timestamp for a commit's author or committer. This is the identity recorded in the commit object, not a linked
+      user account.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/CommitAuthor
+  - term: GitTree
+    definition: A Git tree object. When `truncated` is true, the entry list was cut short by the 100,000-entry or 7 MiB encoded-payload cap. Fetch
+      subtrees non-recursively to page further.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/GitTree
+  - term: Repo
+    definition: A repository.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/Repo
+  - term: ParentPullRequestSelector
+    definition: 'Names the stack parent of a pull request, or removes it. Exactly one member must be set; an empty selector, `clear: false`, or
+      more than one member is rejected with INVALID_ARGUMENT.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ParentPullRequestSelector
+  - term: RequiredCheck
+    definition: A check a repository rule requires on the evaluated head.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RequiredCheck
+  - term: GitCommit
+    definition: A Git commit object. Distinct from `Commit`, which is the higher-level commits API shape (`GET .../commits/{sha}`) with nested
+      `commit` metadata and optional diff `stats` / `files`.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/GitCommit
+  - term: BatchRedeliverWebhookDeliveriesResponse
+    definition: 'Object declared by the contract with fields: results.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/BatchRedeliverWebhookDeliveriesResponse
+  - term: OriginAppActor
+    definition: 'Object declared by the contract with fields: id, displayName.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/OriginAppActor
+  - term: RulesetRule
+    definition: One rule inside a repository ruleset.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RulesetRule
+  - term: InlineCommentAnchor
+    definition: Diff anchor for a new line-anchored comment thread on a file in the pull request version's diff. `start_line` anchors to a line
+      and `end_line` extends it to a range; for a comment on the whole file, use `FileCommentAnchor` instead.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/InlineCommentAnchor
+  - term: SshCertificateAuthority
+    definition: 'An SSH certificate authority an owner trusts: user certificates it signs authenticate git over SSH on the owner''s repositories.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/SshCertificateAuthority
+  - term: RateLimitResource
+    definition: Point budget for one rate limit resource in the current window.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RateLimitResource
+  - term: RateLimitResources
+    definition: Rate limit resources for the authenticated principal.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RateLimitResources
+  - term: App
+    definition: An Origin app.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/App
+  - term: CommitTree
+    definition: The git tree a commit points at.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/CommitTree
+  - term: MirrorTransitionJob
+    definition: An asynchronous job tracking one mirror transition. Jobs are created by starting a transition or forcing a cutover, and are polled
+      until they reach a terminal status.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/MirrorTransitionJob
+  - term: OriginUserActor
+    definition: 'Object declared by the contract with fields: id, email, displayName, handle.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/OriginUserActor
+  - term: GrepContentsResponse
+    definition: 'Object declared by the contract with fields: matches, limitHit.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/GrepContentsResponse
+  - term: ListAppInstallationsResponse
+    definition: 'Object declared by the contract with fields: installations, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListAppInstallationsResponse
+  - term: AddPullRequestLabelsResponse
+    definition: 'Object declared by the contract with fields: labels.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/AddPullRequestLabelsResponse
   - term: GetActiveMirrorTransitionJobResponse
     definition: 'Object declared by the contract with fields: activeJob, lastJob.'
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/GetActiveMirrorTransitionJobResponse
-  - term: GetAppInstallationRequest
-    definition: 'Object declared by the contract with fields: installationId.'
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/GetActiveMirrorTransitionJobResponse
+  - term: RemovePullRequestLabelResponse
+    definition: 'Object declared by the contract with fields: labels.'
     tags:
     - Object
-    source: openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/GetAppInstallationRequest
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RemovePullRequestLabelResponse
+  - term: ListRulesetsResponse
+    definition: 'Object declared by the contract with fields: rulesets, repository.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListRulesetsResponse
+  - term: ListComparisonFilesResponse
+    definition: 'Object declared by the contract with fields: files, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListComparisonFilesResponse
+  - term: ListMatchingGitRefsResponse
+    definition: 'Object declared by the contract with fields: refs.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListMatchingGitRefsResponse
+  - term: CommitComparison
+    definition: A comparison summary without nested commit lists or URL fields. File diffs live in the paginated `ListComparisonFiles` collection.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/CommitComparison
+  - term: Status
+    definition: 'The canonical error envelope, after google.rpc.Status: a code, a developer-facing message, and typed details — google.rpc.BadRequest
+      field violations for invalid arguments, and a google.rpc.RequestInfo entry echoing the caller-supplied request id. New detail types may
+      appear at any time, so integrations must tolerate unknown entries. 404 responses never distinguish a resource that does not exist f'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/Status
+  - term: PullRequestFile
+    definition: A file changed in a pull request.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/PullRequestFile
+  - term: ListAppInstallationRepositoriesResponse
+    definition: 'Object declared by the contract with fields: repositories, nextPageToken, repoSelectionMode.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListAppInstallationRepositoriesResponse
+  - term: RepositoryGrant
+    definition: A permission granted directly on a repository to one user, group, or owning-team group.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/RepositoryGrant
+  - term: PullRequestReference
+    definition: Stable identity and display coordinates for an Origin pull request.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/PullRequestReference
+  - term: PostCheckRunResponse
+    definition: The pair `check_run` + `outcome` is the same per-run result a `BatchUpsertCheckRuns` `results` element carries, inlined.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/PostCheckRunResponse
+  - term: ListPullRequestsResponse
+    definition: 'Object declared by the contract with fields: pullRequests, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListPullRequestsResponse
+  - term: BranchCommit
+    definition: The commit a branch points at.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/BranchCommit
+  - term: ListLabelsResponse
+    definition: 'Object declared by the contract with fields: labels, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListLabelsResponse
+  - term: PingWebhookResponse
+    definition: 'Object declared by the contract with fields: deliveryId, eventId, delivered, responseStatusCode.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/PingWebhookResponse
+  - term: ListRepositoryGrantsResponse
+    definition: 'Object declared by the contract with fields: grants, repository, nextPageToken.'
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/ListRepositoryGrantsResponse
+  - term: CheckRunReference
+    definition: Identity and display coordinates of a check run, for embedding in resources that a `repository:checks` read does not gate. Everything
+      else about the run (status, conclusion, output, details URL) is `GetCheckRun`.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/CheckRunReference
+  - term: AppInstallationRedirectUrisReplace
+    definition: Clean-replace wrapper for `UpdateAppRequest.installation_redirect_uris`.
+    tags:
+    - Object
+    source: openapi/anysphere-cursor-ai-originservice-api-openapi.yml#/components/schemas/AppInstallationRedirectUrisReplace

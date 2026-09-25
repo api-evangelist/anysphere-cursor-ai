@@ -11686,209 +11686,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    OriginGroup:
-      type: object
-      properties:
-        id:
-          type: string
-      description: Public Origin group identity (`grp_…`). Currently id-only.
-    RulesetBypassActor:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-          description: Stable Origin id for this bypass actor row.
-        bypassMode:
-          enum:
-          - always
-          - pull_request_only
-          type: string
-        user:
-          $ref: '#/components/schemas/RulesetUserBypassActor'
-        team:
-          $ref: '#/components/schemas/RulesetTeamBypassActor'
-        app:
-          $ref: '#/components/schemas/RulesetAppBypassActor'
-        originRole:
-          $ref: '#/components/schemas/RulesetOriginRoleBypassActor'
-      description: "A principal that may bypass ruleset enforcement. Identity is a typed\n `actor` oneof (user, team, app, or Origin role), not a parallel kind enum\n plus opaque JSON payload."
-    Ruleset:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-          description: Stable Origin ruleset id.
-        name:
-          type: string
-        description:
-          type: string
-        enforcement:
-          enum:
-          - active
-          - evaluate
-          - disabled
-          type: string
-        kind:
-          enum:
-          - merge_branch
-          - push_branch
-          - push_tag
-          - push_repository
-          type: string
-        includedRefNames:
-          type: array
-          items:
-            type: string
-          description: "Ref name patterns this ruleset includes. Supports globs and the tokens\n `~ALL` and `~DEFAULT_BRANCH`. Create/update reject more than 64 entries;\n list/get therefore never paginate this field."
-        excludedRefNames:
-          type: array
-          items:
-            type: string
-          description: "Ref name patterns this ruleset excludes. Same pattern language and 64-entry\n write cap as `included_ref_names`."
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/RulesetRule'
-          description: "Protection rules in this ruleset. Create/update reject more than 20\n entries; list/get therefore never paginate this field."
-        bypassActors:
-          type: array
-          items:
-            $ref: '#/components/schemas/RulesetBypassActor'
-          description: "Bypass principals for this ruleset. Create/update reject more than 15\n entries; list/get therefore never paginate this field."
-      description: "A named bundle of branch, merge, and push protections for one repository.\n This is a stable caller-facing projection: repository coordinates live on\n the request path (and are hoisted once on list responses), not on each\n ruleset."
-    ListCheckSuitesForCommitResponse:
-      type: object
-      properties:
-        checkSuites:
-          readOnly: true
-          type: array
-          items:
-            $ref: '#/components/schemas/CheckSuite'
-        nextPageToken:
-          readOnly: true
-          type: string
-          description: Opaque cursor for the next page; empty when there are no more pages.
-    CheckRunAnnotation:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-        checkRunId:
-          readOnly: true
-          type: string
-        annotationLevel:
-          readOnly: true
-          enum:
-          - notice
-          - warning
-          - failure
-          type: string
-        message:
-          readOnly: true
-          type: string
-        title:
-          readOnly: true
-          type: string
-        rawDetails:
-          readOnly: true
-          type: string
-        createdAt:
-          readOnly: true
-          type: string
-          format: date-time
-        updatedAt:
-          readOnly: true
-          type: string
-          format: date-time
-        location:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/CheckRunAnnotationLocation'
-      description: Persisted append-only annotation. Non-inline annotations omit `location`.
-    Label:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        color:
-          type: string
-          description: Six-character hex color without a leading `#`.
-        description:
-          type: string
-    RulesetOriginRoleBypassActor:
-      type: object
-      properties:
-        role:
-          enum:
-          - namespace_admin
-          - repository_admin
-          - repository_write
-          type: string
-      description: "Bypass granted to holders of a policy-backed Origin role. Payload role is\n one of `namespace_admin`, `repository_admin`, or `repository_write`."
-    MergePullRequestResponse:
-      type: object
-      properties:
-        mergeCommitSha:
-          readOnly: true
-          type: string
-          description: SHA of the merge commit written to the base branch.
-        mergedPullNumbers:
-          readOnly: true
-          type: array
-          items:
-            type: string
-          description: "Pull numbers (root-to-target order) transitioned to merged by this call.\n Empty when the prefix was already merged."
-        pullRequest:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/PullRequest'
-          description: The target pull request after the merge.
-    AppEventsReplace:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            type: string
-          description: The app's complete new set of webhook event subscriptions.
-      description: Clean-replace wrapper for `UpdateAppRequest.events`.
-    PullRequestStackMembership:
-      type: object
-      properties:
-        id:
-          type: string
-          description: "Stable stack identifier. Pass it as `stack_id` to `ListPullRequests` to\n list the stack's members."
-        parentPullRequest:
-          allOf:
-          - $ref: '#/components/schemas/PullRequestReference'
-          description: "The pull request this one is stacked on. Unset for the root of the stack.\n A merged parent stays referenced until the child is retargeted or\n re-parented."
-      description: "Membership of a pull request in a stack: a chain of dependent pull requests\n in one repository, each stacked on the one it builds upon."
-    BatchGetContentsResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/BatchGetContentsResult'
-          description: One result per unique requested path, in first-seen request order.
-        resolvedCommitSha:
-          type: string
-          description: The commit SHA the `ref` resolved to.
-    ListNamespaceAppsResponse:
-      type: object
-      properties:
-        apps:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppDisplayMetadata'
-        nextPageToken:
-          type: string
-          description: Opaque cursor for the next page; empty when there are no more pages.
     CheckRun:
       type: object
       properties:
@@ -12002,52 +11799,228 @@ components:
           - $ref: '#/components/schemas/OriginActor'
           description: "Principal that re-requested the run. Present iff `rerequested_at` is set;\n cleared together with it when the owning app answers."
       description: "A persisted check run, as returned by `PostCheckRun`. All fields are\n server-owned; the writable shape is `CheckRunInput`.\n\n Each `(check_suite, key, external_id)` is one run attempt. Within a suite,\n the current attempt for a `key` — the one `ListCheckRunsForSuite`,\n `ListCheckRunsForCommit`, and the pull request's CI state and required\n checks use — is the run with the newest `external_updated_at`; ties break\n by `created_at`, then `id`, newest first. A run is current for its commit\n only when its suite is the commit's current suite attempt (see\n `CheckSuite`). Superseded attempts stay readable by id."
-    CheckSuite:
+    CommitAuthor:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        date:
+          type: string
+          description: "ISO-8601 timestamp preserving the git signature's original timezone offset\n (e.g. \"2014-11-07T22:01:45+01:00\")."
+      description: "Git identity and timestamp for a commit's author or committer.\n\n This is the identity recorded in the commit object, not a linked user\n account."
+    ListCheckRunsForSuiteResponse:
+      type: object
+      properties:
+        checkRuns:
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckRun'
+        nextPageToken:
+          readOnly: true
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more pages.
+    TaggedObject:
+      type: object
+      properties:
+        sha:
+          type: string
+          description: Hex SHA of the target object.
+        type:
+          type: string
+          description: One of "commit", "tree", "blob", or "tag".
+      description: The git object an annotated tag points at.
+    CodeownerRequirement:
+      type: object
+      properties:
+        owners:
+          type: array
+          items:
+            type: string
+          description: Code owners, any one of whom can satisfy the requirement.
+          x-cursor-visibility: PREVIEW
+        paths:
+          type: array
+          items:
+            type: string
+          description: Changed paths this owner set covers.
+          x-cursor-visibility: PREVIEW
+      description: One owner set that still needs an approval.
+      x-cursor-visibility: PREVIEW
+    PullRequest:
       type: object
       properties:
         id:
-          readOnly: true
           type: string
-          description: Server-assigned unique ID of the suite.
-        repository:
-          readOnly: true
+          description: Stable Origin pull request identifier.
+        number:
+          type: string
+          description: Pull request number within its repository.
+        state:
+          type: string
+          description: '"open" or "closed". A draft is "open"; merged and closed pull requests are both "closed".'
+        draft:
+          type: boolean
+          description: Whether the pull request is still a draft.
+        merged:
+          type: boolean
+          description: Whether the pull request has been merged.
+        title:
+          type: string
+          description: Pull request title.
+        body:
+          type: string
+          description: Pull request description.
+        head:
           allOf:
-          - $ref: '#/components/schemas/RepositoryReference'
-          description: Repository the suite belongs to.
-        sha:
-          readOnly: true
-          type: string
-          description: Resolved head commit SHA the suite is attached to (lowercase hex).
-        key:
-          readOnly: true
-          type: string
-          description: App-chosen idempotency key for the suite.
-        name:
-          readOnly: true
-          type: string
-          description: Human-facing suite name.
-        detailsUrl:
-          readOnly: true
-          type: string
-          description: Link to more detail about the suite as a whole, if set.
-        createdAt:
-          readOnly: true
-          type: string
-          format: date-time
-        updatedAt:
-          readOnly: true
-          type: string
-          format: date-time
-        externalId:
-          readOnly: true
-          type: string
-          description: Provider-assigned immutable identity for this suite attempt.
-        actor:
-          readOnly: true
+          - $ref: '#/components/schemas/PullRequestRef'
+          description: The source side of the pull request - what is being merged in.
+        base:
+          allOf:
+          - $ref: '#/components/schemas/PullRequestRef'
+          description: The target side of the pull request — what it merges into.
+        author:
           allOf:
           - $ref: '#/components/schemas/OriginActor'
-          description: Principal that produced the suite.
-      description: "A persisted check suite, as returned by `PostCheckRun`. All fields are\n server-owned; the writable shape is `CheckSuiteInput`.\n\n Each `(actor, key, external_id)` reported against a commit is one suite\n attempt. Where the API shows a commit's current suites\n (`ListCheckSuitesForCommit`, `ListCheckRunsForCommit`, and the pull\n request's CI state and required checks), the current attempt per\n `(actor, key)` is the one whose runs carry the newest\n `external_updated_at` (a suite with no runs ranks by its `created_at`);\n ties break by the suite's `created_at`, then its `id`, newest first.\n Superseded attempts stay readable by id."
+          description: The principal that opened the pull request.
+        createdAt:
+          type: string
+          description: When the pull request was opened.
+          format: date-time
+        updatedAt:
+          type: string
+          description: When the pull request was last updated.
+          format: date-time
+        closedAt:
+          type: string
+          description: When the pull request was closed or merged; unset while open.
+          format: date-time
+        mergedAt:
+          type: string
+          description: When the pull request was merged; unset unless merged.
+          format: date-time
+        mergeCommitSha:
+          type: string
+          description: "SHA of the commit the merge wrote to the base branch; set once merged,\n unset before. The pre-merge preview is the `pull/<number>/merge` ref\n (see GetGitRef), a different commit."
+        additions:
+          type: integer
+          description: Lines added by the pull request's latest version.
+          format: int32
+        deletions:
+          type: integer
+          description: Lines deleted by the pull request's latest version.
+          format: int32
+        changedFiles:
+          type: integer
+          description: Files changed by the pull request's latest version.
+          format: int32
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+          description: "Labels currently assigned to this pull request, sorted by name. Empty when\n none are assigned. A pull request can have at most 100 labels."
+        stack:
+          allOf:
+          - $ref: '#/components/schemas/PullRequestStackMembership'
+          description: Stack membership. Unset when the pull request is not part of a stack.
+        version:
+          allOf:
+          - $ref: '#/components/schemas/PullRequestVersion'
+          description: The pull request's latest version.
+      description: A pull request.
+    CommitFile:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: New path of the file.
+        status:
+          type: string
+          description: One of "added", "removed", "modified", "renamed", or "copied".
+        additions:
+          type: integer
+          format: int32
+        deletions:
+          type: integer
+          format: int32
+        changes:
+          type: integer
+          description: '`additions + deletions`.'
+          format: int32
+        patch:
+          type: string
+          description: Unified diff patch for this file. Empty for binary files.
+        previousFilename:
+          type: string
+          description: Pre-rename path, set only when `status` is "renamed" or "copied".
+      description: A single file changed by a commit. Populated only on `GetCommit`.
+    RequiredCheck:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name the repository rule requires.
+          x-cursor-visibility: PREVIEW
+        owner:
+          allOf:
+          - $ref: '#/components/schemas/OriginActor'
+          description: Principal expected to report the check.
+          x-cursor-visibility: PREVIEW
+        checkRun:
+          allOf:
+          - $ref: '#/components/schemas/CheckRunReference'
+          description: "The check run on `head_sha` matching this requirement, by reference.\n Unset when none has been reported (state `missing`). A reference rather\n than the full `CheckRun`: this resource is readable with\n `repository:pull_requests` read alone, while a run's status, conclusion,\n output and details URL are gated by `repository:checks` read\n (`GetCheckRun`); the requirement's state is `RequiredChecksBlocker.state`."
+          x-cursor-visibility: PREVIEW
+      description: A check a repository rule requires on the evaluated head.
+      x-cursor-visibility: PREVIEW
+    ListSshCertificateAuthoritiesResponse:
+      type: object
+      properties:
+        certificateAuthorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/SshCertificateAuthority'
+          description: Every authority the owner trusts, newest first.
+        requireCertificates:
+          type: boolean
+          description: "Whether the owner requires SSH certificates; see\n `SetSshCertificateRequirement`."
+    RequiredChecksBlocker:
+      type: object
+      properties:
+        state:
+          enum:
+          - missing
+          - pending
+          - failing
+          - action_required
+          type: string
+          description: State shared by every check in this blocker.
+          x-cursor-visibility: PREVIEW
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequiredCheck'
+          description: Required checks in that state.
+          x-cursor-visibility: PREVIEW
+      x-cursor-visibility: PREVIEW
+    Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          format: int32
+        message:
+          type: string
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleProtobufAny'
+          description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+      description: 'The canonical error envelope, after google.rpc.Status: a code, a developer-facing message, and typed details — google.rpc.BadRequest field violations for invalid arguments, and a google.rpc.RequestInfo entry echoing the caller-supplied request id. New detail types may appear at any time, so integrations must tolerate unknown entries. 404 responses never distinguish a resource that does not exist from one the caller cannot access; not-found and no-access are deliberately indistinguishable.'
     FileCommentAnchor:
       required:
       - path
@@ -12057,6 +12030,202 @@ components:
           type: string
           description: "File path in the pull request version's diff: the deleted path for\n deletions, the head path otherwise (a renamed file's pre-rename source\n path is rejected). Paths outside the diff fail with INVALID_ARGUMENT;\n there is no fallback to a general-discussion comment."
       description: "Anchor for a new file-level comment thread on the whole file in the pull\n request version's diff. The side is derived from the file's change kind,\n matching the review UI: the base version for deleted files, the head\n version otherwise. It comes back on the thread's `side` field."
+    SetPullRequestLabelsResponse:
+      type: object
+      properties:
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+    PullRequestRef:
+      type: object
+      properties:
+        ref:
+          type: string
+          description: The ref this side points at, as Origin records it.
+        sha:
+          type: string
+          description: "Tip commit SHA of this side at the change's latest version. For `base`\n this is the version's `base_sha`, which can lag the branch's current tip\n (see `PullRequestVersion`)."
+      description: One side (head or base) of a change.
+    CommitParent:
+      type: object
+      properties:
+        sha:
+          type: string
+      description: A parent commit reference. Only the SHA is exposed (URLs omitted).
+    ListNamespaceAppsResponse:
+      type: object
+      properties:
+        apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppDisplayMetadata'
+        nextPageToken:
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more pages.
+    ListWebhookDeliveriesResponse:
+      type: object
+      properties:
+        deliveries:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookDelivery'
+        nextPageToken:
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more pages.
+    ListCommitFilesResponse:
+      type: object
+      properties:
+        files:
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitFile'
+        nextPageToken:
+          readOnly: true
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more files.
+    RateLimitResources:
+      type: object
+      properties:
+        core:
+          allOf:
+          - $ref: '#/components/schemas/RateLimitResource'
+          description: Shared per-minute point budget for public API endpoints.
+      description: Rate limit resources for the authenticated principal.
+    ListAppInstallationsResponse:
+      type: object
+      properties:
+        installations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppInstallation'
+        nextPageToken:
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more pages.
+    PullRequestStackMembership:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "Stable stack identifier. Pass it as `stack_id` to `ListPullRequests` to\n list the stack's members."
+        parentPullRequest:
+          allOf:
+          - $ref: '#/components/schemas/PullRequestReference'
+          description: "The pull request this one is stacked on. Unset for the root of the stack.\n A merged parent stays referenced until the child is retargeted or\n re-parented."
+      description: "Membership of a pull request in a stack: a chain of dependent pull requests\n in one repository, each stacked on the one it builds upon."
+    OriginGroup:
+      type: object
+      properties:
+        id:
+          type: string
+      description: Public Origin group identity (`grp_…`). Currently id-only.
+    RepositoryReference:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        owner:
+          $ref: '#/components/schemas/Owner'
+      description: Stable identity and display coordinates for a repository.
+    WebhookEventReference:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+      description: "The event a delivery carries. `type` is the subscription event type, e.g.\n `pull_request.created`; `id` is shared by every app's delivery of the same\n event."
+    RepositoryMirror:
+      type: object
+      properties:
+        source:
+          readOnly: true
+          enum:
+          - github
+          type: string
+        sourceId:
+          readOnly: true
+          type: string
+          description: Opaque repository identifier assigned by the source.
+        status:
+          readOnly: true
+          enum:
+          - inbound
+          - outbound
+          type: string
+          description: Effective direction during a transition, until cutover completes.
+      description: The external source and lifecycle state of a mirrored repository.
+    AppDisplayMetadata:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: Globally unique app identifier.
+        displayName:
+          readOnly: true
+          type: string
+        description:
+          readOnly: true
+          type: string
+          description: Publisher-provided description. Empty when unset.
+      description: Non-sensitive display fields for an app in a namespace catalog.
+    AppInstallation:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: Globally unique installation identifier.
+        appId:
+          readOnly: true
+          type: string
+          description: The installed app's identifier.
+        target:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Owner'
+          description: Target owner entity the app is installed into.
+        createdAt:
+          readOnly: true
+          type: string
+          format: date-time
+        updatedAt:
+          readOnly: true
+          type: string
+          format: date-time
+        repoSelectionMode:
+          readOnly: true
+          enum:
+          - all
+          - selected
+          type: string
+          description: Whether the app can access all repos belonging to the owner, or only selected repos.
+        scopes:
+          readOnly: true
+          type: array
+          items:
+            type: string
+          description: "Scopes granted to this installation as catalog scope strings, e.g.\n \"repository:contents:read\"."
+        installedBy:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/OriginUserActor'
+          description: User who originally installed the app.
+        suspendedAt:
+          readOnly: true
+          type: string
+          description: Set while the installation is suspended; unset when it is active.
+          format: date-time
+        deletedAt:
+          readOnly: true
+          type: string
+          description: "When the installation was deleted. Set only on the `installation.deleted`\n webhook snapshot; a deleted installation no longer resolves through the\n API."
+          format: date-time
+      description: An installation of an Origin app into a target owner entity.
     PullRequestReviewDismissal:
       type: object
       properties:
@@ -12072,110 +12241,26 @@ components:
           type: string
           description: "Reason recorded with the dismissal. Reviews retired automatically because\n their author submitted a newer verdict carry a server-generated reason."
       description: "Records that a submitted review no longer counts toward the pull request's\n review state."
-    CommitDetail:
+    RulesetTeamBypassActor:
       type: object
       properties:
-        author:
-          $ref: '#/components/schemas/CommitAuthor'
-        committer:
-          $ref: '#/components/schemas/CommitAuthor'
-        message:
+        organizationPublicId:
           type: string
-        tree:
-          $ref: '#/components/schemas/CommitTree'
-      description: Git-object metadata for a commit.
-    ListNamespacesResponse:
-      type: object
-      properties:
-        namespaces:
-          type: array
-          items:
-            $ref: '#/components/schemas/NamespaceListing'
-        nextPageToken:
+        groupPublicId:
           type: string
-          description: Opaque cursor for the next page; empty when there are no more pages.
-    Branch:
+      description: "A team principal that may bypass ruleset enforcement. Identity is the\n immutable org/group `public_id` pair (never mutable slugs)."
+    AppSigningKey:
       type: object
       properties:
-        name:
-          type: string
-          description: Branch name without the "refs/heads/" prefix, e.g. "main".
-        commit:
-          allOf:
-          - $ref: '#/components/schemas/BranchCommit'
-          description: The commit at the tip of the branch.
-      description: A repository branch and the commit at its tip.
-    ListCheckRunsForCommitResponse:
-      type: object
-      properties:
-        checkRuns:
-          readOnly: true
-          type: array
-          items:
-            $ref: '#/components/schemas/CheckRun'
-        nextPageToken:
+        kid:
           readOnly: true
           type: string
-          description: Opaque cursor for the next page; empty when there are no more pages.
-    InstallationReference:
-      type: object
-      properties:
-        id:
+          description: "Key ID: the base64url-encoded SHA-256 digest of the key's SPKI DER\n encoding."
+        createdAt:
+          readOnly: true
           type: string
-        target:
-          allOf:
-          - $ref: '#/components/schemas/Owner'
-          description: Target owner entity the app is installed into.
-      description: "Stable identity for an app installation: the installation id plus the\n owner entity it is installed into, matching AppInstallation."
-    OriginServiceAccountActor:
-      type: object
-      properties:
-        id:
-          type: string
-    RepositoryReference:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        owner:
-          $ref: '#/components/schemas/Owner'
-      description: Stable identity and display coordinates for a repository.
-    OriginActor:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/OriginUserActor'
-        app:
-          $ref: '#/components/schemas/OriginAppActor'
-        serviceAccount:
-          $ref: '#/components/schemas/OriginServiceAccountActor'
-      description: A user, app, or service account that performed an externally visible action.
-    RateLimitStatus:
-      type: object
-      properties:
-        resources:
-          $ref: '#/components/schemas/RateLimitResources'
-        rate:
-          allOf:
-          - $ref: '#/components/schemas/RateLimitResource'
-          description: Alias of `resources.core`. Prefer `resources.core` in new clients.
-      description: Rate limit status for the authenticated principal.
-    BatchRedeliverWebhookDeliveryResult:
-      type: object
-      properties:
-        deliveryId:
-          type: string
-          description: The requested delivery id, echoed verbatim.
-        outcome:
-          enum:
-          - queued
-          - already_in_flight
-          - not_found
-          type: string
-          description: "The result for this id: `queued` (a send was created),\n `already_in_flight` (a send was already running; success, not an error),\n or `not_found`. `not_found` covers unknown ids, ids older than the 7-day\n retention window, and namespaces where the app is no longer installed."
-      description: The outcome for one requested delivery id.
+          format: date-time
+      description: "An app signing key. Only the key's identity is returned; the key material\n is write-only."
     RulesetBypassActorInput:
       required:
       - bypassMode
@@ -12195,21 +12280,39 @@ components:
         originRole:
           $ref: '#/components/schemas/RulesetOriginRoleBypassActor'
       description: "Input for one bypass actor when creating a ruleset. Does not include the\n server-assigned bypass-actor id."
-    AppDisplayMetadata:
+    CheckRunAnnotationLocation:
+      required:
+      - path
+      - startLine
+      - endLine
       type: object
       properties:
-        id:
-          readOnly: true
+        path:
           type: string
-          description: Globally unique app identifier.
-        displayName:
-          readOnly: true
+          description: 'Maximum UTF-8 size: 4096 bytes.'
+        startLine:
+          type: integer
+          format: int32
+        endLine:
+          type: integer
+          format: int32
+        columns:
+          $ref: '#/components/schemas/CheckRunAnnotationColumnRange'
+      description: "Optional source location for a check-run annotation. `path`, `start_line`,\n and `end_line` are required whenever the enclosing annotation supplies this\n message. `path` is canonical and repository-relative, lines and columns are\n positive 1-based inclusive coordinates, and `columns` is supported only for\n a single-line range."
+    ListPullRequestCommentsResponse:
+      type: object
+      properties:
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PullRequestComment'
+        pullRequest:
+          allOf:
+          - $ref: '#/components/schemas/PullRequestReference'
+          description: Pull request shared by every comment in this page.
+        nextPageToken:
           type: string
-        description:
-          readOnly: true
-          type: string
-          description: Publisher-provided description. Empty when unset.
-      description: Non-sensitive display fields for an app in a namespace catalog.
+          description: Opaque cursor for the next page; empty when there are no more comments.
     ListCheckRunAnnotationsResponse:
       type: object
       properties:
@@ -12222,79 +12325,107 @@ components:
           readOnly: true
           type: string
           description: Opaque cursor for the next page; empty when there are no more pages.
-    ListPullRequestCommitsResponse:
+    ListAppInstallationRepositoriesResponse:
       type: object
       properties:
-        commits:
+        repositories:
           type: array
           items:
-            $ref: '#/components/schemas/Commit'
+            $ref: '#/components/schemas/Repo'
         nextPageToken:
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more pages.
+        repoSelectionMode:
           readOnly: true
+          enum:
+          - all
+          - selected
           type: string
-          description: Opaque cursor for the next page; empty when there are no more commits.
-    RulesetRuleInput:
-      required:
-      - ruleType
+          description: Whether the authenticated installation can access all repos belonging to an owner, or only selected repos.
+    TransitionRepoMirrorResponse:
       type: object
       properties:
-        ruleType:
-          type: string
-          description: "Rule type string, for example `pull_request`, `require_status_checks`,\n `require_branch_up_to_date`, `deletion`, or `non_fast_forward`."
-        parameters:
-          type: object
-          description: Type-specific parameters as a JSON object. Shape depends on `rule_type`.
-      description: "Input for one rule when creating a ruleset. Does not include the\n server-assigned rule id."
-    MergeConflictBlocker:
-      type: object
-      properties:
-        conflictedPaths:
-          type: array
-          items:
-            type: string
-          description: Paths that conflict with the base branch. At most 100 are listed.
-          x-cursor-visibility: PREVIEW
-        truncated:
-          type: boolean
-          description: Whether more paths conflict than are listed.
-          x-cursor-visibility: PREVIEW
-        inheritedFromDownstack:
-          type: boolean
-          description: "The conflict comes from a pull request below this one in the stack, so\n this pull request is waiting on that one rather than conflicted itself."
-          x-cursor-visibility: PREVIEW
-      x-cursor-visibility: PREVIEW
-    Commit:
-      type: object
-      properties:
-        sha:
-          type: string
-          description: Full 40/64-char hex commit SHA.
-        commit:
-          allOf:
-          - $ref: '#/components/schemas/CommitDetail'
-          description: Git-object metadata (author, committer, message, tree).
-        parents:
-          type: array
-          items:
-            $ref: '#/components/schemas/CommitParent'
-        stats:
+        repository:
           readOnly: true
           allOf:
-          - $ref: '#/components/schemas/CommitStats'
-          description: Aggregate diff stats. `GetCommit` only.
-      description: "A commit with identity fields (`sha`, `parents`) at the top level and\n git-object metadata nested under\n `commit`. File diffs live in the paginated `ListCommitFiles` collection."
-    ListCommitFilesResponse:
+          - $ref: '#/components/schemas/Repo'
+          description: The repository, reflecting its transitioning mirror state.
+        job:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/MirrorTransitionJob'
+          description: "The job tracking the transition. Poll it until it reaches a terminal\n status."
+    NamespaceListing:
       type: object
       properties:
-        files:
-          readOnly: true
-          type: array
-          items:
-            $ref: '#/components/schemas/CommitFile'
-        nextPageToken:
+        namespace:
+          $ref: '#/components/schemas/Owner'
+        viewerCanCreateRepositories:
+          type: boolean
+          description: "Whether `CreateRepo` in this namespace would pass authorization and the\n namespace owner's plan and settings checks for the caller."
+      description: A namespace in a `ListNamespaces` response, with what the caller may do in it.
+    GrepContentsSubmatch:
+      type: object
+      properties:
+        start:
+          type: integer
+          description: Byte offset of the first byte of the match within the line.
+          format: uint32
+        end:
+          type: integer
+          description: Byte offset one past the last byte of the match within the line.
+          format: uint32
+      description: One matched range of bytes inside a line.
+    WebhookDeliveryAttempt:
+      type: object
+      properties:
+        id:
           readOnly: true
           type: string
-          description: Opaque cursor for the next page; empty when there are no more files.
+        deliveryId:
+          readOnly: true
+          type: string
+        trigger:
+          readOnly: true
+          enum:
+          - automatic
+          - manual
+          type: string
+        responseStatusCode:
+          readOnly: true
+          type: integer
+          description: Unset when the POST produced no HTTP response (transport error, timeout).
+          format: int32
+        latencyMs:
+          readOnly: true
+          type: integer
+          format: int32
+        errorMessage:
+          readOnly: true
+          type: string
+          description: Transport error detail when there was no HTTP response; empty otherwise.
+        attemptedAt:
+          readOnly: true
+          type: string
+          format: date-time
+      description: One HTTP POST of a delivery's payload to the app's webhook URL.
+    Owner:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique URL-friendly name of the owner.
+        id:
+          type: string
+          description: Unique ID of the owner namespace.
+        type:
+          readOnly: true
+          enum:
+          - team
+          - user
+          type: string
+          description: '`team` or `user`. Output-only; unset when unknown.'
+      description: The owner of a repo.
     ListNamespaceGrantsResponse:
       type: object
       properties:
@@ -12306,97 +12437,49 @@ components:
         nextPageToken:
           type: string
           description: Opaque cursor for the next page; empty when there are no more pages.
-    SyncMirrorResponse:
-      type: object
-      properties:
-        synced:
-          type: boolean
-          description: "True when the sync target is known to be satisfied; false while the sync\n is still pending. Always present in JSON responses, mirroring the HTTP\n status (200 when true, 202 when false)."
-    Blob:
+    BranchCommit:
       type: object
       properties:
         sha:
           type: string
-          description: Git blob object SHA (hex).
-        size:
-          type: integer
-          description: "Decoded content size in bytes. `int32` ensures REST JSON emits a number.\n The GetBlob size cap is 4 MiB."
-          format: int32
-        encoding:
+          description: Full hex SHA of the commit at the tip of the branch.
+      description: The commit a branch points at.
+    PostCheckRunResponse:
+      type: object
+      properties:
+        checkSuite:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/CheckSuite'
+          description: The upserted check suite.
+        checkRun:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/CheckRun'
+          description: "The stored check run after this call: the posted values when `outcome`\n is `created` or `updated`, otherwise the run as it already was."
+        outcome:
+          readOnly: true
+          enum:
+          - created
+          - updated
+          - unchanged
+          - ignored_stale
           type: string
-          description: Always "base64".
-        content:
-          type: string
-          description: "Base64-encoded blob contents wrapped at 60 characters per line, with a\n trailing newline."
-      description: A Git blob object.
-    CheckSuiteReference:
+          description: "What this write did to `check_run`. `ignored_stale` and `unchanged` both\n return the stored run; only this field tells them apart."
+      description: "The pair `check_run` + `outcome` is the same per-run result a\n `BatchUpsertCheckRuns` `results` element carries, inlined."
+    OriginServiceAccountActor:
       type: object
       properties:
         id:
           type: string
-    CheckRunOutput:
+    ListPullRequestLabelsResponse:
       type: object
       properties:
-        title:
-          type: string
-          description: 'Short headline for the output. Maximum length: 255 characters.'
-        summary:
-          type: string
-          description: "Summary of the output. May contain Markdown.\n Maximum UTF-8 size: 65535 bytes."
-        text:
-          type: string
-          description: "Detailed output. May contain Markdown.\n Maximum UTF-8 size: 65535 bytes."
-      description: Human-readable output reported for a check run.
-    AppSigningKey:
-      type: object
-      properties:
-        kid:
-          readOnly: true
-          type: string
-          description: "Key ID: the base64url-encoded SHA-256 digest of the key's SPKI DER\n encoding."
-        createdAt:
-          readOnly: true
-          type: string
-          format: date-time
-      description: "An app signing key. Only the key's identity is returned; the key material\n is write-only."
-    ListCheckRunsForSuiteResponse:
-      type: object
-      properties:
-        checkRuns:
-          readOnly: true
+        labels:
           type: array
           items:
-            $ref: '#/components/schemas/CheckRun'
-        nextPageToken:
-          readOnly: true
-          type: string
-          description: Opaque cursor for the next page; empty when there are no more pages.
-    CommitAuthor:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        date:
-          type: string
-          description: "ISO-8601 timestamp preserving the git signature's original timezone offset\n (e.g. \"2014-11-07T22:01:45+01:00\")."
-      description: "Git identity and timestamp for a commit's author or committer.\n\n This is the identity recorded in the commit object, not a linked user\n account."
-    GitTree:
-      type: object
-      properties:
-        sha:
-          type: string
-          description: Tree object SHA (hex).
-        tree:
-          type: array
-          items:
-            $ref: '#/components/schemas/GitTreeEntry'
-          description: Entries under this tree (immediate children, or the full recursive walk).
-        truncated:
-          type: boolean
-          description: True when the entry list was truncated by the entry-count or size cap.
-      description: "A Git tree object.\n\n When `truncated` is true, the entry list was cut short by the 100,000-entry\n or 7 MiB encoded-payload cap. Fetch subtrees non-recursively to page further."
+            $ref: '#/components/schemas/Label'
+          description: Every label currently assigned to the pull request, sorted by name.
     Repo:
       required:
       - name
@@ -12463,120 +12546,21 @@ components:
           type: boolean
           description: Whether the head branch is deleted automatically on merge.
       description: A repository.
-    ParentPullRequestSelector:
-      type: object
-      properties:
-        number:
-          type: string
-          description: Pull request number within the repository.
-        id:
-          type: string
-          description: Pull request id, as returned in `pull_request.id`.
-        clear:
-          type: boolean
-          description: Removes the current stack parent. Only `true` is accepted.
-      description: "Names the stack parent of a pull request, or removes it. Exactly one member\n must be set; an empty selector, `clear: false`, or more than one member is\n rejected with INVALID_ARGUMENT."
-    RequiredCheck:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name the repository rule requires.
-          x-cursor-visibility: PREVIEW
-        owner:
-          allOf:
-          - $ref: '#/components/schemas/OriginActor'
-          description: Principal expected to report the check.
-          x-cursor-visibility: PREVIEW
-        checkRun:
-          allOf:
-          - $ref: '#/components/schemas/CheckRunReference'
-          description: "The check run on `head_sha` matching this requirement, by reference.\n Unset when none has been reported (state `missing`). A reference rather\n than the full `CheckRun`: this resource is readable with\n `repository:pull_requests` read alone, while a run's status, conclusion,\n output and details URL are gated by `repository:checks` read\n (`GetCheckRun`); the requirement's state is `RequiredChecksBlocker.state`."
-          x-cursor-visibility: PREVIEW
-      description: A check a repository rule requires on the evaluated head.
-      x-cursor-visibility: PREVIEW
-    GitCommit:
+    GitTree:
       type: object
       properties:
         sha:
           type: string
-          description: Full hex commit SHA.
-        author:
-          allOf:
-          - $ref: '#/components/schemas/CommitAuthor'
-          description: Author signature from the git object.
-        committer:
-          allOf:
-          - $ref: '#/components/schemas/CommitAuthor'
-          description: Committer signature from the git object.
-        message:
-          type: string
-          description: Full commit message.
+          description: Tree object SHA (hex).
         tree:
-          allOf:
-          - $ref: '#/components/schemas/CommitTree'
-          description: Tree this commit points at.
-        parents:
           type: array
           items:
-            $ref: '#/components/schemas/CommitParent'
-          description: Parent commit SHAs (empty for a root commit).
-      description: "A Git commit object.\n Distinct from `Commit`, which is the higher-level commits API shape\n (`GET .../commits/{sha}`) with nested `commit` metadata and optional\n diff `stats` / `files`."
-    BatchRedeliverWebhookDeliveriesResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/BatchRedeliverWebhookDeliveryResult'
-          description: One result per unique requested delivery id, in first-seen request order.
-    OriginAppActor:
-      type: object
-      properties:
-        id:
-          type: string
-        displayName:
-          type: string
-          description: "The app's registered display name, never empty when present. Omitted on\n payloads whose app could not be resolved and on the first-party Cursor\n facade actor."
-    RulesetRule:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: string
-          description: Stable Origin id for this rule row.
-        ruleType:
-          type: string
-          description: "Rule type string, for example `pull_request`, `require_status_checks`,\n `require_branch_up_to_date`, `deletion`, or `non_fast_forward`."
-        parameters:
-          type: object
-          description: Type-specific parameters as a JSON object. Shape depends on `rule_type`.
-      description: One rule inside a repository ruleset.
-    InlineCommentAnchor:
-      required:
-      - path
-      - side
-      - startLine
-      type: object
-      properties:
-        path:
-          type: string
-          description: "File path in the pull request version's diff. The path must be part of\n that diff, on a side the file has content on; otherwise the request\n fails with INVALID_ARGUMENT. There is no fallback to a\n general-discussion comment."
-        side:
-          enum:
-          - left
-          - right
-          type: string
-          description: "Diff side of the anchor: `left` for the base version of the file,\n `right` for the head version."
-        startLine:
-          type: integer
-          description: "First 1-based line of the anchored range in the `side` version of the\n file. Any line of the file anchors, matching the review UI — the range\n is not restricted to the diff's hunks, but must not run past the end\n of the file."
-          format: uint32
-        endLine:
-          type: integer
-          description: "Inclusive last line of the anchored range. Must be greater than or\n equal to `start_line`. Omit for a single-line anchor."
-          format: uint32
-      description: "Diff anchor for a new line-anchored comment thread on a file in the pull\n request version's diff. `start_line` anchors to a line and `end_line`\n extends it to a range; for a comment on the whole file, use\n `FileCommentAnchor` instead."
+            $ref: '#/components/schemas/GitTreeEntry'
+          description: Entries under this tree (immediate children, or the full recursive walk).
+        truncated:
+          type: boolean
+          description: True when the entry list was truncated by the entry-count or size cap.
+      description: "A Git tree object.\n\n When `truncated` is true, the entry list was cut short by the 100,000-entry\n or 7 MiB encoded-payload cap. Fetch subtrees non-recursively to page further."
     SshCertificateAuthority:
       type: object
       properties:
@@ -12604,34 +12588,231 @@ components:
           type: string
           format: date-time
       description: "An SSH certificate authority an owner trusts: user certificates it signs\n authenticate git over SSH on the owner's repositories."
-    RateLimitResource:
+    CheckSuiteReference:
       type: object
       properties:
-        limit:
-          type: integer
-          description: Maximum points available in the current window.
-          format: int32
-        remaining:
-          type: integer
-          description: Points remaining in the current window.
-          format: int32
-        reset:
-          type: integer
-          description: Unix timestamp (UTC seconds) when the current window resets.
-          format: int32
-        used:
-          type: integer
-          description: Points consumed in the current window.
-          format: int32
-      description: Point budget for one rate limit resource in the current window.
-    RateLimitResources:
+        id:
+          type: string
+    RulesetRule:
       type: object
       properties:
-        core:
+        id:
+          readOnly: true
+          type: string
+          description: Stable Origin id for this rule row.
+        ruleType:
+          type: string
+          description: "Rule type string, for example `pull_request`, `require_status_checks`,\n `require_branch_up_to_date`, `deletion`, or `non_fast_forward`."
+        parameters:
+          type: object
+          description: Type-specific parameters as a JSON object. Shape depends on `rule_type`.
+      description: One rule inside a repository ruleset.
+    PullRequestFile:
+      type: object
+      properties:
+        filename:
+          type: string
+        status:
+          type: string
+          description: '"added" / "removed" / "modified" / "renamed" / "copied"'
+        additions:
+          type: integer
+          format: int32
+        deletions:
+          type: integer
+          format: int32
+        changes:
+          type: integer
+          format: int32
+        patch:
+          type: string
+        previousFilename:
+          type: string
+      description: A file changed in a pull request.
+    PingWebhookResponse:
+      type: object
+      properties:
+        deliveryId:
+          readOnly: true
+          type: string
+          description: Standard Webhooks `webhook-id` of the test delivery.
+        eventId:
+          readOnly: true
+          type: string
+          description: Event id inside the signed envelope (`event.id`).
+        delivered:
+          readOnly: true
+          type: boolean
+          description: "True when the receiver answered with a 2xx status within the delivery\n timeout. Always present in JSON responses (explicit presence keeps\n `false` from being omitted as a proto3 default)."
+        responseStatusCode:
+          readOnly: true
+          type: integer
+          description: "HTTP status the receiver answered with; 0 when no response arrived\n (connection failure or timeout). Always present in JSON responses."
+          format: int32
+    ListCheckRunsForCommitResponse:
+      type: object
+      properties:
+        checkRuns:
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckRun'
+        nextPageToken:
+          readOnly: true
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more pages.
+    PullRequestVersion:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Monotonic version number within the change (1-based).
+        headSha:
+          type: string
+          description: Head commit SHA for this version.
+        baseSha:
+          type: string
+          description: "Base commit SHA this version is diffed against: the base branch tip as\n resolved when the version was recorded. It can lag the branch's current\n tip until the next head push or retarget."
+        createdAt:
+          type: string
+          description: When this version was created.
+          format: date-time
+      description: "A numbered revision of a change. A new version is recorded when the pull\n request's head is pushed or when it is retargeted to another base, each\n with its own head/base SHAs and diff stats. The base branch advancing on\n its own records nothing."
+    ListPullRequestReviewsResponse:
+      type: object
+      properties:
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/PullRequestReview'
+        pullRequest:
+          allOf:
+          - $ref: '#/components/schemas/PullRequestReference'
+          description: Pull request shared by every review in this page.
+        nextPageToken:
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more reviews.
+    ListMatchingGitRefsResponse:
+      type: object
+      properties:
+        refs:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitRef'
+          description: Matching refs, sorted by full ref name.
+    RequiredApprovalsBlocker:
+      type: object
+      properties:
+        requiredCount:
+          type: integer
+          description: Approving reviews the repository rules require.
+          format: int32
+          x-cursor-visibility: PREVIEW
+        approvedCount:
+          type: integer
+          description: Approving reviews currently counted toward the requirement.
+          format: int32
+          x-cursor-visibility: PREVIEW
+      x-cursor-visibility: PREVIEW
+    RulesetUserBypassActor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "Numeric maindb user id, encoded as a decimal string. Internal upsert\n stamps the actor-registry id (`act_…`) from this value."
+      description: A user principal that may bypass ruleset enforcement.
+    RateLimitStatus:
+      type: object
+      properties:
+        resources:
+          $ref: '#/components/schemas/RateLimitResources'
+        rate:
           allOf:
           - $ref: '#/components/schemas/RateLimitResource'
-          description: Shared per-minute point budget for public API endpoints.
-      description: Rate limit resources for the authenticated principal.
+          description: Alias of `resources.core`. Prefer `resources.core` in new clients.
+      description: Rate limit status for the authenticated principal.
+    GitTreeEntry:
+      type: object
+      properties:
+        path:
+          type: string
+          description: Path relative to the requested tree root.
+        mode:
+          type: string
+          description: 'Git mode as an octal string: "100644", "100755", "040000", "120000", "160000".'
+        type:
+          type: string
+          description: One of "blob", "tree", or "commit" (gitlink/submodule).
+        sha:
+          type: string
+          description: Object SHA (hex).
+        size:
+          type: integer
+          description: "Blob size in bytes. Unset for trees and gitlinks. `int32` ensures REST JSON\n emits a number; individual blobs over 2 GiB are not representable."
+          format: int32
+      description: One entry in a Git tree.
+    CommitStats:
+      type: object
+      properties:
+        additions:
+          type: integer
+          format: int32
+        deletions:
+          type: integer
+          format: int32
+        total:
+          type: integer
+          description: '`additions + deletions`.'
+          format: int32
+      description: "Aggregate line stats for a commit's diff against its base. Populated only\n on `GetCommit`, not in list responses."
+    ListPullRequestFilesResponse:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/PullRequestFile'
+        nextPageToken:
+          readOnly: true
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more files.
+    BatchRedeliverWebhookDeliveriesRequest:
+      required:
+      - deliveryIds
+      type: object
+      properties:
+        deliveryIds:
+          type: array
+          items:
+            type: string
+          description: "Deliveries to send again. At most 100 unique entries, matching the\n page_size ceiling on ListWebhookDeliveries. Duplicates are removed,\n keeping first-seen order. An empty list, or more than 100 unique\n entries, is a 400 InvalidArgument."
+    GitCommit:
+      type: object
+      properties:
+        sha:
+          type: string
+          description: Full hex commit SHA.
+        author:
+          allOf:
+          - $ref: '#/components/schemas/CommitAuthor'
+          description: Author signature from the git object.
+        committer:
+          allOf:
+          - $ref: '#/components/schemas/CommitAuthor'
+          description: Committer signature from the git object.
+        message:
+          type: string
+          description: Full commit message.
+        tree:
+          allOf:
+          - $ref: '#/components/schemas/CommitTree'
+          description: Tree this commit points at.
+        parents:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitParent'
+          description: Parent commit SHAs (empty for a root commit).
+      description: "A Git commit object.\n Distinct from `Commit`, which is the higher-level commits API shape\n (`GET .../commits/{sha}`) with nested `commit` metadata and optional\n diff `stats` / `files`."
     App:
       type: object
       properties:
@@ -12684,12 +12865,162 @@ components:
             type: string
           description: "Default scopes offered when the app is installed, as catalog scope\n strings."
       description: An Origin app.
-    CommitTree:
+    CheckRunInput:
+      required:
+      - key
+      - name
+      - status
+      - externalUpdatedAt
+      - externalId
       type: object
       properties:
-        sha:
+        key:
           type: string
-      description: The git tree a commit points at.
+          description: Stable, app-chosen key identifying the logical check across attempts.
+        name:
+          type: string
+          description: Human-facing check-run name.
+        status:
+          enum:
+          - queued
+          - in_progress
+          - completed
+          - rerequested
+          type: string
+          description: "Settable values: `queued`, `in_progress` or `completed`. `rerequested` is\n read-only — set only by Origin on re-request — and a post carrying it is\n rejected with INVALID_ARGUMENT."
+        conclusion:
+          enum:
+          - success
+          - failure
+          - neutral
+          - cancelled
+          - skipped
+          - timed_out
+          - action_required
+          - stale
+          type: string
+          description: Required iff `status == completed`.
+        externalUpdatedAt:
+          type: string
+          description: "The external system's last-update time for this run, at millisecond\n precision. Origin applies a post to an existing run (same `external_id`\n and `key` in the suite) only when this value is at or after the run's\n stored `external_updated_at`, raised to `rerequested_at` while a\n re-request is outstanding. An older value is ignored: the call still\n succeeds with the stored run and reports the outcome `ignored_stale`.\n Equal values apply (the later post wins), with two exceptions that are\n also ignored as stale: a `queued` or `in_progress` post cannot reopen a\n `completed` run at the same timestamp, and a post at exactly the stored\n timestamp is ignored while `rerequested_at` is set. A newer value always\n applies, including reopening a `completed` run. Values more than 60\n seconds in the future are rejected with INVALID_ARGUMENT."
+          format: date-time
+        startedAt:
+          type: string
+          description: "When the check run started. Values more than 60 seconds in the future\n are rejected with INVALID_ARGUMENT."
+          format: date-time
+        completedAt:
+          type: string
+          description: "When the check run completed. Must not precede `started_at` when both\n are posted together; values more than 60 seconds in the future are\n rejected with INVALID_ARGUMENT."
+          format: date-time
+        detailsUrl:
+          type: string
+          description: "Optional link to more detail about this specific check run (e.g. the\n provider's job/build URL)."
+        externalId:
+          type: string
+          description: "Provider-assigned immutable identity for this check attempt. Mint a new\n value per execution (a rerun is a new run for the same `key`; the latest\n attempt per `key` is what CI state, required checks and the default\n listings show, and earlier attempts stay as history). Reusing an\n `external_id` updates that run in place instead, which discards its\n previous result."
+        output:
+          allOf:
+          - $ref: '#/components/schemas/CheckRunOutput'
+          description: Human-readable output for this check run.
+        deadlineAt:
+          type: string
+          description: "Optional deadline. Omitted or unset means no expiration.\n Must not be more than 24 hours in the future. Only an `in_progress` run\n expires: once the deadline has passed, a periodic sweep completes it with\n the conclusion `timed_out` (setting `completed_at` if the run had none),\n so expiry lands some minutes after the deadline rather than at it — the\n sweep runs about every 30 minutes by default, an operational setting\n that may change. A `queued` run never expires, a `completed` post clears\n the deadline, and a later post with a newer `external_updated_at` still\n applies to a timed-out run."
+          format: date-time
+        isRerequestable:
+          type: boolean
+          description: "Declares that this run can be re-run on request. Setting this to true is\n a commitment: the app must subscribe to the\n `repository.check_run.rerequested` webhook event and respond to each\n delivery by posting a fresh run for the same head SHA and `key` — either\n a new run (new `external_id`, preserving the old attempt as history) or\n an update of the re-requested run (same `external_id`, refreshing it in\n place). Once a run is re-requested, it reads as pending in the commit's\n CI state until that fresh post arrives: a required check blocks merges\n and the pull request shows the run as awaiting its re-run, so declaring\n re-requestability without responding strands the check. Origin does not\n verify the subscription at post time.\n Omitted preserves the previously stored value (new runs default to\n false); an explicit value sets it, so a later post can withdraw the\n declaration."
+      description: "A single check run to report. Combined with `CheckSuiteInput`, this is\n upserted in one request."
+    AppEventsReplace:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            type: string
+          description: The app's complete new set of webhook event subscriptions.
+      description: Clean-replace wrapper for `UpdateAppRequest.events`.
+    CommitComparison:
+      type: object
+      properties:
+        status:
+          enum:
+          - identical
+          - ahead
+          - behind
+          - diverged
+          type: string
+        aheadBy:
+          type: integer
+          description: Commits `head` is ahead of the merge base.
+          format: int32
+        behindBy:
+          type: integer
+          description: Commits `head` is behind `base`.
+          format: int32
+        baseCommit:
+          allOf:
+          - $ref: '#/components/schemas/Commit'
+          description: Resolved `base`, using the list projection without `stats` or `files`.
+        headCommit:
+          allOf:
+          - $ref: '#/components/schemas/Commit'
+          description: Resolved `head`, using the list projection without `stats` or `files`.
+        mergeBaseCommit:
+          allOf:
+          - $ref: '#/components/schemas/Commit'
+          description: Merge base of `base` and `head`; unrelated histories return NOT_FOUND.
+      description: "A comparison summary without nested commit lists or URL fields. File\n diffs live in the paginated `ListComparisonFiles` collection."
+    RateLimitResource:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Maximum points available in the current window.
+          format: int32
+        remaining:
+          type: integer
+          description: Points remaining in the current window.
+          format: int32
+        reset:
+          type: integer
+          description: Unix timestamp (UTC seconds) when the current window resets.
+          format: int32
+        used:
+          type: integer
+          description: Points consumed in the current window.
+          format: int32
+      description: Point budget for one rate limit resource in the current window.
+    ListPullRequestRequestedReviewersResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/OriginUserActor'
+          description: Users whose review is currently requested.
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/OriginGroup'
+          description: Groups whose review is currently requested.
+    CreateCheckRunAnnotationsResponse:
+      type: object
+      properties:
+        annotations:
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckRunAnnotation'
+    ListBranchesResponse:
+      type: object
+      properties:
+        branches:
+          type: array
+          items:
+            $ref: '#/components/schemas/Branch'
+        nextPageToken:
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more pages.
     MirrorTransitionJob:
       type: object
       properties:
@@ -12772,467 +13103,74 @@ components:
         handle:
           type: string
           description: "The user's claimed profile handle (the identity behind cursor.com\n /@handle), without the @ prefix. Present only while the user's profile\n is publicly visible; omitted for users without a claimed handle and for\n non-public profiles."
-    GrepContentsResponse:
-      type: object
-      properties:
-        matches:
-          type: array
-          items:
-            $ref: '#/components/schemas/GrepContentsMatch'
-          description: "The matching lines and their context lines. The order in which files and\n lines appear is unspecified and may differ between identical requests."
-        limitHit:
-          type: boolean
-          description: "Whether the search reached `max_results`. Narrow `query`, `filter_path`,\n or the glob lists to search a smaller set of files."
-    ListAppInstallationsResponse:
-      type: object
-      properties:
-        installations:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppInstallation'
-        nextPageToken:
-          type: string
-          description: Opaque cursor for the next page; empty when there are no more pages.
-    AddPullRequestLabelsResponse:
-      type: object
-      properties:
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
-    GetActiveMirrorTransitionJobResponse:
-      type: object
-      properties:
-        activeJob:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/MirrorTransitionJob'
-          description: "The currently active transition job. Absent when no transition is in\n progress."
-        lastJob:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/MirrorTransitionJob'
-          description: "The most recent job that reached a terminal status. Absent when the\n repository has never completed a transition."
-    RemovePullRequestLabelResponse:
-      type: object
-      properties:
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
-    ListRulesetsResponse:
-      type: object
-      properties:
-        rulesets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Ruleset'
-        repository:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/RepositoryReference'
-          description: Repository shared by every ruleset in this response.
-    ListComparisonFilesResponse:
-      type: object
-      properties:
-        files:
-          readOnly: true
-          type: array
-          items:
-            $ref: '#/components/schemas/CommitFile'
-        nextPageToken:
-          readOnly: true
-          type: string
-          description: Opaque cursor for the next page; empty when there are no more files.
-    ListMatchingGitRefsResponse:
-      type: object
-      properties:
-        refs:
-          type: array
-          items:
-            $ref: '#/components/schemas/GitRef'
-          description: Matching refs, sorted by full ref name.
-    CommitComparison:
-      type: object
-      properties:
-        status:
-          enum:
-          - identical
-          - ahead
-          - behind
-          - diverged
-          type: string
-        aheadBy:
-          type: integer
-          description: Commits `head` is ahead of the merge base.
-          format: int32
-        behindBy:
-          type: integer
-          description: Commits `head` is behind `base`.
-          format: int32
-        baseCommit:
-          allOf:
-          - $ref: '#/components/schemas/Commit'
-          description: Resolved `base`, using the list projection without `stats` or `files`.
-        headCommit:
-          allOf:
-          - $ref: '#/components/schemas/Commit'
-          description: Resolved `head`, using the list projection without `stats` or `files`.
-        mergeBaseCommit:
-          allOf:
-          - $ref: '#/components/schemas/Commit'
-          description: Merge base of `base` and `head`; unrelated histories return NOT_FOUND.
-      description: "A comparison summary without nested commit lists or URL fields. File\n diffs live in the paginated `ListComparisonFiles` collection."
-    Status:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-          format: int32
-        message:
-          type: string
-          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/GoogleProtobufAny'
-          description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
-      description: 'The canonical error envelope, after google.rpc.Status: a code, a developer-facing message, and typed details — google.rpc.BadRequest field violations for invalid arguments, and a google.rpc.RequestInfo entry echoing the caller-supplied request id. New detail types may appear at any time, so integrations must tolerate unknown entries. 404 responses never distinguish a resource that does not exist from one the caller cannot access; not-found and no-access are deliberately indistinguishable.'
-    PullRequestFile:
-      type: object
-      properties:
-        filename:
-          type: string
-        status:
-          type: string
-          description: '"added" / "removed" / "modified" / "renamed" / "copied"'
-        additions:
-          type: integer
-          format: int32
-        deletions:
-          type: integer
-          format: int32
-        changes:
-          type: integer
-          format: int32
-        patch:
-          type: string
-        previousFilename:
-          type: string
-      description: A file changed in a pull request.
-    ListAppInstallationRepositoriesResponse:
-      type: object
-      properties:
-        repositories:
-          type: array
-          items:
-            $ref: '#/components/schemas/Repo'
-        nextPageToken:
-          type: string
-          description: Opaque cursor for the next page; empty when there are no more pages.
-        repoSelectionMode:
-          readOnly: true
-          enum:
-          - all
-          - selected
-          type: string
-          description: Whether the authenticated installation can access all repos belonging to an owner, or only selected repos.
-    RepositoryGrant:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/OriginUserActor'
-        group:
-          $ref: '#/components/schemas/OriginGroup'
-        teamGroup:
-          $ref: '#/components/schemas/OriginTeamGroup'
-        permission:
-          enum:
-          - read
-          - write
-          - admin
-          - custom
-          type: string
-      description: "A permission granted directly on a repository to one user, group, or\n owning-team group."
-    PullRequestReference:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Immutable Origin change id.
-        number:
-          type: string
-        repository:
-          allOf:
-          - $ref: '#/components/schemas/RepositoryReference'
-          description: Repository reference for this pull request.
-      description: Stable identity and display coordinates for an Origin pull request.
-    PostCheckRunResponse:
-      type: object
-      properties:
-        checkSuite:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/CheckSuite'
-          description: The upserted check suite.
-        checkRun:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/CheckRun'
-          description: "The stored check run after this call: the posted values when `outcome`\n is `created` or `updated`, otherwise the run as it already was."
-        outcome:
-          readOnly: true
-          enum:
-          - created
-          - updated
-          - unchanged
-          - ignored_stale
-          type: string
-          description: "What this write did to `check_run`. `ignored_stale` and `unchanged` both\n return the stored run; only this field tells them apart."
-      description: "The pair `check_run` + `outcome` is the same per-run result a\n `BatchUpsertCheckRuns` `results` element carries, inlined."
-    ListPullRequestsResponse:
-      type: object
-      properties:
-        pullRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/PullRequest'
-        nextPageToken:
-          type: string
-          description: Opaque cursor for the next page; empty when there are no more pages.
-    BranchCommit:
-      type: object
-      properties:
-        sha:
-          type: string
-          description: Full hex SHA of the commit at the tip of the branch.
-      description: The commit a branch points at.
-    ListLabelsResponse:
-      type: object
-      properties:
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
-        nextPageToken:
-          type: string
-          description: Opaque cursor for the next page. Empty when there are no more results.
-    PingWebhookResponse:
-      type: object
-      properties:
-        deliveryId:
-          readOnly: true
-          type: string
-          description: Standard Webhooks `webhook-id` of the test delivery.
-        eventId:
-          readOnly: true
-          type: string
-          description: Event id inside the signed envelope (`event.id`).
-        delivered:
-          readOnly: true
-          type: boolean
-          description: "True when the receiver answered with a 2xx status within the delivery\n timeout. Always present in JSON responses (explicit presence keeps\n `false` from being omitted as a proto3 default)."
-        responseStatusCode:
-          readOnly: true
-          type: integer
-          description: "HTTP status the receiver answered with; 0 when no response arrived\n (connection failure or timeout). Always present in JSON responses."
-          format: int32
-    ListRepositoryGrantsResponse:
-      type: object
-      properties:
-        grants:
-          type: array
-          items:
-            $ref: '#/components/schemas/RepositoryGrant'
-          description: "Ordered by principal kind (groups, owning-team admins, owning-team\n members, users), then by id. Principals that no longer resolve to an active\n user, group, or owning team are omitted, so a page may hold fewer than\n `page_size` grants."
-        repository:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/RepositoryReference'
-          description: Repository shared by every grant in this response.
-        nextPageToken:
-          type: string
-          description: Opaque cursor for the next page; empty when there are no more pages.
-    CheckRunReference:
-      type: object
-      properties:
-        id:
-          type: string
-          x-cursor-visibility: PREVIEW
-        name:
-          type: string
-          x-cursor-visibility: PREVIEW
-        checkSuite:
-          allOf:
-          - $ref: '#/components/schemas/CheckSuiteReference'
-          description: Suite the check run belongs to.
-          x-cursor-visibility: PREVIEW
-      description: "Identity and display coordinates of a check run, for embedding in resources\n that a `repository:checks` read does not gate. Everything else about the run\n (status, conclusion, output, details URL) is `GetCheckRun`."
-      x-cursor-visibility: PREVIEW
-    AppInstallationRedirectUrisReplace:
-      type: object
-      properties:
-        installationRedirectUris:
-          type: array
-          items:
-            type: string
-          description: The app's complete new OAuth install callback allowlist.
-      description: Clean-replace wrapper for `UpdateAppRequest.installation_redirect_uris`.
-    CheckRunAnnotationInput:
+    ReviewCommentInput:
       required:
-      - annotationLevel
-      - message
+      - body
       type: object
       properties:
-        annotationLevel:
-          enum:
-          - notice
-          - warning
-          - failure
+        body:
           type: string
-        message:
-          type: string
-          description: "Non-empty annotation message. May contain Markdown.\n Maximum UTF-8 size: 65535 bytes."
-        title:
-          type: string
-          description: 'Optional title. Maximum length: 255 Unicode characters.'
-        rawDetails:
-          type: string
-          description: 'Optional raw detail text. Maximum UTF-8 size: 65535 bytes.'
-        location:
+          description: Comment text. Must contain a non-whitespace character.
+        inline:
           allOf:
-          - $ref: '#/components/schemas/CheckRunAnnotationLocation'
-          description: Omit for a general, non-inline annotation.
-      description: "Content fields follow common Checks API annotation semantics. Origin groups source\n coordinates in optional `location`, allowing run-level annotations to omit it."
-    CheckRunAnnotationColumnRange:
+          - $ref: '#/components/schemas/InlineCommentAnchor'
+          description: Diff anchor for a new inline thread on the reviewed version's diff.
+        threadId:
+          type: string
+          description: "Existing thread id to reply to (general-discussion and inline threads\n alike). The reply stays hidden until the review publishes."
+        file:
+          allOf:
+          - $ref: '#/components/schemas/FileCommentAnchor'
+          description: "Anchor for a new file-level thread; the side is derived from the\n file's change kind."
+      description: "One comment filed with a review via `CreatePullRequestReview`. Targets the\n same shapes as `CreatePullRequestComment`: provide `thread_id` to reply to\n an existing thread, `inline` to open a new line-anchored thread on the\n reviewed version's diff, `file` to open a new file-level thread, or\n neither to open a new general-discussion thread. Every comment publishes\n with the review."
+    ListCheckSuitesForCommitResponse:
       type: object
       properties:
-        startColumn:
-          type: integer
-          format: int32
-        endColumn:
-          type: integer
-          format: int32
-      description: Optional paired columns for a single-line annotation range.
-    ListWebhookDeliveriesResponse:
-      type: object
-      properties:
-        deliveries:
+        checkSuites:
+          readOnly: true
           type: array
           items:
-            $ref: '#/components/schemas/WebhookDelivery'
+            $ref: '#/components/schemas/CheckSuite'
         nextPageToken:
+          readOnly: true
           type: string
           description: Opaque cursor for the next page; empty when there are no more pages.
-    GitTreeEntry:
+    CommitDetail:
       type: object
       properties:
-        path:
+        author:
+          $ref: '#/components/schemas/CommitAuthor'
+        committer:
+          $ref: '#/components/schemas/CommitAuthor'
+        message:
           type: string
-          description: Path relative to the requested tree root.
-        mode:
-          type: string
-          description: 'Git mode as an octal string: "100644", "100755", "040000", "120000", "160000".'
-        type:
-          type: string
-          description: One of "blob", "tree", or "commit" (gitlink/submodule).
-        sha:
-          type: string
-          description: Object SHA (hex).
-        size:
-          type: integer
-          description: "Blob size in bytes. Unset for trees and gitlinks. `int32` ensures REST JSON\n emits a number; individual blobs over 2 GiB are not representable."
-          format: int32
-      description: One entry in a Git tree.
-    BatchUpsertCheckRunsResponse:
+        tree:
+          $ref: '#/components/schemas/CommitTree'
+      description: Git-object metadata for a commit.
+    MergeConflictBlocker:
       type: object
       properties:
-        checkSuite:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/CheckSuite'
-          description: The persisted suite shared by all returned check runs.
-        checkRuns:
-          readOnly: true
-          type: array
-          items:
-            $ref: '#/components/schemas/CheckRun'
-          description: 'Deprecated: read `results[].check_run`. Still populated, same order.'
-        results:
-          readOnly: true
-          type: array
-          items:
-            $ref: '#/components/schemas/CheckRunWriteResult'
-          description: "One result per posted `check_runs` element, in request order: the stored\n run and what this write did to it. A run whose post was ignored as stale\n or was unchanged is returned as it already was."
-    AppDefaultScopesReplace:
-      type: object
-      properties:
-        scopes:
+        conflictedPaths:
           type: array
           items:
             type: string
-          description: The app's complete new set of default install scopes.
-      description: Clean-replace wrapper for `UpdateAppRequest.default_scopes`.
-    OriginTeamGroup:
-      type: object
-      properties:
-        kind:
-          enum:
-          - members
-          - admins
-          type: string
-      description: "A fixed group of the team that owns a repository or an owner: every team\n member or every team admin. These are the owning team's default access\n shelves, granted on the resource itself; a repository's team-group grant is\n distinct from the one inherited from its owner."
-    RequiredApprovalsBlocker:
-      type: object
-      properties:
-        requiredCount:
-          type: integer
-          description: Approving reviews the repository rules require.
-          format: int32
+          description: Paths that conflict with the base branch. At most 100 are listed.
           x-cursor-visibility: PREVIEW
-        approvedCount:
-          type: integer
-          description: Approving reviews currently counted toward the requirement.
-          format: int32
+        truncated:
+          type: boolean
+          description: Whether more paths conflict than are listed.
+          x-cursor-visibility: PREVIEW
+        inheritedFromDownstack:
+          type: boolean
+          description: "The conflict comes from a pull request below this one in the stack, so\n this pull request is waiting on that one rather than conflicted itself."
           x-cursor-visibility: PREVIEW
       x-cursor-visibility: PREVIEW
-    Owner:
+    SshCertificateRequirement:
       type: object
       properties:
-        slug:
-          type: string
-          description: Unique URL-friendly name of the owner.
-        id:
-          type: string
-          description: Unique ID of the owner namespace.
-        type:
-          readOnly: true
-          enum:
-          - team
-          - user
-          type: string
-          description: '`team` or `user`. Output-only; unset when unknown.'
-      description: The owner of a repo.
-    ListPullRequestLabelsResponse:
-      type: object
-      properties:
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
-          description: Every label currently assigned to the pull request, sorted by name.
-    GitRef:
-      type: object
-      properties:
-        ref:
-          type: string
-          description: Full ref name, e.g. "refs/heads/main".
-        object:
-          allOf:
-          - $ref: '#/components/schemas/TaggedObject'
-          description: "Object this ref points at directly (unpeeled). For annotated tags,\n `object.type` is \"tag\" and `object.sha` is the tag object SHA."
-      description: A Git reference.
+        requireCertificates:
+          type: boolean
+      description: Whether an owner requires SSH certificates for git over SSH.
     GoogleProtobufAny:
       type: object
       properties:
@@ -13241,263 +13179,84 @@ components:
           description: The type of the serialized message.
       additionalProperties: true
       description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-    RulesetTeamBypassActor:
+    StackShapeBlocker:
       type: object
       properties:
-        organizationPublicId:
-          type: string
-        groupPublicId:
-          type: string
-      description: "A team principal that may bypass ruleset enforcement. Identity is the\n immutable org/group `public_id` pair (never mutable slugs)."
-    RequiredChecksBlocker:
-      type: object
-      properties:
-        state:
+        reason:
           enum:
-          - missing
-          - pending
-          - failing
-          - action_required
+          - partially_merged
+          - cycle
+          - missing_parent
+          - cross_repository_parent
+          - base_branch_missing
           type: string
-          description: State shared by every check in this blocker.
           x-cursor-visibility: PREVIEW
-        checks:
+        relatedPullRequests:
           type: array
           items:
-            $ref: '#/components/schemas/RequiredCheck'
-          description: Required checks in that state.
+            $ref: '#/components/schemas/PullRequestReference'
+          description: Other pull requests involved, when the reason names any.
           x-cursor-visibility: PREVIEW
       x-cursor-visibility: PREVIEW
-    TaggedObject:
-      type: object
-      properties:
-        sha:
-          type: string
-          description: Hex SHA of the target object.
-        type:
-          type: string
-          description: One of "commit", "tree", "blob", or "tag".
-      description: The git object an annotated tag points at.
-    PullRequestComment:
-      type: object
-      properties:
-        id:
-          type: string
-        thread:
-          allOf:
-          - $ref: '#/components/schemas/CommentThread'
-          description: "The thread this comment belongs to, including its diff anchor and\n resolution state."
-        body:
-          type: string
-        author:
-          $ref: '#/components/schemas/OriginActor'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-      description: A threaded comment on a pull request.
-    CheckRunInput:
-      required:
-      - key
-      - name
-      - status
-      - externalUpdatedAt
-      - externalId
-      type: object
-      properties:
-        key:
-          type: string
-          description: Stable, app-chosen key identifying the logical check across attempts.
-        name:
-          type: string
-          description: Human-facing check-run name.
-        status:
-          enum:
-          - queued
-          - in_progress
-          - completed
-          - rerequested
-          type: string
-          description: "Settable values: `queued`, `in_progress` or `completed`. `rerequested` is\n read-only — set only by Origin on re-request — and a post carrying it is\n rejected with INVALID_ARGUMENT."
-        conclusion:
-          enum:
-          - success
-          - failure
-          - neutral
-          - cancelled
-          - skipped
-          - timed_out
-          - action_required
-          - stale
-          type: string
-          description: Required iff `status == completed`.
-        externalUpdatedAt:
-          type: string
-          description: "The external system's last-update time for this run, at millisecond\n precision. Origin applies a post to an existing run (same `external_id`\n and `key` in the suite) only when this value is at or after the run's\n stored `external_updated_at`, raised to `rerequested_at` while a\n re-request is outstanding. An older value is ignored: the call still\n succeeds with the stored run and reports the outcome `ignored_stale`.\n Equal values apply (the later post wins), with two exceptions that are\n also ignored as stale: a `queued` or `in_progress` post cannot reopen a\n `completed` run at the same timestamp, and a post at exactly the stored\n timestamp is ignored while `rerequested_at` is set. A newer value always\n applies, including reopening a `completed` run. Values more than 60\n seconds in the future are rejected with INVALID_ARGUMENT."
-          format: date-time
-        startedAt:
-          type: string
-          description: "When the check run started. Values more than 60 seconds in the future\n are rejected with INVALID_ARGUMENT."
-          format: date-time
-        completedAt:
-          type: string
-          description: "When the check run completed. Must not precede `started_at` when both\n are posted together; values more than 60 seconds in the future are\n rejected with INVALID_ARGUMENT."
-          format: date-time
-        detailsUrl:
-          type: string
-          description: "Optional link to more detail about this specific check run (e.g. the\n provider's job/build URL)."
-        externalId:
-          type: string
-          description: "Provider-assigned immutable identity for this check attempt. Mint a new\n value per execution (a rerun is a new run for the same `key`; the latest\n attempt per `key` is what CI state, required checks and the default\n listings show, and earlier attempts stay as history). Reusing an\n `external_id` updates that run in place instead, which discards its\n previous result."
-        output:
-          allOf:
-          - $ref: '#/components/schemas/CheckRunOutput'
-          description: Human-readable output for this check run.
-        deadlineAt:
-          type: string
-          description: "Optional deadline. Omitted or unset means no expiration.\n Must not be more than 24 hours in the future. Only an `in_progress` run\n expires: once the deadline has passed, a periodic sweep completes it with\n the conclusion `timed_out` (setting `completed_at` if the run had none),\n so expiry lands some minutes after the deadline rather than at it — the\n sweep runs about every 30 minutes by default, an operational setting\n that may change. A `queued` run never expires, a `completed` post clears\n the deadline, and a later post with a newer `external_updated_at` still\n applies to a timed-out run."
-          format: date-time
-        isRerequestable:
-          type: boolean
-          description: "Declares that this run can be re-run on request. Setting this to true is\n a commitment: the app must subscribe to the\n `repository.check_run.rerequested` webhook event and respond to each\n delivery by posting a fresh run for the same head SHA and `key` — either\n a new run (new `external_id`, preserving the old attempt as history) or\n an update of the re-requested run (same `external_id`, refreshing it in\n place). Once a run is re-requested, it reads as pending in the commit's\n CI state until that fresh post arrives: a required check blocks merges\n and the pull request shows the run as awaiting its re-run, so declaring\n re-requestability without responding strands the check. Origin does not\n verify the subscription at post time.\n Omitted preserves the previously stored value (new runs default to\n false); an explicit value sets it, so a later post can withdraw the\n declaration."
-      description: "A single check run to report. Combined with `CheckSuiteInput`, this is\n upserted in one request."
-    ListBranchesResponse:
-      type: object
-      properties:
-        branches:
-          type: array
-          items:
-            $ref: '#/components/schemas/Branch'
-        nextPageToken:
-          type: string
-          description: Opaque cursor for the next page; empty when there are no more pages.
-    CodeownerApprovalBlocker:
-      type: object
-      properties:
-        requirements:
-          type: array
-          items:
-            $ref: '#/components/schemas/CodeownerRequirement'
-          x-cursor-visibility: PREVIEW
-      x-cursor-visibility: PREVIEW
-    CheckSuiteInput:
-      required:
-      - key
-      - name
-      - externalId
-      type: object
-      properties:
-        key:
-          type: string
-          description: Stable, app-chosen key identifying the logical suite across attempts.
-        name:
-          type: string
-          description: Human-facing suite name.
-        detailsUrl:
-          type: string
-          description: Optional link to more detail about the suite as a whole.
-        externalId:
-          type: string
-          description: Provider-assigned immutable identity for this suite attempt.
-    AppInstallation:
+    Ruleset:
       type: object
       properties:
         id:
           readOnly: true
           type: string
-          description: Globally unique installation identifier.
-        appId:
-          readOnly: true
+          description: Stable Origin ruleset id.
+        name:
           type: string
-          description: The installed app's identifier.
-        target:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/Owner'
-          description: Target owner entity the app is installed into.
-        createdAt:
-          readOnly: true
+        description:
           type: string
-          format: date-time
-        updatedAt:
-          readOnly: true
-          type: string
-          format: date-time
-        repoSelectionMode:
-          readOnly: true
+        enforcement:
           enum:
-          - all
-          - selected
+          - active
+          - evaluate
+          - disabled
           type: string
-          description: Whether the app can access all repos belonging to the owner, or only selected repos.
-        scopes:
-          readOnly: true
+        kind:
+          enum:
+          - merge_branch
+          - push_branch
+          - push_tag
+          - push_repository
+          type: string
+        includedRefNames:
           type: array
           items:
             type: string
-          description: "Scopes granted to this installation as catalog scope strings, e.g.\n \"repository:contents:read\"."
-        installedBy:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/OriginUserActor'
-          description: User who originally installed the app.
-        suspendedAt:
-          readOnly: true
-          type: string
-          description: Set while the installation is suspended; unset when it is active.
-          format: date-time
-        deletedAt:
-          readOnly: true
-          type: string
-          description: "When the installation was deleted. Set only on the `installation.deleted`\n webhook snapshot; a deleted installation no longer resolves through the\n API."
-          format: date-time
-      description: An installation of an Origin app into a target owner entity.
-    WebhookDelivery:
+          description: "Ref name patterns this ruleset includes. Supports globs and the tokens\n `~ALL` and `~DEFAULT_BRANCH`. Create/update reject more than 64 entries;\n list/get therefore never paginate this field."
+        excludedRefNames:
+          type: array
+          items:
+            type: string
+          description: "Ref name patterns this ruleset excludes. Same pattern language and 64-entry\n write cap as `included_ref_names`."
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RulesetRule'
+          description: "Protection rules in this ruleset. Create/update reject more than 20\n entries; list/get therefore never paginate this field."
+        bypassActors:
+          type: array
+          items:
+            $ref: '#/components/schemas/RulesetBypassActor'
+          description: "Bypass principals for this ruleset. Create/update reject more than 15\n entries; list/get therefore never paginate this field."
+      description: "A named bundle of branch, merge, and push protections for one repository.\n This is a stable caller-facing projection: repository coordinates live on\n the request path (and are hoisted once on list responses), not on each\n ruleset."
+    BatchRedeliverWebhookDeliveryResult:
       type: object
       properties:
-        id:
-          readOnly: true
+        deliveryId:
           type: string
-        event:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/WebhookEventReference'
-          description: The event this delivery carries.
-        installation:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/InstallationReference'
-          description: "The installation this delivery belongs to. `id` is the current active\n installation for the target owner; unset when none exists (possible only\n for app-targeted lifecycle events after an uninstall)."
-        createdAt:
-          readOnly: true
+          description: The requested delivery id, echoed verbatim.
+        outcome:
+          enum:
+          - queued
+          - already_in_flight
+          - not_found
           type: string
-          format: date-time
-        deliveredAt:
-          readOnly: true
-          type: string
-          description: "First 2xx from any attempt, automatic or manual. Set once, never cleared.\n Unset means the receiver has never acknowledged this delivery."
-          format: date-time
-        lastAttempt:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/WebhookDeliveryAttempt'
-          description: "The most recent HTTP attempt, when one exists: its response status code,\n latency, transport error, trigger, and time."
-      description: "A delivery obligation: one event owed to one app. Its id is the\n `webhook-id` header the receiver sees, stable across every attempt."
-    TransitionRepoMirrorResponse:
-      type: object
-      properties:
-        repository:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/Repo'
-          description: The repository, reflecting its transitioning mirror state.
-        job:
-          readOnly: true
-          allOf:
-          - $ref: '#/components/schemas/MirrorTransitionJob'
-          description: "The job tracking the transition. Poll it until it reaches a terminal\n status."
+          description: "The result for this id: `queued` (a send was created),\n `already_in_flight` (a send was already running; success, not an error),\n or `not_found`. `not_found` covers unknown ids, ids older than the 7-day\n retention window, and namespaces where the app is no longer installed."
+      description: The outcome for one requested delivery id.
     Content:
       type: object
       properties:
@@ -13528,213 +13287,147 @@ components:
             $ref: '#/components/schemas/Content'
           description: Immediate children when `type` is "dir".
       description: "Repository file or directory content.\n\n For a file (`type` = \"file\"): `encoding` and `content` are populated\n (base64). For a directory (`type` = \"dir\"): `entries` lists immediate\n children."
-    NamespaceListing:
+    GetRepoTarballResponse:
       type: object
       properties:
-        namespace:
-          $ref: '#/components/schemas/Owner'
-        viewerCanCreateRepositories:
+        downloadUrl:
+          readOnly: true
+          type: string
+          description: "Short-lived signed download URL, valid for 15 minutes. Empty when the\n REST response streams the archive inline (first request for this\n repository and commit)."
+        sha:
+          readOnly: true
+          type: string
+          description: Resolved commit object id (40- or 64-character hex).
+    GrepContentsResponse:
+      type: object
+      properties:
+        matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrepContentsMatch'
+          description: "The matching lines and their context lines. The order in which files and\n lines appear is unspecified and may differ between identical requests."
+        limitHit:
           type: boolean
-          description: "Whether `CreateRepo` in this namespace would pass authorization and the\n namespace owner's plan and settings checks for the caller."
-      description: A namespace in a `ListNamespaces` response, with what the caller may do in it.
-    NamespaceGrant:
+          description: "Whether the search reached `max_results`. Narrow `query`, `filter_path`,\n or the glob lists to search a smaller set of files."
+    Commit:
+      type: object
+      properties:
+        sha:
+          type: string
+          description: Full 40/64-char hex commit SHA.
+        commit:
+          allOf:
+          - $ref: '#/components/schemas/CommitDetail'
+          description: Git-object metadata (author, committer, message, tree).
+        parents:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitParent'
+        stats:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/CommitStats'
+          description: Aggregate diff stats. `GetCommit` only.
+      description: "A commit with identity fields (`sha`, `parents`) at the top level and\n git-object metadata nested under\n `commit`. File diffs live in the paginated `ListCommitFiles` collection."
+    ListPullRequestCommitsResponse:
+      type: object
+      properties:
+        commits:
+          type: array
+          items:
+            $ref: '#/components/schemas/Commit'
+        nextPageToken:
+          readOnly: true
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more commits.
+    OriginActor:
       type: object
       properties:
         user:
           $ref: '#/components/schemas/OriginUserActor'
-        group:
-          $ref: '#/components/schemas/OriginGroup'
-        teamGroup:
-          allOf:
-          - $ref: '#/components/schemas/OriginTeamGroup'
-          description: A built-in group of the owning team.
-        permission:
-          enum:
-          - PERMISSION_READ
-          - PERMISSION_CONTRIBUTOR
-          - PERMISSION_WRITE
-          - PERMISSION_ADMIN
-          - PERMISSION_CUSTOM
-          type: string
-          description: Permission the principal holds on every repository under the owner.
-      description: "One grant of access to an owner: the principal that holds it and the\n permission it confers on every repository under that owner. The principal is\n a user, a group, or one of the owning team's built-in groups (all team\n admins, or all team members). Grants to the built-in team groups are the\n team's default access to the owner and are set through\n `UpsertNamespaceGrant` and `DeleteNamespaceGrant` like any other grant."
-    StackShapeBlocker:
+        app:
+          $ref: '#/components/schemas/OriginAppActor'
+        serviceAccount:
+          $ref: '#/components/schemas/OriginServiceAccountActor'
+      description: A user, app, or service account that performed an externally visible action.
+    RulesetOriginRoleBypassActor:
       type: object
       properties:
-        reason:
+        role:
           enum:
-          - partially_merged
-          - cycle
-          - missing_parent
-          - cross_repository_parent
-          - base_branch_missing
+          - namespace_admin
+          - repository_admin
+          - repository_write
           type: string
-          x-cursor-visibility: PREVIEW
-        relatedPullRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/PullRequestReference'
-          description: Other pull requests involved, when the reason names any.
-          x-cursor-visibility: PREVIEW
-      x-cursor-visibility: PREVIEW
-    PullRequestVersion:
+      description: "Bypass granted to holders of a policy-backed Origin role. Payload role is\n one of `namespace_admin`, `repository_admin`, or `repository_write`."
+    MergePullRequestResponse:
       type: object
       properties:
-        number:
-          type: string
-          description: Monotonic version number within the change (1-based).
-        headSha:
-          type: string
-          description: Head commit SHA for this version.
-        baseSha:
-          type: string
-          description: "Base commit SHA this version is diffed against: the base branch tip as\n resolved when the version was recorded. It can lag the branch's current\n tip until the next head push or retarget."
-        createdAt:
-          type: string
-          description: When this version was created.
-          format: date-time
-      description: "A numbered revision of a change. A new version is recorded when the pull\n request's head is pushed or when it is retargeted to another base, each\n with its own head/base SHAs and diff stats. The base branch advancing on\n its own records nothing."
-    RepositoryMirror:
-      type: object
-      properties:
-        source:
-          readOnly: true
-          enum:
-          - github
-          type: string
-        sourceId:
+        mergeCommitSha:
           readOnly: true
           type: string
-          description: Opaque repository identifier assigned by the source.
-        status:
+          description: SHA of the merge commit written to the base branch.
+        mergedPullNumbers:
           readOnly: true
-          enum:
-          - inbound
-          - outbound
-          type: string
-          description: Effective direction during a transition, until cutover completes.
-      description: The external source and lifecycle state of a mirrored repository.
-    GrepContentsMatch:
-      type: object
-      properties:
-        path:
-          type: string
-          description: Path to the file, relative to the repository root.
-        lineNumber:
-          type: integer
-          description: One-based line number of this line within the file.
-          format: uint32
-        line:
-          type: string
-          description: The line's text, without its trailing line terminator.
-        kind:
-          enum:
-          - match
-          - context
-          type: string
-          description: Whether this line carries matches or was returned as context.
-        submatches:
-          type: array
-          items:
-            $ref: '#/components/schemas/GrepContentsSubmatch'
-          description: "Where the matches sit inside `line`. Always empty on a context line. When\n `limit_hit` is true, the last matching line may carry only some of its\n matches. Ranges that fall entirely past `line` are omitted; ranges that\n would extend past `line` are reduced to the bytes that remain."
-      description: "One line of a search result: either a line carrying matches or a line\n returned as context around one."
-    CreateCheckRunAnnotationsResponse:
-      type: object
-      properties:
-        annotations:
-          readOnly: true
-          type: array
-          items:
-            $ref: '#/components/schemas/CheckRunAnnotation'
-    PullRequestReview:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Stable Origin review identifier.
-        author:
-          allOf:
-          - $ref: '#/components/schemas/OriginActor'
-          description: The principal that authored the review.
-        verdict:
-          enum:
-          - approve
-          - request_changes
-          - comment
-          type: string
-        body:
-          type: string
-          description: Free-text review summary. Empty when the reviewer left no summary.
-        submittedAt:
-          type: string
-          description: When the review was submitted. Unset for an unsubmitted draft review.
-          format: date-time
-        pullRequestVersion:
-          allOf:
-          - $ref: '#/components/schemas/PullRequestVersion'
-          description: The pull request version and head SHA the verdict applies to.
-        dismissal:
-          allOf:
-          - $ref: '#/components/schemas/PullRequestReviewDismissal'
-          description: "Set once the review has been dismissed; absent while the verdict still\n counts toward the pull request's review state."
-      description: A pull request review.
-    CheckRunAnnotationLocation:
-      required:
-      - path
-      - startLine
-      - endLine
-      type: object
-      properties:
-        path:
-          type: string
-          description: 'Maximum UTF-8 size: 4096 bytes.'
-        startLine:
-          type: integer
-          format: int32
-        endLine:
-          type: integer
-          format: int32
-        columns:
-          $ref: '#/components/schemas/CheckRunAnnotationColumnRange'
-      description: "Optional source location for a check-run annotation. `path`, `start_line`,\n and `end_line` are required whenever the enclosing annotation supplies this\n message. `path` is canonical and repository-relative, lines and columns are\n positive 1-based inclusive coordinates, and `columns` is supported only for\n a single-line range."
-    PingWebhookRequest:
-      type: object
-      properties: {}
-    InstallationAccessToken:
-      type: object
-      properties:
-        token:
-          readOnly: true
-          type: string
-          description: "The installation access token. This is a secret credential; treat it like\n a password and do not log it."
-        expiresAt:
-          readOnly: true
-          type: string
-          description: "When the token expires: at most 15 minutes after creation, and no later\n than the app JWT that created it. Read this field rather than assuming a\n lifetime. Serialized as an RFC 3339 / ISO-8601 string in JSON."
-          format: date-time
-      description: A short-lived installation access token.
-    ListSshCertificateAuthoritiesResponse:
-      type: object
-      properties:
-        certificateAuthorities:
-          type: array
-          items:
-            $ref: '#/components/schemas/SshCertificateAuthority'
-          description: Every authority the owner trusts, newest first.
-        requireCertificates:
-          type: boolean
-          description: "Whether the owner requires SSH certificates; see\n `SetSshCertificateRequirement`."
-    BatchRedeliverWebhookDeliveriesRequest:
-      required:
-      - deliveryIds
-      type: object
-      properties:
-        deliveryIds:
           type: array
           items:
             type: string
-          description: "Deliveries to send again. At most 100 unique entries, matching the\n page_size ceiling on ListWebhookDeliveries. Duplicates are removed,\n keeping first-seen order. An empty list, or more than 100 unique\n entries, is a 400 InvalidArgument."
+          description: "Pull numbers (root-to-target order) transitioned to merged by this call.\n Empty when the prefix was already merged."
+        pullRequest:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/PullRequest'
+          description: The target pull request after the merge.
+    RulesetRuleInput:
+      required:
+      - ruleType
+      type: object
+      properties:
+        ruleType:
+          type: string
+          description: "Rule type string, for example `pull_request`, `require_status_checks`,\n `require_branch_up_to_date`, `deletion`, or `non_fast_forward`."
+        parameters:
+          type: object
+          description: Type-specific parameters as a JSON object. Shape depends on `rule_type`.
+      description: "Input for one rule when creating a ruleset. Does not include the\n server-assigned rule id."
+    CheckRunAnnotation:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        checkRunId:
+          readOnly: true
+          type: string
+        annotationLevel:
+          readOnly: true
+          enum:
+          - notice
+          - warning
+          - failure
+          type: string
+        message:
+          readOnly: true
+          type: string
+        title:
+          readOnly: true
+          type: string
+        rawDetails:
+          readOnly: true
+          type: string
+        createdAt:
+          readOnly: true
+          type: string
+          format: date-time
+        updatedAt:
+          readOnly: true
+          type: string
+          format: date-time
+        location:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/CheckRunAnnotationLocation'
+      description: Persisted append-only annotation. Non-inline annotations omit `location`.
     BatchGetContentsResult:
       type: object
       properties:
@@ -13749,306 +13442,130 @@ components:
           - $ref: '#/components/schemas/Content'
           description: "The path's content when `found` is true; unset otherwise. Uses the same\n representation as `GetContents`."
       description: The outcome for one requested path in a BatchGetContents response.
-    CommitSignature:
-      required:
-      - name
-      - email
+    ListReposResponse:
+      type: object
+      properties:
+        repositories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Repo'
+        nextPageToken:
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more pages.
+    PullRequestMergeability:
+      type: object
+      properties:
+        pullRequest:
+          allOf:
+          - $ref: '#/components/schemas/PullRequestReference'
+          description: The pull request the verdict is about.
+          x-cursor-visibility: PREVIEW
+        verdict:
+          enum:
+          - mergeable
+          - blocked
+          type: string
+          description: "Overall answer for every pull request in `evaluated_pull_requests`:\n `mergeable` means merging `pull_request` lands all of them (for a stacked\n pull request, the whole stack below it as well). Unrecognized values must\n be treated as `blocked`."
+          x-cursor-visibility: PREVIEW
+        blockers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PullRequestMergeabilityBlocker'
+          description: "Everything preventing the merge, ordered by the pull request they belong\n to (stack root first) and then by kind. Empty when `verdict` is\n `mergeable`. At most one blocker per pull request per kind, except\n `required_checks` (one per state) and `rule_failure` / `ruleset_error`\n (one per distinct message); the same kind can appear for different pull\n requests in the stack. Every blocker's `pull_request` is one of\n `evaluated_pull_requests`.\n\n New kinds are added over time. Decode with unknown values tolerated\n (`ignoreUnknownFields` in protobuf-es, `DiscardUnknown` in Go protojson):\n a blocker whose `kind` postdates your client then decodes with `kind`\n unset and `message` intact, and is still blocking. Strict decoders reject\n the whole response instead."
+          x-cursor-visibility: PREVIEW
+        evaluatedPullRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PullRequestReference'
+          description: "Pull requests a merge of `pull_request` would land, stack root first and\n ending with `pull_request`. Ancestors that already merged are not listed:\n they are history, not part of the evaluation. Exactly one element for an\n unstacked pull request."
+          x-cursor-visibility: PREVIEW
+        headSha:
+          type: string
+          description: Head commit of `pull_request` that was evaluated.
+          x-cursor-visibility: PREVIEW
+        baseRef:
+          type: string
+          description: "Branch the evaluated pull requests merge into: the stack root's base, not\n this pull request's own base when it is stacked."
+          x-cursor-visibility: PREVIEW
+        baseSha:
+          type: string
+          description: "Tip commit of `base_ref` at `evaluated_at`. A later push to `base_ref`\n may change the verdict. Empty when the base branch could not be\n determined (for example, an invalid stack)."
+          x-cursor-visibility: PREVIEW
+        evaluatedAt:
+          type: string
+          description: "When this result was evaluated. Changes after this time are not\n reflected; re-query to pick them up."
+          format: date-time
+          x-cursor-visibility: PREVIEW
+      description: Whether a pull request can be merged, and why not when it cannot.
+      x-cursor-visibility: PREVIEW
+    ListRepositoryGrantsResponse:
+      type: object
+      properties:
+        grants:
+          type: array
+          items:
+            $ref: '#/components/schemas/RepositoryGrant'
+          description: "Ordered by principal kind (groups, owning-team admins, owning-team\n members, users), then by id. Principals that no longer resolve to an active\n user, group, or owning team are omitted, so a page may hold fewer than\n `page_size` grants."
+        repository:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/RepositoryReference'
+          description: Repository shared by every grant in this response.
+        nextPageToken:
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more pages.
+    ListPullRequestsResponse:
+      type: object
+      properties:
+        pullRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PullRequest'
+        nextPageToken:
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more pages.
+    PullRequestComment:
+      type: object
+      properties:
+        id:
+          type: string
+        thread:
+          allOf:
+          - $ref: '#/components/schemas/CommentThread'
+          description: "The thread this comment belongs to, including its diff anchor and\n resolution state."
+        body:
+          type: string
+        author:
+          $ref: '#/components/schemas/OriginActor'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      description: A threaded comment on a pull request.
+    GitRef:
+      type: object
+      properties:
+        ref:
+          type: string
+          description: Full ref name, e.g. "refs/heads/main".
+        object:
+          allOf:
+          - $ref: '#/components/schemas/TaggedObject'
+          description: "Object this ref points at directly (unpeeled). For annotated tags,\n `object.type` is \"tag\" and `object.sha` is the tag object SHA."
+      description: A Git reference.
+    Branch:
       type: object
       properties:
         name:
           type: string
-        email:
-          type: string
-      description: Name and email recorded for a commit author or committer.
-    CommitFileChange:
-      required:
-      - path
-      type: object
-      properties:
-        path:
-          type: string
-          description: Repository-relative path using `/` separators, e.g. `docs/changelog.md`.
-        content:
-          type: string
-          description: "New file contents, encoded per `encoding`. Creates the file or replaces\n its contents."
-        delete:
-          type: boolean
-          description: "Removes the file. Must be `true` when set; removing a path that does not\n exist fails with FAILED_PRECONDITION."
-        encoding:
-          type: string
-          description: "Encoding of `content`: \"utf-8\" (default) or \"base64\". Ignored for\n `delete`."
-        mode:
-          type: string
-          description: "File mode for `content`: \"file\" (default), \"executable\", or \"symlink\",\n where the contents are the link target. Ignored for `delete`."
-      description: "One file change in a commit created from files. Exactly one of `content`\n and `delete` must be set."
-    CreateCommitFromFilesResponse:
-      type: object
-      properties:
-        sha:
-          type: string
-          description: SHA of the new commit, now the branch tip.
-        treeSha:
-          type: string
-          description: SHA of the new commit's root tree.
-        previousHeadSha:
-          type: string
-          description: Branch tip before the write; the new commit's parent.
-    GrepContentsSubmatch:
-      type: object
-      properties:
-        start:
-          type: integer
-          description: Byte offset of the first byte of the match within the line.
-          format: uint32
-        end:
-          type: integer
-          description: Byte offset one past the last byte of the match within the line.
-          format: uint32
-      description: One matched range of bytes inside a line.
-    GitTag:
-      type: object
-      properties:
-        sha:
-          type: string
-          description: Tag object SHA (hex).
-        tag:
-          type: string
-          description: Tag name, e.g. "v1.0".
-        message:
-          type: string
-          description: Tag message.
-        tagger:
+          description: Branch name without the "refs/heads/" prefix, e.g. "main".
+        commit:
           allOf:
-          - $ref: '#/components/schemas/CommitAuthor'
-          description: Tagger signature from the tag object.
-        object:
-          allOf:
-          - $ref: '#/components/schemas/TaggedObject'
-          description: Object this tag points at.
-      description: "An annotated Git tag object. Lightweight tags are refs only and are not\n returned by this API."
-    CommitFile:
-      type: object
-      properties:
-        filename:
-          type: string
-          description: New path of the file.
-        status:
-          type: string
-          description: One of "added", "removed", "modified", "renamed", or "copied".
-        additions:
-          type: integer
-          format: int32
-        deletions:
-          type: integer
-          format: int32
-        changes:
-          type: integer
-          description: '`additions + deletions`.'
-          format: int32
-        patch:
-          type: string
-          description: Unified diff patch for this file. Empty for binary files.
-        previousFilename:
-          type: string
-          description: Pre-rename path, set only when `status` is "renamed" or "copied".
-      description: A single file changed by a commit. Populated only on `GetCommit`.
-    RulesetUserBypassActor:
-      type: object
-      properties:
-        id:
-          type: string
-          description: "Numeric maindb user id, encoded as a decimal string. Internal upsert\n stamps the actor-registry id (`act_…`) from this value."
-      description: A user principal that may bypass ruleset enforcement.
-    GetRepoTarballResponse:
-      type: object
-      properties:
-        downloadUrl:
-          readOnly: true
-          type: string
-          description: "Short-lived signed download URL, valid for 15 minutes. Empty when the\n REST response streams the archive inline (first request for this\n repository and commit)."
-        sha:
-          readOnly: true
-          type: string
-          description: Resolved commit object id (40- or 64-character hex).
-    RulesetAppBypassActor:
-      type: object
-      properties:
-        id:
-          type: string
-          description: App id (`app_…`).
-      description: An app principal that may bypass ruleset enforcement.
-    ReviewCommentInput:
-      required:
-      - body
-      type: object
-      properties:
-        body:
-          type: string
-          description: Comment text. Must contain a non-whitespace character.
-        inline:
-          allOf:
-          - $ref: '#/components/schemas/InlineCommentAnchor'
-          description: Diff anchor for a new inline thread on the reviewed version's diff.
-        threadId:
-          type: string
-          description: "Existing thread id to reply to (general-discussion and inline threads\n alike). The reply stays hidden until the review publishes."
-        file:
-          allOf:
-          - $ref: '#/components/schemas/FileCommentAnchor'
-          description: "Anchor for a new file-level thread; the side is derived from the\n file's change kind."
-      description: "One comment filed with a review via `CreatePullRequestReview`. Targets the\n same shapes as `CreatePullRequestComment`: provide `thread_id` to reply to\n an existing thread, `inline` to open a new line-anchored thread on the\n reviewed version's diff, `file` to open a new file-level thread, or\n neither to open a new general-discussion thread. Every comment publishes\n with the review."
-    SshCertificateRequirement:
-      type: object
-      properties:
-        requireCertificates:
-          type: boolean
-      description: Whether an owner requires SSH certificates for git over SSH.
-    CodeownerRequirement:
-      type: object
-      properties:
-        owners:
-          type: array
-          items:
-            type: string
-          description: Code owners, any one of whom can satisfy the requirement.
-          x-cursor-visibility: PREVIEW
-        paths:
-          type: array
-          items:
-            type: string
-          description: Changed paths this owner set covers.
-          x-cursor-visibility: PREVIEW
-      description: One owner set that still needs an approval.
-      x-cursor-visibility: PREVIEW
-    CommitParent:
-      type: object
-      properties:
-        sha:
-          type: string
-      description: A parent commit reference. Only the SHA is exposed (URLs omitted).
-    ListPullRequestRequestedReviewersResponse:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/OriginUserActor'
-          description: Users whose review is currently requested.
-        groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/OriginGroup'
-          description: Groups whose review is currently requested.
-    SetPullRequestLabelsResponse:
-      type: object
-      properties:
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
-    PullRequest:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Stable Origin pull request identifier.
-        number:
-          type: string
-          description: Pull request number within its repository.
-        state:
-          type: string
-          description: '"open" or "closed". A draft is "open"; merged and closed pull requests are both "closed".'
-        draft:
-          type: boolean
-          description: Whether the pull request is still a draft.
-        merged:
-          type: boolean
-          description: Whether the pull request has been merged.
-        title:
-          type: string
-          description: Pull request title.
-        body:
-          type: string
-          description: Pull request description.
-        head:
-          allOf:
-          - $ref: '#/components/schemas/PullRequestRef'
-          description: The source side of the pull request - what is being merged in.
-        base:
-          allOf:
-          - $ref: '#/components/schemas/PullRequestRef'
-          description: The target side of the pull request — what it merges into.
-        author:
-          allOf:
-          - $ref: '#/components/schemas/OriginActor'
-          description: The principal that opened the pull request.
-        createdAt:
-          type: string
-          description: When the pull request was opened.
-          format: date-time
-        updatedAt:
-          type: string
-          description: When the pull request was last updated.
-          format: date-time
-        closedAt:
-          type: string
-          description: When the pull request was closed or merged; unset while open.
-          format: date-time
-        mergedAt:
-          type: string
-          description: When the pull request was merged; unset unless merged.
-          format: date-time
-        mergeCommitSha:
-          type: string
-          description: "SHA of the commit the merge wrote to the base branch; set once merged,\n unset before. The pre-merge preview is the `pull/<number>/merge` ref\n (see GetGitRef), a different commit."
-        additions:
-          type: integer
-          description: Lines added by the pull request's latest version.
-          format: int32
-        deletions:
-          type: integer
-          description: Lines deleted by the pull request's latest version.
-          format: int32
-        changedFiles:
-          type: integer
-          description: Files changed by the pull request's latest version.
-          format: int32
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
-          description: "Labels currently assigned to this pull request, sorted by name. Empty when\n none are assigned. A pull request can have at most 100 labels."
-        stack:
-          allOf:
-          - $ref: '#/components/schemas/PullRequestStackMembership'
-          description: Stack membership. Unset when the pull request is not part of a stack.
-        version:
-          allOf:
-          - $ref: '#/components/schemas/PullRequestVersion'
-          description: The pull request's latest version.
-      description: A pull request.
-    ListPullRequestCommentsResponse:
-      type: object
-      properties:
-        comments:
-          type: array
-          items:
-            $ref: '#/components/schemas/PullRequestComment'
-        pullRequest:
-          allOf:
-          - $ref: '#/components/schemas/PullRequestReference'
-          description: Pull request shared by every comment in this page.
-        nextPageToken:
-          type: string
-          description: Opaque cursor for the next page; empty when there are no more comments.
-    WebhookEventReference:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-      description: "The event a delivery carries. `type` is the subscription event type, e.g.\n `pull_request.created`; `id` is shared by every app's delivery of the same\n event."
+          - $ref: '#/components/schemas/BranchCommit'
+          description: The commit at the tip of the branch.
+      description: A repository branch and the commit at its tip.
     CommentThread:
       type: object
       properties:
@@ -14095,17 +13612,213 @@ components:
           type: string
           format: date-time
       description: "A pull request comment thread as stored: identity, the version it was\n filed against, its diff anchor, and resolution state.\n\n A thread takes one of three shapes: general discussion (no diff anchor),\n file-level (`path` and `side` set with no line range), or line-anchored\n (`path`, `side`, and `start_line` set, optionally with `end_line`)."
-    ListPullRequestFilesResponse:
+    InstallationAccessToken:
+      type: object
+      properties:
+        token:
+          readOnly: true
+          type: string
+          description: "The installation access token. This is a secret credential; treat it like\n a password and do not log it."
+        expiresAt:
+          readOnly: true
+          type: string
+          description: "When the token expires: at most 15 minutes after creation, and no later\n than the app JWT that created it. Read this field rather than assuming a\n lifetime. Serialized as an RFC 3339 / ISO-8601 string in JSON."
+          format: date-time
+      description: A short-lived installation access token.
+    CommitTree:
+      type: object
+      properties:
+        sha:
+          type: string
+      description: The git tree a commit points at.
+    RulesetBypassActor:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: Stable Origin id for this bypass actor row.
+        bypassMode:
+          enum:
+          - always
+          - pull_request_only
+          type: string
+        user:
+          $ref: '#/components/schemas/RulesetUserBypassActor'
+        team:
+          $ref: '#/components/schemas/RulesetTeamBypassActor'
+        app:
+          $ref: '#/components/schemas/RulesetAppBypassActor'
+        originRole:
+          $ref: '#/components/schemas/RulesetOriginRoleBypassActor'
+      description: "A principal that may bypass ruleset enforcement. Identity is a typed\n `actor` oneof (user, team, app, or Origin role), not a parallel kind enum\n plus opaque JSON payload."
+    InlineCommentAnchor:
+      required:
+      - path
+      - side
+      - startLine
+      type: object
+      properties:
+        path:
+          type: string
+          description: "File path in the pull request version's diff. The path must be part of\n that diff, on a side the file has content on; otherwise the request\n fails with INVALID_ARGUMENT. There is no fallback to a\n general-discussion comment."
+        side:
+          enum:
+          - left
+          - right
+          type: string
+          description: "Diff side of the anchor: `left` for the base version of the file,\n `right` for the head version."
+        startLine:
+          type: integer
+          description: "First 1-based line of the anchored range in the `side` version of the\n file. Any line of the file anchors, matching the review UI — the range\n is not restricted to the diff's hunks, but must not run past the end\n of the file."
+          format: uint32
+        endLine:
+          type: integer
+          description: "Inclusive last line of the anchored range. Must be greater than or\n equal to `start_line`. Omit for a single-line anchor."
+          format: uint32
+      description: "Diff anchor for a new line-anchored comment thread on a file in the pull\n request version's diff. `start_line` anchors to a line and `end_line`\n extends it to a range; for a comment on the whole file, use\n `FileCommentAnchor` instead."
+    BatchUpsertCheckRunsResponse:
+      type: object
+      properties:
+        checkSuite:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/CheckSuite'
+          description: The persisted suite shared by all returned check runs.
+        checkRuns:
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckRun'
+          description: 'Deprecated: read `results[].check_run`. Still populated, same order.'
+        results:
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckRunWriteResult'
+          description: "One result per posted `check_runs` element, in request order: the stored\n run and what this write did to it. A run whose post was ignored as stale\n or was unchanged is returned as it already was."
+    ListNamespacesResponse:
+      type: object
+      properties:
+        namespaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/NamespaceListing'
+        nextPageToken:
+          type: string
+          description: Opaque cursor for the next page; empty when there are no more pages.
+    AppInstallationRedirectUrisReplace:
+      type: object
+      properties:
+        installationRedirectUris:
+          type: array
+          items:
+            type: string
+          description: The app's complete new OAuth install callback allowlist.
+      description: Clean-replace wrapper for `UpdateAppRequest.installation_redirect_uris`.
+    CommitSignature:
+      required:
+      - name
+      - email
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      description: Name and email recorded for a commit author or committer.
+    OriginAppActor:
+      type: object
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+          description: "The app's registered display name, never empty when present. Omitted on\n payloads whose app could not be resolved and on the first-party Cursor\n facade actor."
+    BatchRedeliverWebhookDeliveriesResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchRedeliverWebhookDeliveryResult'
+          description: One result per unique requested delivery id, in first-seen request order.
+    CheckRunAnnotationColumnRange:
+      type: object
+      properties:
+        startColumn:
+          type: integer
+          format: int32
+        endColumn:
+          type: integer
+          format: int32
+      description: Optional paired columns for a single-line annotation range.
+    Blob:
+      type: object
+      properties:
+        sha:
+          type: string
+          description: Git blob object SHA (hex).
+        size:
+          type: integer
+          description: "Decoded content size in bytes. `int32` ensures REST JSON emits a number.\n The GetBlob size cap is 4 MiB."
+          format: int32
+        encoding:
+          type: string
+          description: Always "base64".
+        content:
+          type: string
+          description: "Base64-encoded blob contents wrapped at 60 characters per line, with a\n trailing newline."
+      description: A Git blob object.
+    GrepContentsMatch:
+      type: object
+      properties:
+        path:
+          type: string
+          description: Path to the file, relative to the repository root.
+        lineNumber:
+          type: integer
+          description: One-based line number of this line within the file.
+          format: uint32
+        line:
+          type: string
+          description: The line's text, without its trailing line terminator.
+        kind:
+          enum:
+          - match
+          - context
+          type: string
+          description: Whether this line carries matches or was returned as context.
+        submatches:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrepContentsSubmatch'
+          description: "Where the matches sit inside `line`. Always empty on a context line. When\n `limit_hit` is true, the last matching line may carry only some of its\n matches. Ranges that fall entirely past `line` are omitted; ranges that\n would extend past `line` are reduced to the bytes that remain."
+      description: "One line of a search result: either a line carrying matches or a line\n returned as context around one."
+    ListComparisonFilesResponse:
       type: object
       properties:
         files:
+          readOnly: true
           type: array
           items:
-            $ref: '#/components/schemas/PullRequestFile'
+            $ref: '#/components/schemas/CommitFile'
         nextPageToken:
           readOnly: true
           type: string
           description: Opaque cursor for the next page; empty when there are no more files.
+    ListRulesetsResponse:
+      type: object
+      properties:
+        rulesets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ruleset'
+        repository:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/RepositoryReference'
+          description: Repository shared by every ruleset in this response.
     PullRequestMergeabilityBlocker:
       type: object
       properties:
@@ -14159,16 +13872,395 @@ components:
           x-cursor-visibility: PREVIEW
       description: One condition preventing a merge.
       x-cursor-visibility: PREVIEW
-    ListReposResponse:
+    GitTag:
       type: object
       properties:
-        repositories:
+        sha:
+          type: string
+          description: Tag object SHA (hex).
+        tag:
+          type: string
+          description: Tag name, e.g. "v1.0".
+        message:
+          type: string
+          description: Tag message.
+        tagger:
+          allOf:
+          - $ref: '#/components/schemas/CommitAuthor'
+          description: Tagger signature from the tag object.
+        object:
+          allOf:
+          - $ref: '#/components/schemas/TaggedObject'
+          description: Object this tag points at.
+      description: "An annotated Git tag object. Lightweight tags are refs only and are not\n returned by this API."
+    PingWebhookRequest:
+      type: object
+      properties: {}
+    CheckRunAnnotationInput:
+      required:
+      - annotationLevel
+      - message
+      type: object
+      properties:
+        annotationLevel:
+          enum:
+          - notice
+          - warning
+          - failure
+          type: string
+        message:
+          type: string
+          description: "Non-empty annotation message. May contain Markdown.\n Maximum UTF-8 size: 65535 bytes."
+        title:
+          type: string
+          description: 'Optional title. Maximum length: 255 Unicode characters.'
+        rawDetails:
+          type: string
+          description: 'Optional raw detail text. Maximum UTF-8 size: 65535 bytes.'
+        location:
+          allOf:
+          - $ref: '#/components/schemas/CheckRunAnnotationLocation'
+          description: Omit for a general, non-inline annotation.
+      description: "Content fields follow common Checks API annotation semantics. Origin groups source\n coordinates in optional `location`, allowing run-level annotations to omit it."
+    RepositoryGrant:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/OriginUserActor'
+        group:
+          $ref: '#/components/schemas/OriginGroup'
+        teamGroup:
+          $ref: '#/components/schemas/OriginTeamGroup'
+        permission:
+          enum:
+          - read
+          - write
+          - admin
+          - custom
+          type: string
+      description: "A permission granted directly on a repository to one user, group, or\n owning-team group."
+    CheckSuiteInput:
+      required:
+      - key
+      - name
+      - externalId
+      type: object
+      properties:
+        key:
+          type: string
+          description: Stable, app-chosen key identifying the logical suite across attempts.
+        name:
+          type: string
+          description: Human-facing suite name.
+        detailsUrl:
+          type: string
+          description: Optional link to more detail about the suite as a whole.
+        externalId:
+          type: string
+          description: Provider-assigned immutable identity for this suite attempt.
+    SyncMirrorResponse:
+      type: object
+      properties:
+        synced:
+          type: boolean
+          description: "True when the sync target is known to be satisfied; false while the sync\n is still pending. Always present in JSON responses, mirroring the HTTP\n status (200 when true, 202 when false)."
+    AppDefaultScopesReplace:
+      type: object
+      properties:
+        scopes:
           type: array
           items:
-            $ref: '#/components/schemas/Repo'
+            type: string
+          description: The app's complete new set of default install scopes.
+      description: Clean-replace wrapper for `UpdateAppRequest.default_scopes`.
+    CommitFileChange:
+      required:
+      - path
+      type: object
+      properties:
+        path:
+          type: string
+          description: Repository-relative path using `/` separators, e.g. `docs/changelog.md`.
+        content:
+          type: string
+          description: "New file contents, encoded per `encoding`. Creates the file or replaces\n its contents."
+        delete:
+          type: boolean
+          description: "Removes the file. Must be `true` when set; removing a path that does not\n exist fails with FAILED_PRECONDITION."
+        encoding:
+          type: string
+          description: "Encoding of `content`: \"utf-8\" (default) or \"base64\". Ignored for\n `delete`."
+        mode:
+          type: string
+          description: "File mode for `content`: \"file\" (default), \"executable\", or \"symlink\",\n where the contents are the link target. Ignored for `delete`."
+      description: "One file change in a commit created from files. Exactly one of `content`\n and `delete` must be set."
+    AddPullRequestLabelsResponse:
+      type: object
+      properties:
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+    CheckRunReference:
+      type: object
+      properties:
+        id:
+          type: string
+          x-cursor-visibility: PREVIEW
+        name:
+          type: string
+          x-cursor-visibility: PREVIEW
+        checkSuite:
+          allOf:
+          - $ref: '#/components/schemas/CheckSuiteReference'
+          description: Suite the check run belongs to.
+          x-cursor-visibility: PREVIEW
+      description: "Identity and display coordinates of a check run, for embedding in resources\n that a `repository:checks` read does not gate. Everything else about the run\n (status, conclusion, output, details URL) is `GetCheckRun`."
+      x-cursor-visibility: PREVIEW
+    CheckSuite:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+          description: Server-assigned unique ID of the suite.
+        repository:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/RepositoryReference'
+          description: Repository the suite belongs to.
+        sha:
+          readOnly: true
+          type: string
+          description: Resolved head commit SHA the suite is attached to (lowercase hex).
+        key:
+          readOnly: true
+          type: string
+          description: App-chosen idempotency key for the suite.
+        name:
+          readOnly: true
+          type: string
+          description: Human-facing suite name.
+        detailsUrl:
+          readOnly: true
+          type: string
+          description: Link to more detail about the suite as a whole, if set.
+        createdAt:
+          readOnly: true
+          type: string
+          format: date-time
+        updatedAt:
+          readOnly: true
+          type: string
+          format: date-time
+        externalId:
+          readOnly: true
+          type: string
+          description: Provider-assigned immutable identity for this suite attempt.
+        actor:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/OriginActor'
+          description: Principal that produced the suite.
+      description: "A persisted check suite, as returned by `PostCheckRun`. All fields are\n server-owned; the writable shape is `CheckSuiteInput`.\n\n Each `(actor, key, external_id)` reported against a commit is one suite\n attempt. Where the API shows a commit's current suites\n (`ListCheckSuitesForCommit`, `ListCheckRunsForCommit`, and the pull\n request's CI state and required checks), the current attempt per\n `(actor, key)` is the one whose runs carry the newest\n `external_updated_at` (a suite with no runs ranks by its `created_at`);\n ties break by the suite's `created_at`, then its `id`, newest first.\n Superseded attempts stay readable by id."
+    InstallationReference:
+      type: object
+      properties:
+        id:
+          type: string
+        target:
+          allOf:
+          - $ref: '#/components/schemas/Owner'
+          description: Target owner entity the app is installed into.
+      description: "Stable identity for an app installation: the installation id plus the\n owner entity it is installed into, matching AppInstallation."
+    GetActiveMirrorTransitionJobResponse:
+      type: object
+      properties:
+        activeJob:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/MirrorTransitionJob'
+          description: "The currently active transition job. Absent when no transition is in\n progress."
+        lastJob:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/MirrorTransitionJob'
+          description: "The most recent job that reached a terminal status. Absent when the\n repository has never completed a transition."
+    RulesetAppBypassActor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: App id (`app_…`).
+      description: An app principal that may bypass ruleset enforcement.
+    PullRequestReference:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Immutable Origin change id.
+        number:
+          type: string
+        repository:
+          allOf:
+          - $ref: '#/components/schemas/RepositoryReference'
+          description: Repository reference for this pull request.
+      description: Stable identity and display coordinates for an Origin pull request.
+    NamespaceGrant:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/OriginUserActor'
+        group:
+          $ref: '#/components/schemas/OriginGroup'
+        teamGroup:
+          allOf:
+          - $ref: '#/components/schemas/OriginTeamGroup'
+          description: A built-in group of the owning team.
+        permission:
+          enum:
+          - PERMISSION_READ
+          - PERMISSION_CONTRIBUTOR
+          - PERMISSION_WRITE
+          - PERMISSION_ADMIN
+          - PERMISSION_CUSTOM
+          type: string
+          description: Permission the principal holds on every repository under the owner.
+      description: "One grant of access to an owner: the principal that holds it and the\n permission it confers on every repository under that owner. The principal is\n a user, a group, or one of the owning team's built-in groups (all team\n admins, or all team members). Grants to the built-in team groups are the\n team's default access to the owner and are set through\n `UpsertNamespaceGrant` and `DeleteNamespaceGrant` like any other grant."
+    OriginTeamGroup:
+      type: object
+      properties:
+        kind:
+          enum:
+          - members
+          - admins
+          type: string
+      description: "A fixed group of the team that owns a repository or an owner: every team\n member or every team admin. These are the owning team's default access\n shelves, granted on the resource itself; a repository's team-group grant is\n distinct from the one inherited from its owner."
+    WebhookDelivery:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          type: string
+        event:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/WebhookEventReference'
+          description: The event this delivery carries.
+        installation:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/InstallationReference'
+          description: "The installation this delivery belongs to. `id` is the current active\n installation for the target owner; unset when none exists (possible only\n for app-targeted lifecycle events after an uninstall)."
+        createdAt:
+          readOnly: true
+          type: string
+          format: date-time
+        deliveredAt:
+          readOnly: true
+          type: string
+          description: "First 2xx from any attempt, automatic or manual. Set once, never cleared.\n Unset means the receiver has never acknowledged this delivery."
+          format: date-time
+        lastAttempt:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/WebhookDeliveryAttempt'
+          description: "The most recent HTTP attempt, when one exists: its response status code,\n latency, transport error, trigger, and time."
+      description: "A delivery obligation: one event owed to one app. Its id is the\n `webhook-id` header the receiver sees, stable across every attempt."
+    RemovePullRequestLabelResponse:
+      type: object
+      properties:
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+    ListLabelsResponse:
+      type: object
+      properties:
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
         nextPageToken:
           type: string
-          description: Opaque cursor for the next page; empty when there are no more pages.
+          description: Opaque cursor for the next page. Empty when there are no more results.
+    BatchGetContentsResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchGetContentsResult'
+          description: One result per unique requested path, in first-seen request order.
+        resolvedCommitSha:
+          type: string
+          description: The commit SHA the `ref` resolved to.
+    CreateCommitFromFilesResponse:
+      type: object
+      properties:
+        sha:
+          type: string
+          description: SHA of the new commit, now the branch tip.
+        treeSha:
+          type: string
+          description: SHA of the new commit's root tree.
+        previousHeadSha:
+          type: string
+          description: Branch tip before the write; the new commit's parent.
+    PullRequestReview:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable Origin review identifier.
+        author:
+          allOf:
+          - $ref: '#/components/schemas/OriginActor'
+          description: The principal that authored the review.
+        verdict:
+          enum:
+          - approve
+          - request_changes
+          - comment
+          type: string
+        body:
+          type: string
+          description: Free-text review summary. Empty when the reviewer left no summary.
+        submittedAt:
+          type: string
+          description: When the review was submitted. Unset for an unsubmitted draft review.
+          format: date-time
+        pullRequestVersion:
+          allOf:
+          - $ref: '#/components/schemas/PullRequestVersion'
+          description: The pull request version and head SHA the verdict applies to.
+        dismissal:
+          allOf:
+          - $ref: '#/components/schemas/PullRequestReviewDismissal'
+          description: "Set once the review has been dismissed; absent while the verdict still\n counts toward the pull request's review state."
+      description: A pull request review.
+    CheckRunOutput:
+      type: object
+      properties:
+        title:
+          type: string
+          description: 'Short headline for the output. Maximum length: 255 characters.'
+        summary:
+          type: string
+          description: "Summary of the output. May contain Markdown.\n Maximum UTF-8 size: 65535 bytes."
+        text:
+          type: string
+          description: "Detailed output. May contain Markdown.\n Maximum UTF-8 size: 65535 bytes."
+      description: Human-readable output reported for a check run.
+    CodeownerApprovalBlocker:
+      type: object
+      properties:
+        requirements:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeownerRequirement'
+          x-cursor-visibility: PREVIEW
+      x-cursor-visibility: PREVIEW
     CheckRunWriteResult:
       type: object
       properties:
@@ -14187,113 +14279,18 @@ components:
           type: string
           description: "What this write did to `check_run`. `ignored_stale` and `unchanged` both\n return the stored run; only this field tells them apart."
       description: "One check-run write in a `BatchUpsertCheckRuns` response: the stored run\n after the call and what the write did to it."
-    ListPullRequestReviewsResponse:
-      type: object
-      properties:
-        reviews:
-          type: array
-          items:
-            $ref: '#/components/schemas/PullRequestReview'
-        pullRequest:
-          allOf:
-          - $ref: '#/components/schemas/PullRequestReference'
-          description: Pull request shared by every review in this page.
-        nextPageToken:
-          type: string
-          description: Opaque cursor for the next page; empty when there are no more reviews.
-    PullRequestMergeability:
-      type: object
-      properties:
-        pullRequest:
-          allOf:
-          - $ref: '#/components/schemas/PullRequestReference'
-          description: The pull request the verdict is about.
-          x-cursor-visibility: PREVIEW
-        verdict:
-          enum:
-          - mergeable
-          - blocked
-          type: string
-          description: "Overall answer for every pull request in `evaluated_pull_requests`:\n `mergeable` means merging `pull_request` lands all of them (for a stacked\n pull request, the whole stack below it as well). Unrecognized values must\n be treated as `blocked`."
-          x-cursor-visibility: PREVIEW
-        blockers:
-          type: array
-          items:
-            $ref: '#/components/schemas/PullRequestMergeabilityBlocker'
-          description: "Everything preventing the merge, ordered by the pull request they belong\n to (stack root first) and then by kind. Empty when `verdict` is\n `mergeable`. At most one blocker per pull request per kind, except\n `required_checks` (one per state) and `rule_failure` / `ruleset_error`\n (one per distinct message); the same kind can appear for different pull\n requests in the stack. Every blocker's `pull_request` is one of\n `evaluated_pull_requests`.\n\n New kinds are added over time. Decode with unknown values tolerated\n (`ignoreUnknownFields` in protobuf-es, `DiscardUnknown` in Go protojson):\n a blocker whose `kind` postdates your client then decodes with `kind`\n unset and `message` intact, and is still blocking. Strict decoders reject\n the whole response instead."
-          x-cursor-visibility: PREVIEW
-        evaluatedPullRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/PullRequestReference'
-          description: "Pull requests a merge of `pull_request` would land, stack root first and\n ending with `pull_request`. Ancestors that already merged are not listed:\n they are history, not part of the evaluation. Exactly one element for an\n unstacked pull request."
-          x-cursor-visibility: PREVIEW
-        headSha:
-          type: string
-          description: Head commit of `pull_request` that was evaluated.
-          x-cursor-visibility: PREVIEW
-        baseRef:
-          type: string
-          description: "Branch the evaluated pull requests merge into: the stack root's base, not\n this pull request's own base when it is stacked."
-          x-cursor-visibility: PREVIEW
-        baseSha:
-          type: string
-          description: "Tip commit of `base_ref` at `evaluated_at`. A later push to `base_ref`\n may change the verdict. Empty when the base branch could not be\n determined (for example, an invalid stack)."
-          x-cursor-visibility: PREVIEW
-        evaluatedAt:
-          type: string
-          description: "When this result was evaluated. Changes after this time are not\n reflected; re-query to pick them up."
-          format: date-time
-          x-cursor-visibility: PREVIEW
-      description: Whether a pull request can be merged, and why not when it cannot.
-      x-cursor-visibility: PREVIEW
-    CommitStats:
-      type: object
-      properties:
-        additions:
-          type: integer
-          format: int32
-        deletions:
-          type: integer
-          format: int32
-        total:
-          type: integer
-          description: '`additions + deletions`.'
-          format: int32
-      description: "Aggregate line stats for a commit's diff against its base. Populated only\n on `GetCommit`, not in list responses."
-    WebhookDeliveryAttempt:
+    Label:
       type: object
       properties:
         id:
-          readOnly: true
           type: string
-        deliveryId:
-          readOnly: true
+        name:
           type: string
-        trigger:
-          readOnly: true
-          enum:
-          - automatic
-          - manual
+        color:
           type: string
-        responseStatusCode:
-          readOnly: true
-          type: integer
-          description: Unset when the POST produced no HTTP response (transport error, timeout).
-          format: int32
-        latencyMs:
-          readOnly: true
-          type: integer
-          format: int32
-        errorMessage:
-          readOnly: true
+          description: Six-character hex color without a leading `#`.
+        description:
           type: string
-          description: Transport error detail when there was no HTTP response; empty otherwise.
-        attemptedAt:
-          readOnly: true
-          type: string
-          format: date-time
-      description: One HTTP POST of a delivery's payload to the app's webhook URL.
     ListCommitsResponse:
       type: object
       properties:
@@ -14304,16 +14301,19 @@ components:
         nextPageToken:
           type: string
           description: Opaque cursor for the next page; empty when there are no more pages.
-    PullRequestRef:
+    ParentPullRequestSelector:
       type: object
       properties:
-        ref:
+        number:
           type: string
-          description: The ref this side points at, as Origin records it.
-        sha:
+          description: Pull request number within the repository.
+        id:
           type: string
-          description: "Tip commit SHA of this side at the change's latest version. For `base`\n this is the version's `base_sha`, which can lag the branch's current tip\n (see `PullRequestVersion`)."
-      description: One side (head or base) of a change.
+          description: Pull request id, as returned in `pull_request.id`.
+        clear:
+          type: boolean
+          description: Removes the current stack parent. Only `true` is accepted.
+      description: "Names the stack parent of a pull request, or removes it. Exactly one member\n must be set; an empty selector, `clear: false`, or more than one member is\n rejected with INVALID_ARGUMENT."
   securitySchemes:
     bearerAuth:
       type: http

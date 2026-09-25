@@ -43,6 +43,8 @@ hosts:
   - Login
   - APIReference
   - Website
+  - TermsOfService
+  - PrivacyPolicy
   - Documentation
   - Blog
   - Pricing

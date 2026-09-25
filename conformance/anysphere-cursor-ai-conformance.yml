@@ -3,9 +3,9 @@ method: derived
 generator: derive-conformance.py
 source: openapi/ (1 document(s), 53 mutating operations)
 standards:
-- id: openapi-3.1
+- id: openapi-3.2
   conforms: true
-  evidence: the document declares 3.1.0
+  evidence: the document declares 3.2.0
 - id: oauth2
   conforms: false
   evidence: 'securitySchemes: bearerAuth (http)'

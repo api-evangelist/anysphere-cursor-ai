@@ -2,23 +2,15 @@ generated: '2026-09-25'
 method: derived
 generator: derive-data-model.py
 source:
-- openapi/anysphere-cursor-ai-openapi.yaml
+- openapi/anysphere-cursor-ai-originservice-api-openapi.yml
 notation: has_one = property $ref; has_many = array of $ref; belongs_to = <entity>_id field
 summary:
-  entities: 276
-  entities_in_spec: 276
-  relationships: 324
+  entities: 147
+  entities_in_spec: 147
+  relationships: 148
 entities:
-- name: AddAppInstallationRepositoriesRequest
-  fields: 3
-- name: AddAppSigningKeyRequest
-  fields: 2
-- name: AddPullRequestLabelsRequest
-  fields: 3
 - name: AddPullRequestLabelsResponse
   fields: 1
-- name: AddSshCertificateAuthorityRequest
-  fields: 3
 - name: App
   fields: 11
   description: An Origin app.
@@ -40,8 +32,6 @@ entities:
 - name: AppSigningKey
   fields: 2
   description: An app signing key. Only the key's identity is returned; the key material
-- name: BatchGetContentsRequest
-  fields: 3
 - name: BatchGetContentsResponse
   fields: 2
 - name: BatchGetContentsResult
@@ -54,8 +44,6 @@ entities:
 - name: BatchRedeliverWebhookDeliveryResult
   fields: 2
   description: The outcome for one requested delivery id.
-- name: BatchUpsertCheckRunsRequest
-  fields: 4
 - name: BatchUpsertCheckRunsResponse
   fields: 3
 - name: Blob
@@ -91,12 +79,6 @@ entities:
 - name: CheckRunReference
   fields: 3
   description: Identity and display coordinates of a check run, for embedding in resources
-- name: CheckRunRerequestedWebhookPayload
-  fields: 3
-  description: repository.check_run.rerequested webhook payload, delivered only to the app
-- name: CheckRunWebhookPayload
-  fields: 3
-  description: Committed snapshot for an Origin check-run lifecycle event.
 - name: CheckRunWriteResult
   fields: 2
   description: 'One check-run write in a `BatchUpsertCheckRuns` response: the stored run'
@@ -145,112 +127,20 @@ entities:
 - name: CommitTree
   fields: 1
   description: The git tree a commit points at.
-- name: CompareCommitsRequest
-  fields: 2
 - name: Content
   fields: 8
   description: Repository file or directory content.
-- name: CreateAppRequest
-  fields: 9
-- name: CreateCheckRunAnnotationsRequest
-  fields: 3
 - name: CreateCheckRunAnnotationsResponse
   fields: 1
-- name: CreateCommitFromFilesRequest
-  fields: 7
 - name: CreateCommitFromFilesResponse
   fields: 3
-- name: CreateGitRefRequest
-  fields: 3
-- name: CreateInstallationAccessTokenRequest
-  fields: 3
-- name: CreateLabelRequest
-  fields: 4
-- name: CreatePullRequestCommentRequest
-  fields: 7
-- name: CreatePullRequestRequest
-  fields: 7
-- name: CreatePullRequestReviewRequest
-  fields: 6
-- name: CreateRepoRequest
-  fields: 2
-- name: CreateRulesetRequest
-  fields: 9
-- name: DeleteAppInstallationRequest
-  fields: 1
-- name: DeleteGitRefRequest
-  fields: 2
-- name: DeleteLabelRequest
-  fields: 2
-- name: DeleteNamespaceGrantRequest
-  fields: 4
-- name: DeletePullRequestCommentRequest
-  fields: 2
-- name: DeleteRepositoryGrantRequest
-  fields: 4
-- name: DeleteRulesetRequest
-  fields: 2
-- name: DeleteSshCertificateAuthorityRequest
-  fields: 2
-- name: DetachRepoMirrorRequest
-  fields: 1
-- name: DismissPullRequestReviewRequest
-  fields: 4
 - name: FileCommentAnchor
   fields: 1
   description: Anchor for a new file-level comment thread on the whole file in the pull
-- name: ForceRepoMirrorCutoverRequest
-  fields: 1
-- name: GetActiveMirrorTransitionJobRequest
-  fields: 1
 - name: GetActiveMirrorTransitionJobResponse
-  fields: 2
-- name: GetAppInstallationRequest
-  fields: 1
-- name: GetAppRequest
-  fields: 1
-- name: GetAuthenticatedAppRequest
-  fields: 0
-- name: GetBlobRequest
-  fields: 2
-- name: GetCheckRunRequest
-  fields: 2
-- name: GetCheckSuiteRequest
-  fields: 2
-- name: GetCommitRequest
-  fields: 2
-- name: GetContentsRequest
-  fields: 3
-- name: GetGitCommitRequest
-  fields: 2
-- name: GetGitRefRequest
-  fields: 2
-- name: GetLabelRequest
-  fields: 2
-- name: GetMirrorTransitionJobRequest
-  fields: 2
-- name: GetMirroredRepoRequest
-  fields: 1
-- name: GetPullRequestCommentRequest
-  fields: 2
-- name: GetPullRequestMergeabilityRequest
-  fields: 3
-- name: GetPullRequestRequest
-  fields: 2
-- name: GetRateLimitRequest
-  fields: 0
-- name: GetRepoRequest
-  fields: 1
-- name: GetRepoTarballRequest
   fields: 2
 - name: GetRepoTarballResponse
   fields: 2
-- name: GetRulesetRequest
-  fields: 2
-- name: GetTagRequest
-  fields: 2
-- name: GetTreeRequest
-  fields: 3
 - name: GitCommit
   fields: 6
   description: A Git commit object.
@@ -273,8 +163,6 @@ entities:
 - name: GrepContentsMatch
   fields: 5
   description: 'One line of a search result: either a line carrying matches or a line'
-- name: GrepContentsRequest
-  fields: 12
 - name: GrepContentsResponse
   fields: 2
 - name: GrepContentsSubmatch
@@ -286,133 +174,67 @@ entities:
 - name: InstallationAccessToken
   fields: 2
   description: A short-lived installation access token.
-- name: InstallationCreatedWebhookPayload
-  fields: 2
-- name: InstallationDeletedWebhookPayload
-  fields: 2
 - name: InstallationReference
   fields: 2
   description: 'Stable identity for an app installation: the installation id plus the'
-- name: InstallationSuspendedWebhookPayload
-  fields: 2
-- name: InstallationUnsuspendedWebhookPayload
-  fields: 2
-- name: InstallationUpdatedWebhookPayload
-  fields: 2
 - name: Label
   fields: 4
-- name: ListAppInstallationRepositoriesRequest
-  fields: 3
 - name: ListAppInstallationRepositoriesResponse
   fields: 3
-- name: ListAppInstallationsRequest
-  fields: 2
 - name: ListAppInstallationsResponse
   fields: 2
-- name: ListBranchesRequest
-  fields: 3
 - name: ListBranchesResponse
   fields: 2
-- name: ListCheckRunAnnotationsRequest
-  fields: 4
 - name: ListCheckRunAnnotationsResponse
   fields: 2
-- name: ListCheckRunsForCommitRequest
-  fields: 6
 - name: ListCheckRunsForCommitResponse
   fields: 2
-- name: ListCheckRunsForSuiteRequest
-  fields: 4
 - name: ListCheckRunsForSuiteResponse
   fields: 2
-- name: ListCheckSuitesForCommitRequest
-  fields: 4
 - name: ListCheckSuitesForCommitResponse
   fields: 2
-- name: ListCommitFilesRequest
-  fields: 4
 - name: ListCommitFilesResponse
   fields: 2
-- name: ListCommitsRequest
-  fields: 4
 - name: ListCommitsResponse
   fields: 2
-- name: ListComparisonFilesRequest
-  fields: 4
 - name: ListComparisonFilesResponse
   fields: 2
-- name: ListLabelsRequest
-  fields: 3
 - name: ListLabelsResponse
-  fields: 2
-- name: ListMatchingGitRefsRequest
   fields: 2
 - name: ListMatchingGitRefsResponse
   fields: 1
-- name: ListNamespaceAppsRequest
-  fields: 3
 - name: ListNamespaceAppsResponse
   fields: 2
-- name: ListNamespaceGrantsRequest
-  fields: 3
 - name: ListNamespaceGrantsResponse
-  fields: 2
-- name: ListNamespacesRequest
   fields: 2
 - name: ListNamespacesResponse
   fields: 2
-- name: ListPullRequestCommentsRequest
-  fields: 7
 - name: ListPullRequestCommentsResponse
   fields: 3
-- name: ListPullRequestCommitsRequest
-  fields: 4
 - name: ListPullRequestCommitsResponse
   fields: 2
-- name: ListPullRequestFilesRequest
-  fields: 4
 - name: ListPullRequestFilesResponse
-  fields: 2
-- name: ListPullRequestLabelsRequest
   fields: 2
 - name: ListPullRequestLabelsResponse
   fields: 1
-- name: ListPullRequestRequestedReviewersRequest
-  fields: 2
 - name: ListPullRequestRequestedReviewersResponse
   fields: 2
-- name: ListPullRequestReviewsRequest
-  fields: 4
 - name: ListPullRequestReviewsResponse
   fields: 3
-- name: ListPullRequestsRequest
-  fields: 13
 - name: ListPullRequestsResponse
   fields: 2
-- name: ListReposRequest
-  fields: 4
 - name: ListReposResponse
   fields: 2
-- name: ListRepositoryGrantsRequest
-  fields: 3
 - name: ListRepositoryGrantsResponse
   fields: 3
-- name: ListRulesetsRequest
-  fields: 1
 - name: ListRulesetsResponse
   fields: 2
-- name: ListSshCertificateAuthoritiesRequest
-  fields: 1
 - name: ListSshCertificateAuthoritiesResponse
   fields: 2
-- name: ListWebhookDeliveriesRequest
-  fields: 7
 - name: ListWebhookDeliveriesResponse
   fields: 2
 - name: MergeConflictBlocker
   fields: 3
-- name: MergePullRequestRequest
-  fields: 4
 - name: MergePullRequestResponse
   fields: 3
 - name: MirrorTransitionJob
@@ -449,8 +271,6 @@ entities:
   fields: 0
 - name: PingWebhookResponse
   fields: 4
-- name: PostCheckRunRequest
-  fields: 4
 - name: PostCheckRunResponse
   fields: 3
   description: The pair `check_run` + `outcome` is the same per-run result a
@@ -460,24 +280,9 @@ entities:
 - name: PullRequestComment
   fields: 6
   description: A threaded comment on a pull request.
-- name: PullRequestCommentReaction
-  fields: 2
-  description: A reaction one principal placed on a pull request comment. A reactor holds
-- name: PullRequestCommentReactionWebhookPayload
-  fields: 3
-  description: A reaction added to or removed from a pull request comment. The envelope's
-- name: PullRequestCommentReference
-  fields: 2
-  description: Stable identity of a pull request comment and the thread that holds it.
-- name: PullRequestCommentWebhookPayload
-  fields: 2
-  description: A comment created on a pull request. Comments filed with a review are
 - name: PullRequestFile
   fields: 7
   description: A file changed in a pull request.
-- name: PullRequestLabelWebhookPayload
-  fields: 3
-  description: A change to the pull request's assigned labels. Read the current set with
 - name: PullRequestMergeability
   fields: 8
   description: Whether a pull request can be merged, and why not when it cannot.
@@ -490,32 +295,18 @@ entities:
 - name: PullRequestReference
   fields: 3
   description: Stable identity and display coordinates for an Origin pull request.
-- name: PullRequestRequestedReviewer
-  fields: 2
-  description: A user or group whose review has been requested on a pull request.
 - name: PullRequestReview
   fields: 7
   description: A pull request review.
 - name: PullRequestReviewDismissal
   fields: 3
   description: Records that a submitted review no longer counts toward the pull request's
-- name: PullRequestReviewWebhookPayload
-  fields: 2
-- name: PullRequestReviewerWebhookPayload
-  fields: 5
-  description: A change to the pull request's requested reviewers. Read the current pending
 - name: PullRequestStackMembership
   fields: 2
   description: 'Membership of a pull request in a stack: a chain of dependent pull requests'
 - name: PullRequestVersion
   fields: 4
   description: A numbered revision of a change. A new version is recorded when the pull
-- name: PullRequestWebhook
-  fields: 20
-  description: A pull request snapshot for webhook payloads. Assigned labels are omitted;
-- name: PullRequestWebhookPayload
-  fields: 2
-  description: A pull request lifecycle change. The lifecycle action is the envelope's
 - name: RateLimitResource
   fields: 4
   description: Point budget for one rate limit resource in the current window.
@@ -525,47 +316,20 @@ entities:
 - name: RateLimitStatus
   fields: 2
   description: Rate limit status for the authenticated principal.
-- name: RemoveAllPullRequestLabelsRequest
-  fields: 2
-- name: RemovePullRequestLabelRequest
-  fields: 3
 - name: RemovePullRequestLabelResponse
   fields: 1
-- name: RemovePullRequestRequestedReviewersRequest
-  fields: 4
 - name: Repo
   fields: 14
   description: A repository.
-- name: RepoIdentifier
-  fields: 2
-  description: Addresses a repository as `{owner_slug}/{name}` or `/_/{id}` (`_` is not
-- name: RepositoryCreatedWebhookPayload
-  fields: 1
-- name: RepositoryDeletedWebhookPayload
-  fields: 2
 - name: RepositoryGrant
   fields: 4
   description: A permission granted directly on a repository to one user, group, or
-- name: RepositoryMetadataUpdatedWebhookPayload
-  fields: 1
-  description: Carries the full repository snapshot with no delta and no updating actor.
 - name: RepositoryMirror
   fields: 3
   description: The external source and lifecycle state of a mirrored repository.
-- name: RepositoryPushCommit
-  fields: 4
-  description: Commit at the peeled tip of a pushed ref. The SHA may differ from the ref's
-- name: RepositoryPushRefUpdate
-  fields: 7
-  description: One ref update within an atomic repository push.
-- name: RepositoryPushWebhookPayload
-  fields: 5
-  description: One atomic push, which may update several refs. There is no commits array;
 - name: RepositoryReference
   fields: 3
   description: Stable identity and display coordinates for a repository.
-- name: RequestPullRequestReviewersRequest
-  fields: 4
 - name: RequiredApprovalsBlocker
   fields: 2
 - name: RequiredCheck
@@ -573,13 +337,9 @@ entities:
   description: A check a repository rule requires on the evaluated head.
 - name: RequiredChecksBlocker
   fields: 2
-- name: RerequestCheckRunRequest
-  fields: 2
 - name: ReviewCommentInput
   fields: 4
   description: One comment filed with a review via `CreatePullRequestReview`. Targets the
-- name: RevokeAppSigningKeyRequest
-  fields: 2
 - name: Ruleset
   fields: 9
   description: A named bundle of branch, merge, and push protections for one repository.
@@ -607,12 +367,8 @@ entities:
 - name: RulesetUserBypassActor
   fields: 1
   description: A user principal that may bypass ruleset enforcement.
-- name: SetPullRequestLabelsRequest
-  fields: 3
 - name: SetPullRequestLabelsResponse
   fields: 1
-- name: SetSshCertificateRequirementRequest
-  fields: 2
 - name: SshCertificateAuthority
   fields: 6
   description: 'An SSH certificate authority an owner trusts: user certificates it signs'
@@ -625,42 +381,12 @@ entities:
   fields: 3
   description: 'The canonical error envelope, after google.rpc.Status: a code, a developer-facing message, and typed
     details — google.rpc.BadRequest field violations for invalid arguments, and a google.rpc.RequestInf'
-- name: SyncMirrorRequest
-  fields: 4
 - name: SyncMirrorResponse
   fields: 1
 - name: TaggedObject
   fields: 2
   description: The git object an annotated tag points at.
-- name: ThreadReference
-  fields: 1
-  description: Stable identity of a pull request comment thread.
-- name: TransitionRepoMirrorRequest
-  fields: 2
 - name: TransitionRepoMirrorResponse
-  fields: 2
-- name: UpdateAppRequest
-  fields: 8
-- name: UpdateLabelRequest
-  fields: 5
-- name: UpdatePullRequestCommentRequest
-  fields: 3
-- name: UpdatePullRequestRequest
-  fields: 8
-- name: UpdatePullRequestReviewRequest
-  fields: 4
-- name: UpdatePullRequestThreadRequest
-  fields: 3
-- name: UpdateRepoRequest
-  fields: 6
-- name: UpdateRulesetRequest
-  fields: 10
-  description: Same configuration body as `CreateRulesetRequest`, plus the ruleset id on
-- name: UpsertNamespaceGrantRequest
-  fields: 5
-- name: UpsertRepositoryGrantRequest
-  fields: 5
-- name: WebhookApp
   fields: 2
 - name: WebhookDelivery
   fields: 6
@@ -671,82 +397,59 @@ entities:
 - name: WebhookEventReference
   fields: 2
   description: The event a delivery carries. `type` is the subscription event type, e.g.
-- name: WebhookInstallation
-  fields: 12
-  description: 'The installation snapshot delivered with `installation.*` events: the fields'
 relationships:
-- from: AddAppInstallationRepositoriesRequest
-  to: Repo
-  type: belongs_to
-  via: repoIds
-- from: AddAppSigningKeyRequest
-  to: App
-  type: belongs_to
-  via: appId
-- from: AddPullRequestLabelsRequest
-  to: RepoIdentifier
+- from: RulesetBypassActor
+  to: RulesetUserBypassActor
   type: has_one
-  via: identifier
-- from: AddPullRequestLabelsResponse
-  to: Label
+  via: user
+- from: RulesetBypassActor
+  to: RulesetTeamBypassActor
+  type: has_one
+  via: team
+- from: RulesetBypassActor
+  to: RulesetAppBypassActor
+  type: has_one
+  via: app
+- from: RulesetBypassActor
+  to: RulesetOriginRoleBypassActor
+  type: has_one
+  via: originRole
+- from: Ruleset
+  to: RulesetRule
   type: has_many
-  via: labels
-- from: AppInstallation
-  to: App
+  via: rules
+- from: Ruleset
+  to: RulesetBypassActor
+  type: has_many
+  via: bypassActors
+- from: ListCheckSuitesForCommitResponse
+  to: CheckSuite
+  type: has_many
+  via: checkSuites
+- from: CheckRunAnnotation
+  to: CheckRun
   type: belongs_to
-  via: appId
-- from: AppInstallation
-  to: Owner
+  via: checkRunId
+- from: CheckRunAnnotation
+  to: CheckRunAnnotationLocation
   type: has_one
-  via: target
-- from: AppInstallation
-  to: OriginUserActor
+  via: location
+- from: MergePullRequestResponse
+  to: PullRequest
   type: has_one
-  via: installedBy
-- from: BatchGetContentsRequest
-  to: RepoIdentifier
+  via: pullRequest
+- from: PullRequestStackMembership
+  to: PullRequestReference
   type: has_one
-  via: identifier
+  via: parentPullRequest
 - from: BatchGetContentsResponse
   to: BatchGetContentsResult
   type: has_many
   via: results
-- from: BatchGetContentsResult
-  to: Content
-  type: has_one
-  via: content
-- from: BatchRedeliverWebhookDeliveriesResponse
-  to: BatchRedeliverWebhookDeliveryResult
+- from: ListNamespaceAppsResponse
+  to: AppDisplayMetadata
   type: has_many
-  via: results
-- from: BatchUpsertCheckRunsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: BatchUpsertCheckRunsRequest
-  to: CheckSuiteInput
-  type: has_one
-  via: checkSuite
-- from: BatchUpsertCheckRunsRequest
-  to: CheckRunInput
-  type: has_many
-  via: checkRuns
-- from: BatchUpsertCheckRunsResponse
-  to: CheckSuite
-  type: has_one
-  via: checkSuite
-- from: BatchUpsertCheckRunsResponse
-  to: CheckRun
-  type: has_many
-  via: checkRuns
-- from: BatchUpsertCheckRunsResponse
-  to: CheckRunWriteResult
-  type: has_many
-  via: results
-- from: Branch
-  to: BranchCommit
-  type: has_one
-  via: commit
+  via: apps
 - from: CheckRun
   to: RepositoryReference
   type: has_one
@@ -767,58 +470,6 @@ relationships:
   to: OriginActor
   type: has_one
   via: rerequestedBy
-- from: CheckRunAnnotation
-  to: CheckRun
-  type: belongs_to
-  via: checkRunId
-- from: CheckRunAnnotation
-  to: CheckRunAnnotationLocation
-  type: has_one
-  via: location
-- from: CheckRunAnnotationInput
-  to: CheckRunAnnotationLocation
-  type: has_one
-  via: location
-- from: CheckRunAnnotationLocation
-  to: CheckRunAnnotationColumnRange
-  type: has_one
-  via: columns
-- from: CheckRunInput
-  to: CheckRunOutput
-  type: has_one
-  via: output
-- from: CheckRunReference
-  to: CheckSuiteReference
-  type: has_one
-  via: checkSuite
-- from: CheckRunRerequestedWebhookPayload
-  to: RepositoryReference
-  type: has_one
-  via: repository
-- from: CheckRunRerequestedWebhookPayload
-  to: CheckSuite
-  type: has_one
-  via: checkSuite
-- from: CheckRunRerequestedWebhookPayload
-  to: CheckRun
-  type: has_one
-  via: checkRun
-- from: CheckRunWebhookPayload
-  to: RepositoryReference
-  type: has_one
-  via: repository
-- from: CheckRunWebhookPayload
-  to: CheckSuite
-  type: has_one
-  via: checkSuite
-- from: CheckRunWebhookPayload
-  to: CheckRun
-  type: has_one
-  via: checkRun
-- from: CheckRunWriteResult
-  to: CheckRun
-  type: has_one
-  via: checkRun
 - from: CheckSuite
   to: RepositoryReference
   type: has_one
@@ -827,38 +478,10 @@ relationships:
   to: OriginActor
   type: has_one
   via: actor
-- from: CodeownerApprovalBlocker
-  to: CodeownerRequirement
-  type: has_many
-  via: requirements
-- from: CommentThread
-  to: PullRequestVersion
+- from: PullRequestReviewDismissal
+  to: OriginActor
   type: has_one
-  via: version
-- from: Commit
-  to: CommitDetail
-  type: has_one
-  via: commit
-- from: Commit
-  to: CommitParent
-  type: has_many
-  via: parents
-- from: Commit
-  to: CommitStats
-  type: has_one
-  via: stats
-- from: CommitComparison
-  to: Commit
-  type: has_one
-  via: baseCommit
-- from: CommitComparison
-  to: Commit
-  type: has_one
-  via: headCommit
-- from: CommitComparison
-  to: Commit
-  type: has_one
-  via: mergeBaseCommit
+  via: dismissedBy
 - from: CommitDetail
   to: CommitAuthor
   type: has_one
@@ -871,574 +494,26 @@ relationships:
   to: CommitTree
   type: has_one
   via: tree
-- from: CompareCommitsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: CreateCheckRunAnnotationsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: CreateCheckRunAnnotationsRequest
-  to: CheckRun
-  type: belongs_to
-  via: checkRunId
-- from: CreateCheckRunAnnotationsRequest
-  to: CheckRunAnnotationInput
-  type: has_many
-  via: annotations
-- from: CreateCheckRunAnnotationsResponse
-  to: CheckRunAnnotation
-  type: has_many
-  via: annotations
-- from: CreateCommitFromFilesRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: CreateCommitFromFilesRequest
-  to: CommitSignature
-  type: has_one
-  via: author
-- from: CreateCommitFromFilesRequest
-  to: CommitSignature
-  type: has_one
-  via: committer
-- from: CreateCommitFromFilesRequest
-  to: CommitFileChange
-  type: has_many
-  via: files
-- from: CreateGitRefRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: CreateLabelRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: CreatePullRequestCommentRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: CreatePullRequestCommentRequest
-  to: InlineCommentAnchor
-  type: has_one
-  via: inline
-- from: CreatePullRequestCommentRequest
-  to: FileCommentAnchor
-  type: has_one
-  via: file
-- from: CreatePullRequestRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: CreatePullRequestRequest
-  to: ParentPullRequestSelector
-  type: has_one
-  via: parentPullRequest
-- from: CreatePullRequestReviewRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: CreatePullRequestReviewRequest
-  to: ReviewCommentInput
-  type: has_many
-  via: comments
-- from: CreateRepoRequest
-  to: Repo
-  type: has_one
-  via: repo
-- from: CreateRulesetRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: CreateRulesetRequest
-  to: RulesetRuleInput
-  type: has_many
-  via: rules
-- from: CreateRulesetRequest
-  to: RulesetBypassActorInput
-  type: has_many
-  via: bypassActors
-- from: DeleteGitRefRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: DeleteLabelRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: DeleteNamespaceGrantRequest
-  to: OriginUserActor
-  type: has_one
-  via: user
-- from: DeleteNamespaceGrantRequest
-  to: OriginGroup
-  type: has_one
-  via: group
-- from: DeleteNamespaceGrantRequest
-  to: OriginTeamGroup
-  type: has_one
-  via: teamGroup
-- from: DeletePullRequestCommentRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: DeleteRepositoryGrantRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: DeleteRepositoryGrantRequest
-  to: OriginUserActor
-  type: has_one
-  via: user
-- from: DeleteRepositoryGrantRequest
-  to: OriginGroup
-  type: has_one
-  via: group
-- from: DeleteRepositoryGrantRequest
-  to: OriginTeamGroup
-  type: has_one
-  via: teamGroup
-- from: DeleteRulesetRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: DeleteRulesetRequest
-  to: Ruleset
-  type: belongs_to
-  via: rulesetId
-- from: DetachRepoMirrorRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: DismissPullRequestReviewRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ForceRepoMirrorCutoverRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetActiveMirrorTransitionJobRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetActiveMirrorTransitionJobResponse
-  to: MirrorTransitionJob
-  type: has_one
-  via: activeJob
-- from: GetActiveMirrorTransitionJobResponse
-  to: MirrorTransitionJob
-  type: has_one
-  via: lastJob
-- from: GetAppRequest
-  to: App
-  type: belongs_to
-  via: appId
-- from: GetBlobRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetCheckRunRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetCheckRunRequest
-  to: CheckRun
-  type: belongs_to
-  via: checkRunId
-- from: GetCheckSuiteRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetCheckSuiteRequest
-  to: CheckSuite
-  type: belongs_to
-  via: checkSuiteId
-- from: GetCommitRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetContentsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetGitCommitRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetGitRefRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetLabelRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetMirrorTransitionJobRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetPullRequestCommentRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetPullRequestMergeabilityRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetPullRequestRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetRepoRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetRepoTarballRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetRulesetRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetRulesetRequest
-  to: Ruleset
-  type: belongs_to
-  via: rulesetId
-- from: GetTagRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GetTreeRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GitCommit
-  to: CommitAuthor
-  type: has_one
-  via: author
-- from: GitCommit
-  to: CommitAuthor
-  type: has_one
-  via: committer
-- from: GitCommit
-  to: CommitTree
-  type: has_one
-  via: tree
-- from: GitCommit
-  to: CommitParent
-  type: has_many
-  via: parents
-- from: GitRef
-  to: TaggedObject
-  type: has_one
-  via: object
-- from: GitTag
-  to: CommitAuthor
-  type: has_one
-  via: tagger
-- from: GitTag
-  to: TaggedObject
-  type: has_one
-  via: object
-- from: GitTree
-  to: GitTreeEntry
-  type: has_many
-  via: tree
-- from: GrepContentsMatch
-  to: GrepContentsSubmatch
-  type: has_many
-  via: submatches
-- from: GrepContentsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: GrepContentsResponse
-  to: GrepContentsMatch
-  type: has_many
-  via: matches
-- from: InstallationCreatedWebhookPayload
-  to: WebhookInstallation
-  type: has_one
-  via: installation
-- from: InstallationCreatedWebhookPayload
-  to: WebhookApp
-  type: has_one
-  via: app
-- from: InstallationDeletedWebhookPayload
-  to: WebhookInstallation
-  type: has_one
-  via: installation
-- from: InstallationDeletedWebhookPayload
-  to: WebhookApp
-  type: has_one
-  via: app
-- from: InstallationReference
-  to: Owner
-  type: has_one
-  via: target
-- from: InstallationSuspendedWebhookPayload
-  to: WebhookInstallation
-  type: has_one
-  via: installation
-- from: InstallationSuspendedWebhookPayload
-  to: WebhookApp
-  type: has_one
-  via: app
-- from: InstallationUnsuspendedWebhookPayload
-  to: WebhookInstallation
-  type: has_one
-  via: installation
-- from: InstallationUnsuspendedWebhookPayload
-  to: WebhookApp
-  type: has_one
-  via: app
-- from: InstallationUpdatedWebhookPayload
-  to: WebhookInstallation
-  type: has_one
-  via: installation
-- from: InstallationUpdatedWebhookPayload
-  to: WebhookApp
-  type: has_one
-  via: app
-- from: ListAppInstallationRepositoriesResponse
-  to: Repo
-  type: has_many
-  via: repositories
-- from: ListAppInstallationsResponse
-  to: AppInstallation
-  type: has_many
-  via: installations
-- from: ListBranchesRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListBranchesResponse
-  to: Branch
-  type: has_many
-  via: branches
-- from: ListCheckRunAnnotationsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListCheckRunAnnotationsRequest
-  to: CheckRun
-  type: belongs_to
-  via: checkRunId
-- from: ListCheckRunAnnotationsResponse
-  to: CheckRunAnnotation
-  type: has_many
-  via: annotations
-- from: ListCheckRunsForCommitRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListCheckRunsForCommitResponse
-  to: CheckRun
-  type: has_many
-  via: checkRuns
-- from: ListCheckRunsForSuiteRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListCheckRunsForSuiteRequest
-  to: CheckSuite
-  type: belongs_to
-  via: checkSuiteId
-- from: ListCheckRunsForSuiteResponse
-  to: CheckRun
-  type: has_many
-  via: checkRuns
-- from: ListCheckSuitesForCommitRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListCheckSuitesForCommitResponse
-  to: CheckSuite
-  type: has_many
-  via: checkSuites
-- from: ListCommitFilesRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListCommitFilesResponse
-  to: CommitFile
-  type: has_many
-  via: files
-- from: ListCommitsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListCommitsResponse
-  to: Commit
-  type: has_many
-  via: commits
-- from: ListComparisonFilesRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListComparisonFilesResponse
-  to: CommitFile
-  type: has_many
-  via: files
-- from: ListLabelsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListLabelsResponse
-  to: Label
-  type: has_many
-  via: labels
-- from: ListMatchingGitRefsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListMatchingGitRefsResponse
-  to: GitRef
-  type: has_many
-  via: refs
-- from: ListNamespaceAppsResponse
-  to: AppDisplayMetadata
-  type: has_many
-  via: apps
-- from: ListNamespaceGrantsResponse
-  to: NamespaceGrant
-  type: has_many
-  via: grants
 - from: ListNamespacesResponse
   to: NamespaceListing
   type: has_many
   via: namespaces
-- from: ListPullRequestCommentsRequest
-  to: RepoIdentifier
+- from: Branch
+  to: BranchCommit
   type: has_one
-  via: identifier
-- from: ListPullRequestCommentsResponse
-  to: PullRequestComment
+  via: commit
+- from: ListCheckRunsForCommitResponse
+  to: CheckRun
   type: has_many
-  via: comments
-- from: ListPullRequestCommentsResponse
-  to: PullRequestReference
-  type: has_one
-  via: pullRequest
-- from: ListPullRequestCommitsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListPullRequestCommitsResponse
-  to: Commit
-  type: has_many
-  via: commits
-- from: ListPullRequestFilesRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListPullRequestFilesResponse
-  to: PullRequestFile
-  type: has_many
-  via: files
-- from: ListPullRequestLabelsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListPullRequestLabelsResponse
-  to: Label
-  type: has_many
-  via: labels
-- from: ListPullRequestRequestedReviewersRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListPullRequestRequestedReviewersResponse
-  to: OriginUserActor
-  type: has_many
-  via: users
-- from: ListPullRequestRequestedReviewersResponse
-  to: OriginGroup
-  type: has_many
-  via: groups
-- from: ListPullRequestReviewsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListPullRequestReviewsResponse
-  to: PullRequestReview
-  type: has_many
-  via: reviews
-- from: ListPullRequestReviewsResponse
-  to: PullRequestReference
-  type: has_one
-  via: pullRequest
-- from: ListPullRequestsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListPullRequestsResponse
-  to: PullRequest
-  type: has_many
-  via: pullRequests
-- from: ListReposResponse
-  to: Repo
-  type: has_many
-  via: repositories
-- from: ListRepositoryGrantsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListRepositoryGrantsResponse
-  to: RepositoryGrant
-  type: has_many
-  via: grants
-- from: ListRepositoryGrantsResponse
-  to: RepositoryReference
-  type: has_one
-  via: repository
-- from: ListRulesetsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: ListRulesetsResponse
-  to: Ruleset
-  type: has_many
-  via: rulesets
-- from: ListRulesetsResponse
-  to: RepositoryReference
-  type: has_one
-  via: repository
-- from: ListSshCertificateAuthoritiesResponse
-  to: SshCertificateAuthority
-  type: has_many
-  via: certificateAuthorities
-- from: ListWebhookDeliveriesResponse
-  to: WebhookDelivery
-  type: has_many
-  via: deliveries
-- from: MergePullRequestRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: MergePullRequestResponse
-  to: PullRequest
-  type: has_one
-  via: pullRequest
-- from: NamespaceGrant
-  to: OriginUserActor
-  type: has_one
-  via: user
-- from: NamespaceGrant
-  to: OriginGroup
-  type: has_one
-  via: group
-- from: NamespaceGrant
-  to: OriginTeamGroup
-  type: has_one
-  via: teamGroup
-- from: NamespaceListing
+  via: checkRuns
+- from: InstallationReference
   to: Owner
   type: has_one
-  via: namespace
+  via: target
+- from: RepositoryReference
+  to: Owner
+  type: has_one
+  via: owner
 - from: OriginActor
   to: OriginUserActor
   type: has_one
@@ -1451,18 +526,182 @@ relationships:
   to: OriginServiceAccountActor
   type: has_one
   via: serviceAccount
-- from: PostCheckRunRequest
-  to: RepoIdentifier
+- from: RateLimitStatus
+  to: RateLimitResources
   type: has_one
-  via: identifier
-- from: PostCheckRunRequest
-  to: CheckSuiteInput
+  via: resources
+- from: RateLimitStatus
+  to: RateLimitResource
   type: has_one
-  via: checkSuite
-- from: PostCheckRunRequest
-  to: CheckRunInput
+  via: rate
+- from: RulesetBypassActorInput
+  to: RulesetUserBypassActor
+  type: has_one
+  via: user
+- from: RulesetBypassActorInput
+  to: RulesetTeamBypassActor
+  type: has_one
+  via: team
+- from: RulesetBypassActorInput
+  to: RulesetAppBypassActor
+  type: has_one
+  via: app
+- from: RulesetBypassActorInput
+  to: RulesetOriginRoleBypassActor
+  type: has_one
+  via: originRole
+- from: ListCheckRunAnnotationsResponse
+  to: CheckRunAnnotation
+  type: has_many
+  via: annotations
+- from: ListPullRequestCommitsResponse
+  to: Commit
+  type: has_many
+  via: commits
+- from: Commit
+  to: CommitDetail
+  type: has_one
+  via: commit
+- from: Commit
+  to: CommitParent
+  type: has_many
+  via: parents
+- from: Commit
+  to: CommitStats
+  type: has_one
+  via: stats
+- from: ListCommitFilesResponse
+  to: CommitFile
+  type: has_many
+  via: files
+- from: ListNamespaceGrantsResponse
+  to: NamespaceGrant
+  type: has_many
+  via: grants
+- from: ListCheckRunsForSuiteResponse
+  to: CheckRun
+  type: has_many
+  via: checkRuns
+- from: GitTree
+  to: GitTreeEntry
+  type: has_many
+  via: tree
+- from: Repo
+  to: Owner
+  type: has_one
+  via: owner
+- from: Repo
+  to: RepositoryMirror
+  type: has_one
+  via: mirror
+- from: RequiredCheck
+  to: OriginActor
+  type: has_one
+  via: owner
+- from: RequiredCheck
+  to: CheckRunReference
   type: has_one
   via: checkRun
+- from: GitCommit
+  to: CommitAuthor
+  type: has_one
+  via: author
+- from: GitCommit
+  to: CommitAuthor
+  type: has_one
+  via: committer
+- from: GitCommit
+  to: CommitTree
+  type: has_one
+  via: tree
+- from: GitCommit
+  to: CommitParent
+  type: has_many
+  via: parents
+- from: BatchRedeliverWebhookDeliveriesResponse
+  to: BatchRedeliverWebhookDeliveryResult
+  type: has_many
+  via: results
+- from: RateLimitResources
+  to: RateLimitResource
+  type: has_one
+  via: core
+- from: GrepContentsResponse
+  to: GrepContentsMatch
+  type: has_many
+  via: matches
+- from: ListAppInstallationsResponse
+  to: AppInstallation
+  type: has_many
+  via: installations
+- from: AddPullRequestLabelsResponse
+  to: Label
+  type: has_many
+  via: labels
+- from: GetActiveMirrorTransitionJobResponse
+  to: MirrorTransitionJob
+  type: has_one
+  via: activeJob
+- from: GetActiveMirrorTransitionJobResponse
+  to: MirrorTransitionJob
+  type: has_one
+  via: lastJob
+- from: RemovePullRequestLabelResponse
+  to: Label
+  type: has_many
+  via: labels
+- from: ListRulesetsResponse
+  to: Ruleset
+  type: has_many
+  via: rulesets
+- from: ListRulesetsResponse
+  to: RepositoryReference
+  type: has_one
+  via: repository
+- from: ListComparisonFilesResponse
+  to: CommitFile
+  type: has_many
+  via: files
+- from: ListMatchingGitRefsResponse
+  to: GitRef
+  type: has_many
+  via: refs
+- from: CommitComparison
+  to: Commit
+  type: has_one
+  via: baseCommit
+- from: CommitComparison
+  to: Commit
+  type: has_one
+  via: headCommit
+- from: CommitComparison
+  to: Commit
+  type: has_one
+  via: mergeBaseCommit
+- from: Status
+  to: GoogleProtobufAny
+  type: has_many
+  via: details
+- from: ListAppInstallationRepositoriesResponse
+  to: Repo
+  type: has_many
+  via: repositories
+- from: RepositoryGrant
+  to: OriginUserActor
+  type: has_one
+  via: user
+- from: RepositoryGrant
+  to: OriginGroup
+  type: has_one
+  via: group
+- from: RepositoryGrant
+  to: OriginTeamGroup
+  type: has_one
+  via: teamGroup
+- from: PullRequestReference
+  to: RepositoryReference
+  type: has_one
+  via: repository
 - from: PostCheckRunResponse
   to: CheckSuite
   type: has_one
@@ -1471,6 +710,190 @@ relationships:
   to: CheckRun
   type: has_one
   via: checkRun
+- from: ListPullRequestsResponse
+  to: PullRequest
+  type: has_many
+  via: pullRequests
+- from: ListLabelsResponse
+  to: Label
+  type: has_many
+  via: labels
+- from: ListRepositoryGrantsResponse
+  to: RepositoryGrant
+  type: has_many
+  via: grants
+- from: ListRepositoryGrantsResponse
+  to: RepositoryReference
+  type: has_one
+  via: repository
+- from: CheckRunReference
+  to: CheckSuiteReference
+  type: has_one
+  via: checkSuite
+- from: CheckRunAnnotationInput
+  to: CheckRunAnnotationLocation
+  type: has_one
+  via: location
+- from: ListWebhookDeliveriesResponse
+  to: WebhookDelivery
+  type: has_many
+  via: deliveries
+- from: BatchUpsertCheckRunsResponse
+  to: CheckSuite
+  type: has_one
+  via: checkSuite
+- from: BatchUpsertCheckRunsResponse
+  to: CheckRun
+  type: has_many
+  via: checkRuns
+- from: BatchUpsertCheckRunsResponse
+  to: CheckRunWriteResult
+  type: has_many
+  via: results
+- from: ListPullRequestLabelsResponse
+  to: Label
+  type: has_many
+  via: labels
+- from: GitRef
+  to: TaggedObject
+  type: has_one
+  via: object
+- from: RequiredChecksBlocker
+  to: RequiredCheck
+  type: has_many
+  via: checks
+- from: PullRequestComment
+  to: CommentThread
+  type: has_one
+  via: thread
+- from: PullRequestComment
+  to: OriginActor
+  type: has_one
+  via: author
+- from: CheckRunInput
+  to: CheckRunOutput
+  type: has_one
+  via: output
+- from: ListBranchesResponse
+  to: Branch
+  type: has_many
+  via: branches
+- from: CodeownerApprovalBlocker
+  to: CodeownerRequirement
+  type: has_many
+  via: requirements
+- from: AppInstallation
+  to: App
+  type: belongs_to
+  via: appId
+- from: AppInstallation
+  to: Owner
+  type: has_one
+  via: target
+- from: AppInstallation
+  to: OriginUserActor
+  type: has_one
+  via: installedBy
+- from: WebhookDelivery
+  to: WebhookEventReference
+  type: has_one
+  via: event
+- from: WebhookDelivery
+  to: InstallationReference
+  type: has_one
+  via: installation
+- from: WebhookDelivery
+  to: WebhookDeliveryAttempt
+  type: has_one
+  via: lastAttempt
+- from: TransitionRepoMirrorResponse
+  to: Repo
+  type: has_one
+  via: repository
+- from: TransitionRepoMirrorResponse
+  to: MirrorTransitionJob
+  type: has_one
+  via: job
+- from: NamespaceListing
+  to: Owner
+  type: has_one
+  via: namespace
+- from: NamespaceGrant
+  to: OriginUserActor
+  type: has_one
+  via: user
+- from: NamespaceGrant
+  to: OriginGroup
+  type: has_one
+  via: group
+- from: NamespaceGrant
+  to: OriginTeamGroup
+  type: has_one
+  via: teamGroup
+- from: StackShapeBlocker
+  to: PullRequestReference
+  type: has_many
+  via: relatedPullRequests
+- from: GrepContentsMatch
+  to: GrepContentsSubmatch
+  type: has_many
+  via: submatches
+- from: CreateCheckRunAnnotationsResponse
+  to: CheckRunAnnotation
+  type: has_many
+  via: annotations
+- from: PullRequestReview
+  to: OriginActor
+  type: has_one
+  via: author
+- from: PullRequestReview
+  to: PullRequestVersion
+  type: has_one
+  via: pullRequestVersion
+- from: PullRequestReview
+  to: PullRequestReviewDismissal
+  type: has_one
+  via: dismissal
+- from: CheckRunAnnotationLocation
+  to: CheckRunAnnotationColumnRange
+  type: has_one
+  via: columns
+- from: ListSshCertificateAuthoritiesResponse
+  to: SshCertificateAuthority
+  type: has_many
+  via: certificateAuthorities
+- from: BatchGetContentsResult
+  to: Content
+  type: has_one
+  via: content
+- from: GitTag
+  to: CommitAuthor
+  type: has_one
+  via: tagger
+- from: GitTag
+  to: TaggedObject
+  type: has_one
+  via: object
+- from: ReviewCommentInput
+  to: InlineCommentAnchor
+  type: has_one
+  via: inline
+- from: ReviewCommentInput
+  to: FileCommentAnchor
+  type: has_one
+  via: file
+- from: ListPullRequestRequestedReviewersResponse
+  to: OriginUserActor
+  type: has_many
+  via: users
+- from: ListPullRequestRequestedReviewersResponse
+  to: OriginGroup
+  type: has_many
+  via: groups
+- from: SetPullRequestLabelsResponse
+  to: Label
+  type: has_many
+  via: labels
 - from: PullRequest
   to: PullRequestRef
   type: has_one
@@ -1495,66 +918,22 @@ relationships:
   to: PullRequestVersion
   type: has_one
   via: version
-- from: PullRequestComment
-  to: CommentThread
-  type: has_one
-  via: thread
-- from: PullRequestComment
-  to: OriginActor
-  type: has_one
-  via: author
-- from: PullRequestCommentReaction
-  to: OriginActor
-  type: has_one
-  via: reactor
-- from: PullRequestCommentReactionWebhookPayload
-  to: PullRequestReference
-  type: has_one
-  via: pullRequest
-- from: PullRequestCommentReactionWebhookPayload
-  to: PullRequestCommentReference
-  type: has_one
-  via: comment
-- from: PullRequestCommentReactionWebhookPayload
-  to: PullRequestCommentReaction
-  type: has_one
-  via: reaction
-- from: PullRequestCommentReference
-  to: ThreadReference
-  type: has_one
-  via: thread
-- from: PullRequestCommentWebhookPayload
-  to: PullRequestReference
-  type: has_one
-  via: pullRequest
-- from: PullRequestCommentWebhookPayload
+- from: ListPullRequestCommentsResponse
   to: PullRequestComment
-  type: has_one
-  via: comment
-- from: PullRequestLabelWebhookPayload
+  type: has_many
+  via: comments
+- from: ListPullRequestCommentsResponse
   to: PullRequestReference
   type: has_one
   via: pullRequest
-- from: PullRequestLabelWebhookPayload
-  to: Label
+- from: CommentThread
+  to: PullRequestVersion
   type: has_one
-  via: label
-- from: PullRequestLabelWebhookPayload
-  to: OriginActor
-  type: has_one
-  via: actor
-- from: PullRequestMergeability
-  to: PullRequestReference
-  type: has_one
-  via: pullRequest
-- from: PullRequestMergeability
-  to: PullRequestMergeabilityBlocker
+  via: version
+- from: ListPullRequestFilesResponse
+  to: PullRequestFile
   type: has_many
-  via: blockers
-- from: PullRequestMergeability
-  to: PullRequestReference
-  type: has_many
-  via: evaluatedPullRequests
+  via: files
 - from: PullRequestMergeabilityBlocker
   to: PullRequestReference
   type: has_one
@@ -1579,395 +958,35 @@ relationships:
   to: StackShapeBlocker
   type: has_one
   via: stackShape
-- from: PullRequestReference
-  to: RepositoryReference
-  type: has_one
-  via: repository
-- from: PullRequestRequestedReviewer
-  to: OriginUserActor
-  type: has_one
-  via: user
-- from: PullRequestRequestedReviewer
-  to: OriginGroup
-  type: has_one
-  via: group
-- from: PullRequestReview
-  to: OriginActor
-  type: has_one
-  via: author
-- from: PullRequestReview
-  to: PullRequestVersion
-  type: has_one
-  via: pullRequestVersion
-- from: PullRequestReview
-  to: PullRequestReviewDismissal
-  type: has_one
-  via: dismissal
-- from: PullRequestReviewDismissal
-  to: OriginActor
-  type: has_one
-  via: dismissedBy
-- from: PullRequestReviewWebhookPayload
-  to: PullRequestReference
-  type: has_one
-  via: pullRequest
-- from: PullRequestReviewWebhookPayload
-  to: PullRequestReview
-  type: has_one
-  via: review
-- from: PullRequestReviewerWebhookPayload
-  to: PullRequestReference
-  type: has_one
-  via: pullRequest
-- from: PullRequestReviewerWebhookPayload
-  to: PullRequestRequestedReviewer
-  type: has_one
-  via: reviewer
-- from: PullRequestReviewerWebhookPayload
-  to: OriginActor
-  type: has_one
-  via: createdBy
-- from: PullRequestStackMembership
-  to: PullRequestReference
-  type: has_one
-  via: parentPullRequest
-- from: PullRequestWebhook
-  to: PullRequestRef
-  type: has_one
-  via: head
-- from: PullRequestWebhook
-  to: PullRequestRef
-  type: has_one
-  via: base
-- from: PullRequestWebhook
-  to: OriginActor
-  type: has_one
-  via: author
-- from: PullRequestWebhook
-  to: PullRequestStackMembership
-  type: has_one
-  via: stack
-- from: PullRequestWebhook
-  to: PullRequestVersion
-  type: has_one
-  via: version
-- from: PullRequestWebhookPayload
-  to: PullRequestWebhook
-  type: has_one
-  via: pullRequest
-- from: PullRequestWebhookPayload
-  to: RepositoryReference
-  type: has_one
-  via: repository
-- from: RateLimitResources
-  to: RateLimitResource
-  type: has_one
-  via: core
-- from: RateLimitStatus
-  to: RateLimitResources
-  type: has_one
-  via: resources
-- from: RateLimitStatus
-  to: RateLimitResource
-  type: has_one
-  via: rate
-- from: RemoveAllPullRequestLabelsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: RemovePullRequestLabelRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: RemovePullRequestLabelResponse
-  to: Label
-  type: has_many
-  via: labels
-- from: RemovePullRequestRequestedReviewersRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: Repo
-  to: Owner
-  type: has_one
-  via: owner
-- from: Repo
-  to: RepositoryMirror
-  type: has_one
-  via: mirror
-- from: RepositoryCreatedWebhookPayload
+- from: ListReposResponse
   to: Repo
-  type: has_one
-  via: repository
-- from: RepositoryDeletedWebhookPayload
-  to: RepositoryReference
-  type: has_one
-  via: repository
-- from: RepositoryGrant
-  to: OriginUserActor
-  type: has_one
-  via: user
-- from: RepositoryGrant
-  to: OriginGroup
-  type: has_one
-  via: group
-- from: RepositoryGrant
-  to: OriginTeamGroup
-  type: has_one
-  via: teamGroup
-- from: RepositoryMetadataUpdatedWebhookPayload
-  to: Repo
-  type: has_one
-  via: repository
-- from: RepositoryPushCommit
-  to: CommitAuthor
-  type: has_one
-  via: author
-- from: RepositoryPushCommit
-  to: CommitAuthor
-  type: has_one
-  via: committer
-- from: RepositoryPushRefUpdate
-  to: RepositoryPushCommit
-  type: has_one
-  via: headCommit
-- from: RepositoryPushWebhookPayload
-  to: RepositoryReference
-  type: has_one
-  via: repository
-- from: RepositoryPushWebhookPayload
-  to: RepositoryPushRefUpdate
-  type: has_many
-  via: refUpdates
-- from: RepositoryPushWebhookPayload
-  to: OriginActor
-  type: has_one
-  via: pusher
-- from: RepositoryReference
-  to: Owner
-  type: has_one
-  via: owner
-- from: RequestPullRequestReviewersRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: RequiredCheck
-  to: OriginActor
-  type: has_one
-  via: owner
-- from: RequiredCheck
-  to: CheckRunReference
-  type: has_one
-  via: checkRun
-- from: RequiredChecksBlocker
-  to: RequiredCheck
-  type: has_many
-  via: checks
-- from: RerequestCheckRunRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: RerequestCheckRunRequest
-  to: CheckRun
-  type: belongs_to
-  via: checkRunId
-- from: ReviewCommentInput
-  to: InlineCommentAnchor
-  type: has_one
-  via: inline
-- from: ReviewCommentInput
-  to: FileCommentAnchor
-  type: has_one
-  via: file
-- from: RevokeAppSigningKeyRequest
-  to: App
-  type: belongs_to
-  via: appId
-- from: Ruleset
-  to: RulesetRule
-  type: has_many
-  via: rules
-- from: Ruleset
-  to: RulesetBypassActor
-  type: has_many
-  via: bypassActors
-- from: RulesetBypassActor
-  to: RulesetUserBypassActor
-  type: has_one
-  via: user
-- from: RulesetBypassActor
-  to: RulesetTeamBypassActor
-  type: has_one
-  via: team
-- from: RulesetBypassActor
-  to: RulesetAppBypassActor
-  type: has_one
-  via: app
-- from: RulesetBypassActor
-  to: RulesetOriginRoleBypassActor
-  type: has_one
-  via: originRole
-- from: RulesetBypassActorInput
-  to: RulesetUserBypassActor
-  type: has_one
-  via: user
-- from: RulesetBypassActorInput
-  to: RulesetTeamBypassActor
-  type: has_one
-  via: team
-- from: RulesetBypassActorInput
-  to: RulesetAppBypassActor
-  type: has_one
-  via: app
-- from: RulesetBypassActorInput
-  to: RulesetOriginRoleBypassActor
-  type: has_one
-  via: originRole
-- from: SetPullRequestLabelsRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: SetPullRequestLabelsResponse
-  to: Label
-  type: has_many
-  via: labels
-- from: StackShapeBlocker
-  to: PullRequestReference
-  type: has_many
-  via: relatedPullRequests
-- from: Status
-  to: GoogleProtobufAny
-  type: has_many
-  via: details
-- from: SyncMirrorRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: TransitionRepoMirrorRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: TransitionRepoMirrorResponse
-  to: Repo
-  type: has_one
-  via: repository
-- from: TransitionRepoMirrorResponse
-  to: MirrorTransitionJob
-  type: has_one
-  via: job
-- from: UpdateAppRequest
-  to: App
-  type: belongs_to
-  via: appId
-- from: UpdateAppRequest
-  to: AppEventsReplace
-  type: has_one
-  via: events
-- from: UpdateAppRequest
-  to: AppInstallationRedirectUrisReplace
-  type: has_one
-  via: installationRedirectUris
-- from: UpdateAppRequest
-  to: AppDefaultScopesReplace
-  type: has_one
-  via: defaultScopes
-- from: UpdateLabelRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: UpdatePullRequestCommentRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: UpdatePullRequestRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: UpdatePullRequestRequest
-  to: ParentPullRequestSelector
-  type: has_one
-  via: parentPullRequest
-- from: UpdatePullRequestReviewRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: UpdatePullRequestThreadRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: UpdateRepoRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: UpdateRulesetRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: UpdateRulesetRequest
-  to: Ruleset
-  type: belongs_to
-  via: rulesetId
-- from: UpdateRulesetRequest
-  to: RulesetRuleInput
-  type: has_many
-  via: rules
-- from: UpdateRulesetRequest
-  to: RulesetBypassActorInput
-  type: has_many
-  via: bypassActors
-- from: UpsertNamespaceGrantRequest
-  to: OriginUserActor
-  type: has_one
-  via: user
-- from: UpsertNamespaceGrantRequest
-  to: OriginGroup
-  type: has_one
-  via: group
-- from: UpsertNamespaceGrantRequest
-  to: OriginTeamGroup
-  type: has_one
-  via: teamGroup
-- from: UpsertRepositoryGrantRequest
-  to: RepoIdentifier
-  type: has_one
-  via: identifier
-- from: UpsertRepositoryGrantRequest
-  to: OriginUserActor
-  type: has_one
-  via: user
-- from: UpsertRepositoryGrantRequest
-  to: OriginGroup
-  type: has_one
-  via: group
-- from: UpsertRepositoryGrantRequest
-  to: OriginTeamGroup
-  type: has_one
-  via: teamGroup
-- from: WebhookDelivery
-  to: WebhookEventReference
-  type: has_one
-  via: event
-- from: WebhookDelivery
-  to: InstallationReference
-  type: has_one
-  via: installation
-- from: WebhookDelivery
-  to: WebhookDeliveryAttempt
-  type: has_one
-  via: lastAttempt
-- from: WebhookInstallation
-  to: App
-  type: belongs_to
-  via: appId
-- from: WebhookInstallation
-  to: Owner
-  type: has_one
-  via: target
-- from: WebhookInstallation
-  to: RepositoryReference
   type: has_many
   via: repositories
-- from: WebhookInstallation
-  to: OriginUserActor
+- from: CheckRunWriteResult
+  to: CheckRun
   type: has_one
-  via: installedBy
+  via: checkRun
+- from: ListPullRequestReviewsResponse
+  to: PullRequestReview
+  type: has_many
+  via: reviews
+- from: ListPullRequestReviewsResponse
+  to: PullRequestReference
+  type: has_one
+  via: pullRequest
+- from: PullRequestMergeability
+  to: PullRequestReference
+  type: has_one
+  via: pullRequest
+- from: PullRequestMergeability
+  to: PullRequestMergeabilityBlocker
+  type: has_many
+  via: blockers
+- from: PullRequestMergeability
+  to: PullRequestReference
+  type: has_many
+  via: evaluatedPullRequests
+- from: ListCommitsResponse
+  to: Commit
+  type: has_many
+  via: commits

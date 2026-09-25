@@ -1,19 +1,21 @@
 {
   "provider": "anysphere-cursor-ai",
   "sources": [
-    "anysphere-cursor-ai-openapi.yaml"
+    "_original/anysphere-cursor-ai-openapi.yaml"
   ],
   "outputs": [
     "anysphere-cursor-ai-originservice-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/anysphere-cursor-ai-openapi.yaml"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "anysphere-cursor-ai-openapi.yaml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "apis.yml register: written (+1 apis, 1 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "anysphere-cursor-ai-openapi.json: parse error ScannerError: mapping values are not allowed here",
+    "anysphere-cursor-ai-originservice-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

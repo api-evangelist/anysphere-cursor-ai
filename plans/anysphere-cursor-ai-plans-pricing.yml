@@ -1,32 +1,69 @@
 generated: '2026-09-25'
 method: searched
 generator: extract-docs-artifacts.py (local)
-source: https://cursor.com/docs/models-and-pricing
+source: https://cursor.com/pricing
 sources:
+- https://cursor.com/pricing
 - https://cursor.com/docs/models-and-pricing
 - https://cursor.com/docs/agent/plan-mode
 name: Anysphere Cursor Ai pricing
 audience: business-product
-pricing_basis: per-seat
+pricing_basis: negotiated
 plans:
+- name: Hobby
+  price_text: Free
+  description: For the tinkerer
+  features:
+  - No credit card required
+  - Limited Agent requests
+  - Access to Composer
+- name: Individual
+  price_text: $20 / mo.
+  price: 20
+  description: For the agent‑curious
+  features:
+  - Everything in Hobby
+  - Extended limits on Agent
+  - Generous limits for Grok
+  - Access to frontier models
+  - Grok Bot access
+  - MCPs, skills, and hooks
+  - Cloud agents
+  - Bugbot on usage‑based billing
+- name: Pro Teams
+  price_text: $40 / user / mo.
+  price: 40
+  description: For teams that ship together
+  features:
+  - Everything on Individual
+  - Centralized team billing and administration
+  - Team marketplace for internal rules, skills, and plugins
+  - Cloud agents and automations with shared team context
+  - Grok Bot access
+  - Agentic code reviews with Bugbot
+  - Usage analytics to understand team behavior
+  - Team‑wide privacy mode
+  - SAML/OIDC SSO
+- name: Enterprise
+  price_text: Custom
+  description: For scaled organizations
+  features:
+  - Everything on Teams
+  - Pooled usage
+  - Invoice/PO billing
+  - SCIM seat management
+  - Repository, model, and MCP access controls
+  - Auto‑run, browser, and network controls
+  - Audit logs and service accounts
+  - AI code tracking API
+  - Access, network, and audit controls for Grok Bot
+  - Priority support and account management
 - name: Start (India only)
   price_text: ₹649/mo, tax inclusive
-  price: 649
-  billing_period: monthly
-  description: Start plan for developers in India covering the Cursor Models pool and Cloud Agents.
-- name: Pro
-  price_text: $20/mo
-  price: 20
-  billing_period: monthly
-  description: Pro plan includes unlimited tab completions, extended agent usage limits, Bugbot, and Cloud Agents.
-- name: Pro Plus
-  price_text: $60/mo
-  price: 60
-  billing_period: monthly
-  description: Pro Plus plan includes unlimited tab completions, extended agent usage limits, Bugbot, and Cloud Agents.
-- name: Ultra
-  price_text: $200/mo
-  price: 200
-  billing_period: monthly
-  description: Ultra plan includes unlimited tab completions, extended agent usage limits, Bugbot, and Cloud Agents.
-docs: https://cursor.com/docs/models-and-pricing
+  description: Lower‑priced plan for developers in India
+  features:
+  - Generous usage of the Cursor Models pool
+  - Cloud Agents
+  - Cursor for iOS
+  - Plugins, MCP servers, hooks, and skills
+docs: https://cursor.com/pricing

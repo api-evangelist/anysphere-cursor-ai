@@ -26,6 +26,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/anysphere-cursor-ai-openapi-overlay.yml
 - type: AgenticAccess
   url: agentic-access/anysphere-cursor-ai-agentic-access.yml
 - type: Plans
@@ -80,6 +82,10 @@ common:
   url: security/anysphere-cursor-ai-domain-security.yml
 - type: Website
   url: https://cursor.com
+- type: TermsOfService
+  url: https://cursor.com/terms-of-service
+- type: PrivacyPolicy
+  url: https://cursor.com/privacy
 - type: Documentation
   url: https://cursor.com/docs
 - type: Blog
@@ -113,9 +119,17 @@ apis:
     url: json-schema/anysphere-cursor-ai-mirror-transition-job-schema.json
   - type: JSONSchema
     url: json-schema/anysphere-cursor-ai-repo-schema.json
+x-coverage:
+  state: unreadable
+  reason: js-rendered-docs
+  detail: Documentation pages render via JavaScript and no machine‑readable OpenAPI spec was found.
+  evidence:
+    - url: https://cursor.com/docs
+      status: 200
+  checked: 2026-09-25
 x-enrichment:
   date: '2026-09-25'
-  status: enriched
-  artifacts_added: 26
+  status: minimal
+  artifacts_added: 3
   pass: modular-v1
   engine: identity=local,contract=local,surfaces=local,docs=local

@@ -8,6 +8,11 @@ hosts:
   cert_expires: Nov 24 11:10:16 2026 GMT
   hsts: true
   hsts_max_age: 63072000
+- host: api.cursor.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Apr  4 23:59:59 2027 GMT
+  hsts: false
 domains:
 - domain: cursor.com
   dnssec: false

@@ -2,7 +2,7 @@ generated: '2026-09-25'
 method: derived
 generator: derive-problem-types.py
 source:
-- openapi/anysphere-cursor-ai-openapi.yaml
+- openapi/anysphere-cursor-ai-originservice-api-openapi.yml
 format: custom
 envelope:
   media_type: application/json
