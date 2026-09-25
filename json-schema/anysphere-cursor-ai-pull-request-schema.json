@@ -1,0 +1,318 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/anysphere-cursor-ai/main/json-schema/anysphere-cursor-ai-pull-request-schema.json",
+  "title": "PullRequest",
+  "description": "A pull request.",
+  "x-generated": "2026-09-25",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/PullRequest",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable Origin pull request identifier."
+    },
+    "number": {
+      "type": "string",
+      "description": "Pull request number within its repository."
+    },
+    "state": {
+      "type": "string",
+      "description": "\"open\" or \"closed\". A draft is \"open\"; merged and closed pull requests are both \"closed\"."
+    },
+    "draft": {
+      "type": "boolean",
+      "description": "Whether the pull request is still a draft."
+    },
+    "merged": {
+      "type": "boolean",
+      "description": "Whether the pull request has been merged."
+    },
+    "title": {
+      "type": "string",
+      "description": "Pull request title."
+    },
+    "body": {
+      "type": "string",
+      "description": "Pull request description."
+    },
+    "head": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/PullRequestRef"
+        }
+      ],
+      "description": "The source side of the pull request - what is being merged in."
+    },
+    "base": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/PullRequestRef"
+        }
+      ],
+      "description": "The target side of the pull request — what it merges into."
+    },
+    "author": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/OriginActor"
+        }
+      ],
+      "description": "The principal that opened the pull request."
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "When the pull request was opened.",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "When the pull request was last updated.",
+      "format": "date-time"
+    },
+    "closedAt": {
+      "type": "string",
+      "description": "When the pull request was closed or merged; unset while open.",
+      "format": "date-time"
+    },
+    "mergedAt": {
+      "type": "string",
+      "description": "When the pull request was merged; unset unless merged.",
+      "format": "date-time"
+    },
+    "mergeCommitSha": {
+      "type": "string",
+      "description": "SHA of the commit the merge wrote to the base branch; set once merged,\n unset before. The pre-merge preview is the `pull/<number>/merge` ref\n (see GetGitRef), a different commit."
+    },
+    "additions": {
+      "type": "integer",
+      "description": "Lines added by the pull request's latest version.",
+      "format": "int32"
+    },
+    "deletions": {
+      "type": "integer",
+      "description": "Lines deleted by the pull request's latest version.",
+      "format": "int32"
+    },
+    "changedFiles": {
+      "type": "integer",
+      "description": "Files changed by the pull request's latest version.",
+      "format": "int32"
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Label"
+      },
+      "description": "Labels currently assigned to this pull request, sorted by name. Empty when\n none are assigned. A pull request can have at most 100 labels."
+    },
+    "stack": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/PullRequestStackMembership"
+        }
+      ],
+      "description": "Stack membership. Unset when the pull request is not part of a stack."
+    },
+    "version": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/PullRequestVersion"
+        }
+      ],
+      "description": "The pull request's latest version."
+    }
+  },
+  "$defs": {
+    "Label": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string",
+          "description": "Six-character hex color without a leading `#`."
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "OriginActor": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/$defs/OriginUserActor"
+        },
+        "app": {
+          "$ref": "#/$defs/OriginAppActor"
+        },
+        "serviceAccount": {
+          "$ref": "#/$defs/OriginServiceAccountActor"
+        }
+      },
+      "description": "A user, app, or service account that performed an externally visible action."
+    },
+    "OriginAppActor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The app's registered display name, never empty when present. Omitted on\n payloads whose app could not be resolved and on the first-party Cursor\n facade actor."
+        }
+      }
+    },
+    "OriginServiceAccountActor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "OriginUserActor": {
+      "required": [
+        "email"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Human-readable display name: the account's first and last name, each\n trimmed, joined with a space — exactly the name the product UI renders.\n Omitted when the account has no name; never synthesized from the email,\n the id, or any other field. May also be absent on webhook payloads whose\n actor could not be resolved."
+        },
+        "handle": {
+          "type": "string",
+          "description": "The user's claimed profile handle (the identity behind cursor.com\n /@handle), without the @ prefix. Present only while the user's profile\n is publicly visible; omitted for users without a claimed handle and for\n non-public profiles."
+        }
+      }
+    },
+    "Owner": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "description": "Unique URL-friendly name of the owner."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique ID of the owner namespace."
+        },
+        "type": {
+          "readOnly": true,
+          "enum": [
+            "team",
+            "user"
+          ],
+          "type": "string",
+          "description": "`team` or `user`. Output-only; unset when unknown."
+        }
+      },
+      "description": "The owner of a repo."
+    },
+    "PullRequestRef": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "description": "The ref this side points at, as Origin records it."
+        },
+        "sha": {
+          "type": "string",
+          "description": "Tip commit SHA of this side at the change's latest version. For `base`\n this is the version's `base_sha`, which can lag the branch's current tip\n (see `PullRequestVersion`)."
+        }
+      },
+      "description": "One side (head or base) of a change."
+    },
+    "PullRequestReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Immutable Origin change id."
+        },
+        "number": {
+          "type": "string"
+        },
+        "repository": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/RepositoryReference"
+            }
+          ],
+          "description": "Repository reference for this pull request."
+        }
+      },
+      "description": "Stable identity and display coordinates for an Origin pull request."
+    },
+    "PullRequestStackMembership": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Stable stack identifier. Pass it as `stack_id` to `ListPullRequests` to\n list the stack's members."
+        },
+        "parentPullRequest": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/PullRequestReference"
+            }
+          ],
+          "description": "The pull request this one is stacked on. Unset for the root of the stack.\n A merged parent stays referenced until the child is retargeted or\n re-parented."
+        }
+      },
+      "description": "Membership of a pull request in a stack: a chain of dependent pull requests\n in one repository, each stacked on the one it builds upon."
+    },
+    "PullRequestVersion": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string",
+          "description": "Monotonic version number within the change (1-based)."
+        },
+        "headSha": {
+          "type": "string",
+          "description": "Head commit SHA for this version."
+        },
+        "baseSha": {
+          "type": "string",
+          "description": "Base commit SHA this version is diffed against: the base branch tip as\n resolved when the version was recorded. It can lag the branch's current\n tip until the next head push or retarget."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "When this version was created.",
+          "format": "date-time"
+        }
+      },
+      "description": "A numbered revision of a change. A new version is recorded when the pull\n request's head is pushed or when it is retargeted to another base, each\n with its own head/base SHAs and diff stats. The base branch advancing on\n its own records nothing."
+    },
+    "RepositoryReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        }
+      },
+      "description": "Stable identity and display coordinates for a repository."
+    }
+  }
+}

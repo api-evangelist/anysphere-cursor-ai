@@ -1,0 +1,63 @@
+generated: '2026-09-25'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/anysphere-cursor-ai-openapi.yaml
+format: custom
+envelope:
+  media_type: application/json
+  schema: Status
+coverage:
+  operations: 105
+  statuses_declared: 7
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad Request
+  operations: 104
+  media_types:
+  - application/json
+  schema: Status
+- status: 401
+  title: Unauthorized
+  description: Unauthorized
+  operations: 105
+  media_types:
+  - application/json
+  schema: Status
+- status: 403
+  title: Forbidden
+  description: Forbidden
+  operations: 104
+  media_types:
+  - application/json
+  schema: Status
+- status: 404
+  title: Not Found
+  description: The addressed resource, or its repository, does not exist or is not visible to the caller. Not-found
+    and no-access are deliberately indistin
+  operations: 98
+  media_types:
+  - application/json
+  schema: Status
+- status: 409
+  title: Conflict
+  description: The request conflicts with the current state of the resource.
+  operations: 20
+  media_types:
+  - application/json
+  schema: Status
+- status: 429
+  title: Too Many Requests
+  description: Too Many Requests
+  operations: 104
+  media_types:
+  - application/json
+  schema: Status
+- status: default
+  title: null
+  description: Default error response
+  operations: 105
+  media_types:
+  - application/json
+  schema: Status

@@ -1,0 +1,283 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/anysphere-cursor-ai/main/json-schema/anysphere-cursor-ai-check-run-schema.json",
+  "title": "CheckRun",
+  "description": "A persisted check run, as returned by `PostCheckRun`. All fields are\n server-owned; the writable shape is `CheckRunInput`.\n\n Each `(check_suite, key, external_id)` is one run attempt. Within a suite,\n the current attempt for a `key` — the one `ListCheckRunsForSuite`,\n `ListCheckRunsForCommit`, and the pull request's CI state and required\n checks use — is the run with the newest `external_updated_at`; ties break\n by `created_at`, then `id`, newest first. A run is current for its commit\n only when its suite is the commit's current suite attempt (see\n `CheckSuite`). Superseded attempts stay readable by id.",
+  "x-generated": "2026-09-25",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRun",
+  "type": "object",
+  "properties": {
+    "id": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Server-assigned unique ID of the check run."
+    },
+    "repository": {
+      "readOnly": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/RepositoryReference"
+        }
+      ],
+      "description": "Repository the check run belongs to."
+    },
+    "checkSuite": {
+      "readOnly": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/CheckSuiteReference"
+        }
+      ],
+      "description": "Suite this check run belongs to."
+    },
+    "sha": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Resolved head commit SHA the check run is attached to (lowercase hex)."
+    },
+    "key": {
+      "readOnly": true,
+      "type": "string",
+      "description": "App-chosen idempotency key for the check run."
+    },
+    "name": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Human-facing check-run name."
+    },
+    "status": {
+      "readOnly": true,
+      "enum": [
+        "queued",
+        "in_progress",
+        "completed",
+        "rerequested"
+      ],
+      "type": "string",
+      "description": "Lifecycle state. `rerequested` is a completed run whose re-run was\n requested and not yet answered by the owning app: pending for readers\n (render like `queued`), with `conclusion` and the timings still\n describing the superseded attempt. Set only by Origin on re-request\n (RerequestCheckRun); apps cannot post it."
+    },
+    "conclusion": {
+      "readOnly": true,
+      "enum": [
+        "success",
+        "failure",
+        "neutral",
+        "cancelled",
+        "skipped",
+        "timed_out",
+        "action_required",
+        "stale"
+      ],
+      "type": "string",
+      "description": "Present iff `status` is `completed` or `rerequested`. For a\n `rerequested` run it is the superseded attempt's verdict: treat the run\n as pending and read `conclusion` only when `status == completed`."
+    },
+    "detailsUrl": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Link to more detail about this specific check run, if set."
+    },
+    "externalUpdatedAt": {
+      "readOnly": true,
+      "type": "string",
+      "description": "The external system's last-update time used for ordering.",
+      "format": "date-time"
+    },
+    "startedAt": {
+      "readOnly": true,
+      "type": "string",
+      "description": "When the check run started, if reported.",
+      "format": "date-time"
+    },
+    "completedAt": {
+      "readOnly": true,
+      "type": "string",
+      "description": "When the check run completed, if reported.",
+      "format": "date-time"
+    },
+    "createdAt": {
+      "readOnly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "readOnly": true,
+      "type": "string",
+      "description": "When Origin last wrote the run. Not advanced by a post that was ignored\n as stale or that repeated the stored values (see\n `PostCheckRunResponse.outcome`), so it cannot tell those two apart.",
+      "format": "date-time"
+    },
+    "externalId": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Provider-assigned immutable identity for this check attempt (see\n `CheckRunInput.external_id`: one per execution is the recommended style)."
+    },
+    "actor": {
+      "readOnly": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/OriginActor"
+        }
+      ],
+      "description": "Principal that produced the check run; always the owning suite's `actor`."
+    },
+    "output": {
+      "readOnly": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/CheckRunOutput"
+        }
+      ],
+      "description": "Human-readable output for this check run, if set."
+    },
+    "deadlineAt": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Optional deadline. Omitted or unset means no expiration. Cleared when\n the run completes, including when it expires as `timed_out` (see\n `CheckRunInput.deadline_at`).",
+      "format": "date-time"
+    },
+    "isRerequestable": {
+      "readOnly": true,
+      "type": "boolean",
+      "description": "Whether the reporting app declared this run re-requestable\n (`CheckRunInput.is_rerequestable`)."
+    },
+    "rerequestedAt": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Set while a re-request is outstanding; cleared when the provider posts\n again. Unset means no re-request is pending. While set, `status` is\n `rerequested` and the run stays in the commit's CI state as pending\n (`conclusion` and the timings are the superseded result); the owning app\n answers by posting the run it committed to by declaring\n `is_rerequestable` — a new run for the same `key`, or an update of this\n run (which clears this field) — after which the run may be re-requested\n again.",
+      "format": "date-time"
+    },
+    "rerequestedBy": {
+      "readOnly": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/OriginActor"
+        }
+      ],
+      "description": "Principal that re-requested the run. Present iff `rerequested_at` is set;\n cleared together with it when the owning app answers."
+    }
+  },
+  "$defs": {
+    "CheckRunOutput": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short headline for the output. Maximum length: 255 characters."
+        },
+        "summary": {
+          "type": "string",
+          "description": "Summary of the output. May contain Markdown.\n Maximum UTF-8 size: 65535 bytes."
+        },
+        "text": {
+          "type": "string",
+          "description": "Detailed output. May contain Markdown.\n Maximum UTF-8 size: 65535 bytes."
+        }
+      },
+      "description": "Human-readable output reported for a check run."
+    },
+    "CheckSuiteReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "OriginActor": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/$defs/OriginUserActor"
+        },
+        "app": {
+          "$ref": "#/$defs/OriginAppActor"
+        },
+        "serviceAccount": {
+          "$ref": "#/$defs/OriginServiceAccountActor"
+        }
+      },
+      "description": "A user, app, or service account that performed an externally visible action."
+    },
+    "OriginAppActor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The app's registered display name, never empty when present. Omitted on\n payloads whose app could not be resolved and on the first-party Cursor\n facade actor."
+        }
+      }
+    },
+    "OriginServiceAccountActor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "OriginUserActor": {
+      "required": [
+        "email"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Human-readable display name: the account's first and last name, each\n trimmed, joined with a space — exactly the name the product UI renders.\n Omitted when the account has no name; never synthesized from the email,\n the id, or any other field. May also be absent on webhook payloads whose\n actor could not be resolved."
+        },
+        "handle": {
+          "type": "string",
+          "description": "The user's claimed profile handle (the identity behind cursor.com\n /@handle), without the @ prefix. Present only while the user's profile\n is publicly visible; omitted for users without a claimed handle and for\n non-public profiles."
+        }
+      }
+    },
+    "Owner": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "description": "Unique URL-friendly name of the owner."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique ID of the owner namespace."
+        },
+        "type": {
+          "readOnly": true,
+          "enum": [
+            "team",
+            "user"
+          ],
+          "type": "string",
+          "description": "`team` or `user`. Output-only; unset when unknown."
+        }
+      },
+      "description": "The owner of a repo."
+    },
+    "RepositoryReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        }
+      },
+      "description": "Stable identity and display coordinates for a repository."
+    }
+  }
+}

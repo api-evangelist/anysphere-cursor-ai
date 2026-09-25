@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/anysphere-cursor-ai/main/json-schema/anysphere-cursor-ai-check-run-input-schema.json",
+  "title": "CheckRunInput",
+  "description": "A single check run to report. Combined with `CheckSuiteInput`, this is\n upserted in one request.",
+  "x-generated": "2026-09-25",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/CheckRunInput",
+  "required": [
+    "key",
+    "name",
+    "status",
+    "externalUpdatedAt",
+    "externalId"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Stable, app-chosen key identifying the logical check across attempts."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-facing check-run name."
+    },
+    "status": {
+      "enum": [
+        "queued",
+        "in_progress",
+        "completed",
+        "rerequested"
+      ],
+      "type": "string",
+      "description": "Settable values: `queued`, `in_progress` or `completed`. `rerequested` is\n read-only — set only by Origin on re-request — and a post carrying it is\n rejected with INVALID_ARGUMENT."
+    },
+    "conclusion": {
+      "enum": [
+        "success",
+        "failure",
+        "neutral",
+        "cancelled",
+        "skipped",
+        "timed_out",
+        "action_required",
+        "stale"
+      ],
+      "type": "string",
+      "description": "Required iff `status == completed`."
+    },
+    "externalUpdatedAt": {
+      "type": "string",
+      "description": "The external system's last-update time for this run, at millisecond\n precision. Origin applies a post to an existing run (same `external_id`\n and `key` in the suite) only when this value is at or after the run's\n stored `external_updated_at`, raised to `rerequested_at` while a\n re-request is outstanding. An older value is ignored: the call still\n succeeds with the stored run and reports the outcome `ignored_stale`.\n Equal values apply (the later post wins), with two exceptions that are\n also ignored as stale: a `queued` or `in_progress` post cannot reopen a\n `completed` run at the same timestamp, and a post at exactly the stored\n timestamp is ignored while `rerequested_at` is set. A newer value always\n applies, including reopening a `completed` run. Values more than 60\n seconds in the future are rejected with INVALID_ARGUMENT.",
+      "format": "date-time"
+    },
+    "startedAt": {
+      "type": "string",
+      "description": "When the check run started. Values more than 60 seconds in the future\n are rejected with INVALID_ARGUMENT.",
+      "format": "date-time"
+    },
+    "completedAt": {
+      "type": "string",
+      "description": "When the check run completed. Must not precede `started_at` when both\n are posted together; values more than 60 seconds in the future are\n rejected with INVALID_ARGUMENT.",
+      "format": "date-time"
+    },
+    "detailsUrl": {
+      "type": "string",
+      "description": "Optional link to more detail about this specific check run (e.g. the\n provider's job/build URL)."
+    },
+    "externalId": {
+      "type": "string",
+      "description": "Provider-assigned immutable identity for this check attempt. Mint a new\n value per execution (a rerun is a new run for the same `key`; the latest\n attempt per `key` is what CI state, required checks and the default\n listings show, and earlier attempts stay as history). Reusing an\n `external_id` updates that run in place instead, which discards its\n previous result."
+    },
+    "output": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/CheckRunOutput"
+        }
+      ],
+      "description": "Human-readable output for this check run."
+    },
+    "deadlineAt": {
+      "type": "string",
+      "description": "Optional deadline. Omitted or unset means no expiration.\n Must not be more than 24 hours in the future. Only an `in_progress` run\n expires: once the deadline has passed, a periodic sweep completes it with\n the conclusion `timed_out` (setting `completed_at` if the run had none),\n so expiry lands some minutes after the deadline rather than at it — the\n sweep runs about every 30 minutes by default, an operational setting\n that may change. A `queued` run never expires, a `completed` post clears\n the deadline, and a later post with a newer `external_updated_at` still\n applies to a timed-out run.",
+      "format": "date-time"
+    },
+    "isRerequestable": {
+      "type": "boolean",
+      "description": "Declares that this run can be re-run on request. Setting this to true is\n a commitment: the app must subscribe to the\n `repository.check_run.rerequested` webhook event and respond to each\n delivery by posting a fresh run for the same head SHA and `key` — either\n a new run (new `external_id`, preserving the old attempt as history) or\n an update of the re-requested run (same `external_id`, refreshing it in\n place). Once a run is re-requested, it reads as pending in the commit's\n CI state until that fresh post arrives: a required check blocks merges\n and the pull request shows the run as awaiting its re-run, so declaring\n re-requestability without responding strands the check. Origin does not\n verify the subscription at post time.\n Omitted preserves the previously stored value (new runs default to\n false); an explicit value sets it, so a later post can withdraw the\n declaration."
+    }
+  },
+  "$defs": {
+    "CheckRunOutput": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short headline for the output. Maximum length: 255 characters."
+        },
+        "summary": {
+          "type": "string",
+          "description": "Summary of the output. May contain Markdown.\n Maximum UTF-8 size: 65535 bytes."
+        },
+        "text": {
+          "type": "string",
+          "description": "Detailed output. May contain Markdown.\n Maximum UTF-8 size: 65535 bytes."
+        }
+      },
+      "description": "Human-readable output reported for a check run."
+    }
+  }
+}

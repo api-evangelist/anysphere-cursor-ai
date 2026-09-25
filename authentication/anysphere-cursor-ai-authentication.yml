@@ -1,0 +1,20 @@
+generated: '2026-09-25'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://cursor.com/docs/account/enterprise/service-accounts
+sources:
+- https://cursor.com/docs/account/enterprise/service-accounts
+- https://cursor.com/docs/get-started/quickstart
+- https://cursor.com/docs/cloud-agent/setup
+description: Authentication for Cursor service accounts
+schemes:
+- type: http-bearer
+  name: Bearer
+  evidence: Service accounts authenticate using their API key. Use the key in the Authorization header when making requests to the Cloud Agents
+    API
+  location: header
+  header: Authorization
+  how_to_obtain: Create a service account in the Cursor Dashboard → Settings → API Keys → Service Accounts and copy the generated API key (shown
+    only once).
+note: No OAuth2 or other authentication schemes are documented on the provided pages.
+docs: https://cursor.com/docs/account/enterprise/service-accounts

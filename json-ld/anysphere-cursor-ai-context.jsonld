@@ -1,0 +1,794 @@
+{
+  "@context": {
+    "@vocab": "https://cursor.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "anysphere": "https://cursor.com/schema#",
+    "AddAppInstallationRepositoriesRequest": "anysphere:AddAppInstallationRepositoriesRequest",
+    "namespaceSlug": {
+      "@id": "anysphere:namespaceSlug",
+      "@type": "xsd:string"
+    },
+    "installationId": {
+      "@id": "anysphere:installationId",
+      "@type": "xsd:string"
+    },
+    "repoIds": {
+      "@id": "anysphere:repoIds",
+      "@container": "@list"
+    },
+    "AddAppSigningKeyRequest": "anysphere:AddAppSigningKeyRequest",
+    "appId": {
+      "@id": "anysphere:appId",
+      "@type": "xsd:string"
+    },
+    "publicKey": {
+      "@id": "anysphere:publicKey",
+      "@type": "xsd:string"
+    },
+    "AddPullRequestLabelsRequest": "anysphere:AddPullRequestLabelsRequest",
+    "identifier": {
+      "@id": "anysphere:identifier",
+      "@type": "@id"
+    },
+    "pullNumber": {
+      "@id": "anysphere:pullNumber",
+      "@type": "xsd:string"
+    },
+    "labels": {
+      "@id": "anysphere:labels",
+      "@container": "@list"
+    },
+    "AddPullRequestLabelsResponse": "anysphere:AddPullRequestLabelsResponse",
+    "AddSshCertificateAuthorityRequest": "anysphere:AddSshCertificateAuthorityRequest",
+    "ownerSlug": {
+      "@id": "anysphere:ownerSlug",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "anysphere:name",
+      "@type": "xsd:string"
+    },
+    "App": "anysphere:App",
+    "id": {
+      "@id": "anysphere:id",
+      "@type": "xsd:string"
+    },
+    "displayName": {
+      "@id": "anysphere:displayName",
+      "@type": "xsd:string"
+    },
+    "webhookUrl": {
+      "@id": "anysphere:webhookUrl",
+      "@type": "xsd:string"
+    },
+    "events": {
+      "@id": "anysphere:events",
+      "@container": "@list"
+    },
+    "createdAt": {
+      "@id": "anysphere:createdAt",
+      "@type": "xsd:dateTime"
+    },
+    "updatedAt": {
+      "@id": "anysphere:updatedAt",
+      "@type": "xsd:dateTime"
+    },
+    "installationRedirectUris": {
+      "@id": "anysphere:installationRedirectUris",
+      "@container": "@list"
+    },
+    "description": {
+      "@id": "anysphere:description",
+      "@type": "xsd:string"
+    },
+    "websiteUrl": {
+      "@id": "anysphere:websiteUrl",
+      "@type": "xsd:string"
+    },
+    "defaultScopes": {
+      "@id": "anysphere:defaultScopes",
+      "@container": "@list"
+    },
+    "AppDefaultScopesReplace": "anysphere:AppDefaultScopesReplace",
+    "scopes": {
+      "@id": "anysphere:scopes",
+      "@container": "@list"
+    },
+    "AppDisplayMetadata": "anysphere:AppDisplayMetadata",
+    "AppEventsReplace": "anysphere:AppEventsReplace",
+    "AppInstallation": "anysphere:AppInstallation",
+    "target": {
+      "@id": "anysphere:target"
+    },
+    "repoSelectionMode": {
+      "@id": "anysphere:repoSelectionMode",
+      "@type": "xsd:string"
+    },
+    "installedBy": {
+      "@id": "anysphere:installedBy"
+    },
+    "suspendedAt": {
+      "@id": "anysphere:suspendedAt",
+      "@type": "xsd:dateTime"
+    },
+    "deletedAt": {
+      "@id": "anysphere:deletedAt",
+      "@type": "xsd:dateTime"
+    },
+    "AppInstallationRedirectUrisReplace": "anysphere:AppInstallationRedirectUrisReplace",
+    "AppSigningKey": "anysphere:AppSigningKey",
+    "kid": {
+      "@id": "anysphere:kid",
+      "@type": "xsd:string"
+    },
+    "BatchGetContentsRequest": "anysphere:BatchGetContentsRequest",
+    "paths": {
+      "@id": "anysphere:paths",
+      "@container": "@list"
+    },
+    "ref": {
+      "@id": "anysphere:ref",
+      "@type": "xsd:string"
+    },
+    "BatchGetContentsResponse": "anysphere:BatchGetContentsResponse",
+    "results": {
+      "@id": "anysphere:results",
+      "@container": "@list"
+    },
+    "resolvedCommitSha": {
+      "@id": "anysphere:resolvedCommitSha",
+      "@type": "xsd:string"
+    },
+    "BatchGetContentsResult": "anysphere:BatchGetContentsResult",
+    "path": {
+      "@id": "anysphere:path",
+      "@type": "xsd:string"
+    },
+    "found": {
+      "@id": "anysphere:found",
+      "@type": "xsd:boolean"
+    },
+    "content": {
+      "@id": "anysphere:content"
+    },
+    "BatchRedeliverWebhookDeliveriesRequest": "anysphere:BatchRedeliverWebhookDeliveriesRequest",
+    "deliveryIds": {
+      "@id": "anysphere:deliveryIds",
+      "@container": "@list"
+    },
+    "BatchRedeliverWebhookDeliveriesResponse": "anysphere:BatchRedeliverWebhookDeliveriesResponse",
+    "BatchRedeliverWebhookDeliveryResult": "anysphere:BatchRedeliverWebhookDeliveryResult",
+    "deliveryId": {
+      "@id": "anysphere:deliveryId",
+      "@type": "xsd:string"
+    },
+    "outcome": {
+      "@id": "anysphere:outcome",
+      "@type": "xsd:string"
+    },
+    "BatchUpsertCheckRunsRequest": "anysphere:BatchUpsertCheckRunsRequest",
+    "headSha": {
+      "@id": "anysphere:headSha",
+      "@type": "xsd:string"
+    },
+    "checkSuite": {
+      "@id": "anysphere:checkSuite"
+    },
+    "checkRuns": {
+      "@id": "anysphere:checkRuns",
+      "@container": "@list"
+    },
+    "BatchUpsertCheckRunsResponse": "anysphere:BatchUpsertCheckRunsResponse",
+    "Blob": "anysphere:Blob",
+    "sha": {
+      "@id": "anysphere:sha",
+      "@type": "xsd:string"
+    },
+    "size": {
+      "@id": "anysphere:size",
+      "@type": "xsd:integer"
+    },
+    "encoding": {
+      "@id": "anysphere:encoding",
+      "@type": "xsd:string"
+    },
+    "Branch": "anysphere:Branch",
+    "commit": {
+      "@id": "anysphere:commit"
+    },
+    "BranchCommit": "anysphere:BranchCommit",
+    "CheckRun": "anysphere:CheckRun",
+    "repository": {
+      "@id": "anysphere:repository"
+    },
+    "key": {
+      "@id": "anysphere:key",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "anysphere:status",
+      "@type": "xsd:string"
+    },
+    "conclusion": {
+      "@id": "anysphere:conclusion",
+      "@type": "xsd:string"
+    },
+    "detailsUrl": {
+      "@id": "anysphere:detailsUrl",
+      "@type": "xsd:string"
+    },
+    "externalUpdatedAt": {
+      "@id": "anysphere:externalUpdatedAt",
+      "@type": "xsd:dateTime"
+    },
+    "startedAt": {
+      "@id": "anysphere:startedAt",
+      "@type": "xsd:dateTime"
+    },
+    "completedAt": {
+      "@id": "anysphere:completedAt",
+      "@type": "xsd:dateTime"
+    },
+    "externalId": {
+      "@id": "anysphere:externalId",
+      "@type": "xsd:string"
+    },
+    "actor": {
+      "@id": "anysphere:actor"
+    },
+    "output": {
+      "@id": "anysphere:output"
+    },
+    "deadlineAt": {
+      "@id": "anysphere:deadlineAt",
+      "@type": "xsd:dateTime"
+    },
+    "isRerequestable": {
+      "@id": "anysphere:isRerequestable",
+      "@type": "xsd:boolean"
+    },
+    "rerequestedAt": {
+      "@id": "anysphere:rerequestedAt",
+      "@type": "xsd:dateTime"
+    },
+    "rerequestedBy": {
+      "@id": "anysphere:rerequestedBy"
+    },
+    "CheckRunAnnotation": "anysphere:CheckRunAnnotation",
+    "checkRunId": {
+      "@id": "anysphere:checkRunId",
+      "@type": "xsd:string"
+    },
+    "annotationLevel": {
+      "@id": "anysphere:annotationLevel",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "anysphere:message",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "anysphere:title",
+      "@type": "xsd:string"
+    },
+    "rawDetails": {
+      "@id": "anysphere:rawDetails",
+      "@type": "xsd:string"
+    },
+    "location": {
+      "@id": "anysphere:location"
+    },
+    "CheckRunAnnotationColumnRange": "anysphere:CheckRunAnnotationColumnRange",
+    "startColumn": {
+      "@id": "anysphere:startColumn",
+      "@type": "xsd:integer"
+    },
+    "endColumn": {
+      "@id": "anysphere:endColumn",
+      "@type": "xsd:integer"
+    },
+    "CheckRunAnnotationInput": "anysphere:CheckRunAnnotationInput",
+    "CheckRunAnnotationLocation": "anysphere:CheckRunAnnotationLocation",
+    "startLine": {
+      "@id": "anysphere:startLine",
+      "@type": "xsd:integer"
+    },
+    "endLine": {
+      "@id": "anysphere:endLine",
+      "@type": "xsd:integer"
+    },
+    "columns": {
+      "@id": "anysphere:columns",
+      "@type": "@id"
+    },
+    "CheckRunInput": "anysphere:CheckRunInput",
+    "CheckRunOutput": "anysphere:CheckRunOutput",
+    "summary": {
+      "@id": "anysphere:summary",
+      "@type": "xsd:string"
+    },
+    "text": {
+      "@id": "anysphere:text",
+      "@type": "xsd:string"
+    },
+    "CheckRunReference": "anysphere:CheckRunReference",
+    "CheckRunRerequestedWebhookPayload": "anysphere:CheckRunRerequestedWebhookPayload",
+    "checkRun": {
+      "@id": "anysphere:checkRun"
+    },
+    "CheckRunWebhookPayload": "anysphere:CheckRunWebhookPayload",
+    "CheckRunWriteResult": "anysphere:CheckRunWriteResult",
+    "CheckSuite": "anysphere:CheckSuite",
+    "CheckSuiteInput": "anysphere:CheckSuiteInput",
+    "CheckSuiteReference": "anysphere:CheckSuiteReference",
+    "CodeownerApprovalBlocker": "anysphere:CodeownerApprovalBlocker",
+    "requirements": {
+      "@id": "anysphere:requirements",
+      "@container": "@list"
+    },
+    "CodeownerRequirement": "anysphere:CodeownerRequirement",
+    "owners": {
+      "@id": "anysphere:owners",
+      "@container": "@list"
+    },
+    "CommentThread": "anysphere:CommentThread",
+    "version": {
+      "@id": "anysphere:version"
+    },
+    "side": {
+      "@id": "anysphere:side",
+      "@type": "xsd:string"
+    },
+    "resolvedAt": {
+      "@id": "anysphere:resolvedAt",
+      "@type": "xsd:dateTime"
+    },
+    "Commit": "anysphere:Commit",
+    "parents": {
+      "@id": "anysphere:parents",
+      "@container": "@list"
+    },
+    "stats": {
+      "@id": "anysphere:stats"
+    },
+    "CommitAuthor": "anysphere:CommitAuthor",
+    "email": {
+      "@id": "anysphere:email",
+      "@type": "xsd:string"
+    },
+    "date": {
+      "@id": "anysphere:date",
+      "@type": "xsd:string"
+    },
+    "CommitComparison": "anysphere:CommitComparison",
+    "aheadBy": {
+      "@id": "anysphere:aheadBy",
+      "@type": "xsd:integer"
+    },
+    "behindBy": {
+      "@id": "anysphere:behindBy",
+      "@type": "xsd:integer"
+    },
+    "baseCommit": {
+      "@id": "anysphere:baseCommit"
+    },
+    "headCommit": {
+      "@id": "anysphere:headCommit"
+    },
+    "mergeBaseCommit": {
+      "@id": "anysphere:mergeBaseCommit"
+    },
+    "CommitDetail": "anysphere:CommitDetail",
+    "author": {
+      "@id": "anysphere:author",
+      "@type": "@id"
+    },
+    "committer": {
+      "@id": "anysphere:committer",
+      "@type": "@id"
+    },
+    "tree": {
+      "@id": "anysphere:tree",
+      "@type": "@id"
+    },
+    "CommitFile": "anysphere:CommitFile",
+    "filename": {
+      "@id": "anysphere:filename",
+      "@type": "xsd:string"
+    },
+    "additions": {
+      "@id": "anysphere:additions",
+      "@type": "xsd:integer"
+    },
+    "deletions": {
+      "@id": "anysphere:deletions",
+      "@type": "xsd:integer"
+    },
+    "changes": {
+      "@id": "anysphere:changes",
+      "@type": "xsd:integer"
+    },
+    "patch": {
+      "@id": "anysphere:patch",
+      "@type": "xsd:string"
+    },
+    "previousFilename": {
+      "@id": "anysphere:previousFilename",
+      "@type": "xsd:string"
+    },
+    "CommitFileChange": "anysphere:CommitFileChange",
+    "delete": {
+      "@id": "anysphere:delete",
+      "@type": "xsd:boolean"
+    },
+    "mode": {
+      "@id": "anysphere:mode",
+      "@type": "xsd:string"
+    },
+    "CommitParent": "anysphere:CommitParent",
+    "CommitSignature": "anysphere:CommitSignature",
+    "CommitStats": "anysphere:CommitStats",
+    "total": {
+      "@id": "anysphere:total",
+      "@type": "xsd:integer"
+    },
+    "CommitTree": "anysphere:CommitTree",
+    "CompareCommitsRequest": "anysphere:CompareCommitsRequest",
+    "basehead": {
+      "@id": "anysphere:basehead",
+      "@type": "xsd:string"
+    },
+    "Content": "anysphere:Content",
+    "type": {
+      "@id": "anysphere:type",
+      "@type": "xsd:string"
+    },
+    "entries": {
+      "@id": "anysphere:entries",
+      "@container": "@list"
+    },
+    "CreateAppRequest": "anysphere:CreateAppRequest",
+    "CreateCheckRunAnnotationsRequest": "anysphere:CreateCheckRunAnnotationsRequest",
+    "annotations": {
+      "@id": "anysphere:annotations",
+      "@container": "@list"
+    },
+    "CreateCheckRunAnnotationsResponse": "anysphere:CreateCheckRunAnnotationsResponse",
+    "CreateCommitFromFilesRequest": "anysphere:CreateCommitFromFilesRequest",
+    "targetBranch": {
+      "@id": "anysphere:targetBranch",
+      "@type": "xsd:string"
+    },
+    "expectedHeadSha": {
+      "@id": "anysphere:expectedHeadSha",
+      "@type": "xsd:string"
+    },
+    "files": {
+      "@id": "anysphere:files",
+      "@container": "@list"
+    },
+    "CreateCommitFromFilesResponse": "anysphere:CreateCommitFromFilesResponse",
+    "treeSha": {
+      "@id": "anysphere:treeSha",
+      "@type": "xsd:string"
+    },
+    "previousHeadSha": {
+      "@id": "anysphere:previousHeadSha",
+      "@type": "xsd:string"
+    },
+    "CreateGitRefRequest": "anysphere:CreateGitRefRequest",
+    "CreateInstallationAccessTokenRequest": "anysphere:CreateInstallationAccessTokenRequest",
+    "repositoryIds": {
+      "@id": "anysphere:repositoryIds",
+      "@container": "@list"
+    },
+    "CreateLabelRequest": "anysphere:CreateLabelRequest",
+    "color": {
+      "@id": "anysphere:color",
+      "@type": "xsd:string"
+    },
+    "CreatePullRequestCommentRequest": "anysphere:CreatePullRequestCommentRequest",
+    "body": {
+      "@id": "anysphere:body",
+      "@type": "xsd:string"
+    },
+    "threadId": {
+      "@id": "anysphere:threadId",
+      "@type": "xsd:string"
+    },
+    "inline": {
+      "@id": "anysphere:inline"
+    },
+    "file": {
+      "@id": "anysphere:file"
+    },
+    "versionNumber": {
+      "@id": "anysphere:versionNumber",
+      "@type": "xsd:string"
+    },
+    "CreatePullRequestRequest": "anysphere:CreatePullRequestRequest",
+    "head": {
+      "@id": "anysphere:head",
+      "@type": "xsd:string"
+    },
+    "base": {
+      "@id": "anysphere:base",
+      "@type": "xsd:string"
+    },
+    "draft": {
+      "@id": "anysphere:draft",
+      "@type": "xsd:boolean"
+    },
+    "parentPullRequest": {
+      "@id": "anysphere:parentPullRequest"
+    },
+    "CreatePullRequestReviewRequest": "anysphere:CreatePullRequestReviewRequest",
+    "verdict": {
+      "@id": "anysphere:verdict",
+      "@type": "xsd:string"
+    },
+    "comments": {
+      "@id": "anysphere:comments",
+      "@container": "@list"
+    },
+    "CreateRepoRequest": "anysphere:CreateRepoRequest",
+    "repo": {
+      "@id": "anysphere:repo"
+    },
+    "CreateRulesetRequest": "anysphere:CreateRulesetRequest",
+    "enforcement": {
+      "@id": "anysphere:enforcement",
+      "@type": "xsd:string"
+    },
+    "kind": {
+      "@id": "anysphere:kind",
+      "@type": "xsd:string"
+    },
+    "includedRefNames": {
+      "@id": "anysphere:includedRefNames",
+      "@container": "@list"
+    },
+    "excludedRefNames": {
+      "@id": "anysphere:excludedRefNames",
+      "@container": "@list"
+    },
+    "rules": {
+      "@id": "anysphere:rules",
+      "@container": "@list"
+    },
+    "bypassActors": {
+      "@id": "anysphere:bypassActors",
+      "@container": "@list"
+    },
+    "DeleteAppInstallationRequest": "anysphere:DeleteAppInstallationRequest",
+    "DeleteGitRefRequest": "anysphere:DeleteGitRefRequest",
+    "DeleteLabelRequest": "anysphere:DeleteLabelRequest",
+    "labelName": {
+      "@id": "anysphere:labelName",
+      "@type": "xsd:string"
+    },
+    "DeleteNamespaceGrantRequest": "anysphere:DeleteNamespaceGrantRequest",
+    "user": {
+      "@id": "anysphere:user",
+      "@type": "@id"
+    },
+    "group": {
+      "@id": "anysphere:group",
+      "@type": "@id"
+    },
+    "teamGroup": {
+      "@id": "anysphere:teamGroup",
+      "@type": "@id"
+    },
+    "DeletePullRequestCommentRequest": "anysphere:DeletePullRequestCommentRequest",
+    "commentId": {
+      "@id": "anysphere:commentId",
+      "@type": "xsd:string"
+    },
+    "DeleteRepositoryGrantRequest": "anysphere:DeleteRepositoryGrantRequest",
+    "DeleteRulesetRequest": "anysphere:DeleteRulesetRequest",
+    "rulesetId": {
+      "@id": "anysphere:rulesetId",
+      "@type": "xsd:string"
+    },
+    "DeleteSshCertificateAuthorityRequest": "anysphere:DeleteSshCertificateAuthorityRequest",
+    "certificateAuthorityId": {
+      "@id": "anysphere:certificateAuthorityId",
+      "@type": "xsd:string"
+    },
+    "DetachRepoMirrorRequest": "anysphere:DetachRepoMirrorRequest",
+    "DismissPullRequestReviewRequest": "anysphere:DismissPullRequestReviewRequest",
+    "reviewId": {
+      "@id": "anysphere:reviewId",
+      "@type": "xsd:string"
+    },
+    "FileCommentAnchor": "anysphere:FileCommentAnchor",
+    "ForceRepoMirrorCutoverRequest": "anysphere:ForceRepoMirrorCutoverRequest",
+    "GetActiveMirrorTransitionJobRequest": "anysphere:GetActiveMirrorTransitionJobRequest",
+    "GetActiveMirrorTransitionJobResponse": "anysphere:GetActiveMirrorTransitionJobResponse",
+    "activeJob": {
+      "@id": "anysphere:activeJob"
+    },
+    "lastJob": {
+      "@id": "anysphere:lastJob"
+    },
+    "GetAppInstallationRequest": "anysphere:GetAppInstallationRequest",
+    "GetAppRequest": "anysphere:GetAppRequest",
+    "GetBlobRequest": "anysphere:GetBlobRequest",
+    "GetCheckRunRequest": "anysphere:GetCheckRunRequest",
+    "GetCheckSuiteRequest": "anysphere:GetCheckSuiteRequest",
+    "checkSuiteId": {
+      "@id": "anysphere:checkSuiteId",
+      "@type": "xsd:string"
+    },
+    "GetCommitRequest": "anysphere:GetCommitRequest",
+    "GetContentsRequest": "anysphere:GetContentsRequest",
+    "GetGitCommitRequest": "anysphere:GetGitCommitRequest",
+    "GetGitRefRequest": "anysphere:GetGitRefRequest",
+    "GetLabelRequest": "anysphere:GetLabelRequest",
+    "GetMirrorTransitionJobRequest": "anysphere:GetMirrorTransitionJobRequest",
+    "jobId": {
+      "@id": "anysphere:jobId",
+      "@type": "xsd:string"
+    },
+    "GetMirroredRepoRequest": "anysphere:GetMirroredRepoRequest",
+    "sourceNodeId": {
+      "@id": "anysphere:sourceNodeId",
+      "@type": "xsd:string"
+    },
+    "GetPullRequestCommentRequest": "anysphere:GetPullRequestCommentRequest",
+    "GetPullRequestMergeabilityRequest": "anysphere:GetPullRequestMergeabilityRequest",
+    "GetPullRequestRequest": "anysphere:GetPullRequestRequest",
+    "GetRepoRequest": "anysphere:GetRepoRequest",
+    "GetRepoTarballRequest": "anysphere:GetRepoTarballRequest",
+    "GetRepoTarballResponse": "anysphere:GetRepoTarballResponse",
+    "downloadUrl": {
+      "@id": "anysphere:downloadUrl",
+      "@type": "xsd:string"
+    },
+    "GetRulesetRequest": "anysphere:GetRulesetRequest",
+    "GetTagRequest": "anysphere:GetTagRequest",
+    "GetTreeRequest": "anysphere:GetTreeRequest",
+    "recursive": {
+      "@id": "anysphere:recursive",
+      "@type": "xsd:boolean"
+    },
+    "GitCommit": "anysphere:GitCommit",
+    "GitRef": "anysphere:GitRef",
+    "object": {
+      "@id": "anysphere:object"
+    },
+    "GitTag": "anysphere:GitTag",
+    "tag": {
+      "@id": "anysphere:tag",
+      "@type": "xsd:string"
+    },
+    "tagger": {
+      "@id": "anysphere:tagger"
+    },
+    "GitTree": "anysphere:GitTree",
+    "truncated": {
+      "@id": "anysphere:truncated",
+      "@type": "xsd:boolean"
+    },
+    "GitTreeEntry": "anysphere:GitTreeEntry",
+    "GoogleProtobufAny": "anysphere:GoogleProtobufAny",
+    "GrepContentsMatch": "anysphere:GrepContentsMatch",
+    "lineNumber": {
+      "@id": "anysphere:lineNumber",
+      "@type": "xsd:integer"
+    },
+    "line": {
+      "@id": "anysphere:line",
+      "@type": "xsd:string"
+    },
+    "submatches": {
+      "@id": "anysphere:submatches",
+      "@container": "@list"
+    },
+    "GrepContentsRequest": "anysphere:GrepContentsRequest",
+    "query": {
+      "@id": "anysphere:query",
+      "@type": "xsd:string"
+    },
+    "literal": {
+      "@id": "anysphere:literal",
+      "@type": "xsd:boolean"
+    },
+    "caseInsensitive": {
+      "@id": "anysphere:caseInsensitive",
+      "@type": "xsd:boolean"
+    },
+    "wholeWord": {
+      "@id": "anysphere:wholeWord",
+      "@type": "xsd:boolean"
+    },
+    "contextBefore": {
+      "@id": "anysphere:contextBefore",
+      "@type": "xsd:integer"
+    },
+    "contextAfter": {
+      "@id": "anysphere:contextAfter",
+      "@type": "xsd:integer"
+    },
+    "filterPath": {
+      "@id": "anysphere:filterPath",
+      "@type": "xsd:string"
+    },
+    "includes": {
+      "@id": "anysphere:includes",
+      "@container": "@list"
+    },
+    "excludes": {
+      "@id": "anysphere:excludes",
+      "@container": "@list"
+    },
+    "maxResults": {
+      "@id": "anysphere:maxResults",
+      "@type": "xsd:integer"
+    },
+    "GrepContentsResponse": "anysphere:GrepContentsResponse",
+    "matches": {
+      "@id": "anysphere:matches",
+      "@container": "@list"
+    },
+    "limitHit": {
+      "@id": "anysphere:limitHit",
+      "@type": "xsd:boolean"
+    },
+    "GrepContentsSubmatch": "anysphere:GrepContentsSubmatch",
+    "start": {
+      "@id": "anysphere:start",
+      "@type": "xsd:integer"
+    },
+    "end": {
+      "@id": "anysphere:end",
+      "@type": "xsd:integer"
+    },
+    "InlineCommentAnchor": "anysphere:InlineCommentAnchor",
+    "InstallationAccessToken": "anysphere:InstallationAccessToken",
+    "token": {
+      "@id": "anysphere:token",
+      "@type": "xsd:string"
+    },
+    "expiresAt": {
+      "@id": "anysphere:expiresAt",
+      "@type": "xsd:dateTime"
+    },
+    "InstallationCreatedWebhookPayload": "anysphere:InstallationCreatedWebhookPayload",
+    "installation": {
+      "@id": "anysphere:installation"
+    },
+    "app": {
+      "@id": "anysphere:app"
+    },
+    "InstallationDeletedWebhookPayload": "anysphere:InstallationDeletedWebhookPayload",
+    "InstallationReference": "anysphere:InstallationReference",
+    "InstallationSuspendedWebhookPayload": "anysphere:InstallationSuspendedWebhookPayload",
+    "InstallationUnsuspendedWebhookPayload": "anysphere:InstallationUnsuspendedWebhookPayload",
+    "InstallationUpdatedWebhookPayload": "anysphere:InstallationUpdatedWebhookPayload",
+    "Label": "anysphere:Label",
+    "ListAppInstallationRepositoriesRequest": "anysphere:ListAppInstallationRepositoriesRequest",
+    "pageSize": {
+      "@id": "anysphere:pageSize",
+      "@type": "xsd:integer"
+    },
+    "pageToken": {
+      "@id": "anysphere:pageToken",
+      "@type": "xsd:string"
+    },
+    "filter": {
+      "@id": "anysphere:filter",
+      "@type": "xsd:string"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Anysphere Cursor Ai API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Anysphere Cursor Ai's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-09-25) from openapi/anysphere-cursor-ai-openapi.yaml.",
+  "dcterms:created": "2026-09-25",
+  "dcterms:source": [
+    "openapi/anysphere-cursor-ai-openapi.yaml"
+  ]
+}

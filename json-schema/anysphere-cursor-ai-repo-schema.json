@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/anysphere-cursor-ai/main/json-schema/anysphere-cursor-ai-repo-schema.json",
+  "title": "Repo",
+  "description": "A repository.",
+  "x-generated": "2026-09-25",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/Repo",
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "readOnly": true,
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "The repo name, unique to its owner. Required on create."
+    },
+    "fullName": {
+      "readOnly": true,
+      "type": "string",
+      "description": "\"{owner.login}/{name}\". Derived."
+    },
+    "owner": {
+      "readOnly": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/Owner"
+        }
+      ],
+      "description": "The owning entity. Determined by the parent on create; not settable directly."
+    },
+    "defaultBranch": {
+      "type": "string",
+      "description": "Default branch name. Always set on responses. On create, omitting this field or leaving it empty defaults to \"main\"."
+    },
+    "createdAt": {
+      "readOnly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "readOnly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "pushedAt": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Most-recent-push timestamp on any branch; absent until the first push.",
+      "format": "date-time"
+    },
+    "cloneUrl": {
+      "readOnly": true,
+      "type": "string",
+      "description": "HTTPS URL for cloning the repository."
+    },
+    "mirror": {
+      "readOnly": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/RepositoryMirror"
+        }
+      ],
+      "description": "Mirror metadata. Absent for a native repository and before a mirror's\n initial sync is ready."
+    },
+    "visibility": {
+      "readOnly": true,
+      "enum": [
+        "internal",
+        "private",
+        "public"
+      ],
+      "type": "string",
+      "description": "Repository visibility, `internal`, `private`, or `public`."
+    },
+    "allowMergeCommit": {
+      "readOnly": true,
+      "type": "boolean",
+      "description": "Whether pull requests may land as merge commits."
+    },
+    "allowSquashMerge": {
+      "readOnly": true,
+      "type": "boolean",
+      "description": "Whether pull requests may land as squash merges."
+    },
+    "deleteBranchOnMerge": {
+      "readOnly": true,
+      "type": "boolean",
+      "description": "Whether the head branch is deleted automatically on merge."
+    }
+  },
+  "$defs": {
+    "Owner": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "description": "Unique URL-friendly name of the owner."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique ID of the owner namespace."
+        },
+        "type": {
+          "readOnly": true,
+          "enum": [
+            "team",
+            "user"
+          ],
+          "type": "string",
+          "description": "`team` or `user`. Output-only; unset when unknown."
+        }
+      },
+      "description": "The owner of a repo."
+    },
+    "RepositoryMirror": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "readOnly": true,
+          "enum": [
+            "github"
+          ],
+          "type": "string"
+        },
+        "sourceId": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Opaque repository identifier assigned by the source."
+        },
+        "status": {
+          "readOnly": true,
+          "enum": [
+            "inbound",
+            "outbound"
+          ],
+          "type": "string",
+          "description": "Effective direction during a transition, until cutover completes."
+        }
+      },
+      "description": "The external source and lifecycle state of a mirrored repository."
+    }
+  }
+}

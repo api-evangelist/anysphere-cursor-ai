@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/anysphere-cursor-ai/main/json-schema/anysphere-cursor-ai-mirror-transition-job-schema.json",
+  "title": "MirrorTransitionJob",
+  "description": "An asynchronous job tracking one mirror transition. Jobs are created by\n starting a transition or forcing a cutover, and are polled until they reach\n a terminal status.",
+  "x-generated": "2026-09-25",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/MirrorTransitionJob",
+  "type": "object",
+  "properties": {
+    "id": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Unique identifier of the job."
+    },
+    "transition": {
+      "readOnly": true,
+      "enum": [
+        "initial_to_inbound",
+        "inbound_to_outbound",
+        "outbound_to_inbound"
+      ],
+      "type": "string",
+      "description": "The mirror-direction change this job performs."
+    },
+    "status": {
+      "readOnly": true,
+      "enum": [
+        "queued",
+        "running",
+        "succeeded",
+        "failed_rolled_back",
+        "requires_attention",
+        "superseded"
+      ],
+      "type": "string",
+      "description": "Lifecycle state. `succeeded`, `failed_rolled_back`, and `superseded` are\n terminal; `requires_attention` needs operator intervention or a forced\n cutover."
+    },
+    "phase": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Progress detail within `status`, for display and debugging. One of\n \"queued\", \"starting\", \"draining-writes\", \"initializing-mirror-fetch\",\n \"finalizing-mirror-fetch\", \"finalizing-mirror-push\", \"snapshotting-refs\",\n \"verifying-integrity\", \"reopening-inbound-mirror\",\n \"committing-target-status\", \"rolling-back\", or \"completed\". New phases\n may appear as the transition process evolves; poll `status` for\n completion rather than matching on phases."
+    },
+    "attemptCount": {
+      "readOnly": true,
+      "type": "integer",
+      "description": "Number of times this job has been attempted.",
+      "format": "uint32"
+    },
+    "drainUntil": {
+      "readOnly": true,
+      "type": "string",
+      "description": "When the write-drain window of an in-progress transition ends. Absent\n outside the draining phase.",
+      "format": "date-time"
+    },
+    "lastErrorCode": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Stable code identifying why the job last failed, for example\n \"InboundMirrorDrainTimeout\" or \"MirrorIntegrityMismatch\". Absent while\n the job has not failed."
+    },
+    "lastErrorMessage": {
+      "readOnly": true,
+      "type": "string",
+      "description": "Human-readable detail for `last_error_code`. Absent while the job has\n not failed."
+    },
+    "startedAt": {
+      "readOnly": true,
+      "type": "string",
+      "description": "When the job started running. Absent while queued.",
+      "format": "date-time"
+    },
+    "completedAt": {
+      "readOnly": true,
+      "type": "string",
+      "description": "When the job reached a terminal status. Absent until then.",
+      "format": "date-time"
+    },
+    "createdAt": {
+      "readOnly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "readOnly": true,
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

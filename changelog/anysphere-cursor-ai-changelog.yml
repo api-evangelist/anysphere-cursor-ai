@@ -1,0 +1,76 @@
+generated: '2026-09-25'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://cursor.com/docs/sdk/changelog
+sources:
+- https://cursor.com/docs/sdk/changelog
+- https://cursor.com/docs/cli/changelog
+- https://cursor.com/docs/api/origin/migrations
+- https://cursor.com/docs/api/origin/changelog
+entries:
+- breaking: false
+  highlights:
+  - Replace the system prompt. systemPrompt on Agent.create() replaces Cursor's built-in system prompt for the main agent loop with your own text.
+  - Steer a run while it is running. run.steer(text) injects a message into the turn in flight and resolves complete_delivered , or revert_to_followup
+    when you should send it as a normal follow-up instead.
+  - Background subagents report back. When the agent runs a subagent in the background, its result now returns to the parent as a follow-up turn
+    on the same run instead of being dropped when the parent turn ends.
+  - Annotate custom tools. annotations on a local.customTools entry passes MCP tool annotations ( title , readOnlyHint , destructiveHint , idempotentHint
+    , openWorldHint ) through to the model.
+  version: 1.0.31
+- breaking: false
+  highlights:
+  - Long-running local agents keep their credentials fresh. Local runs in TypeScript and Python refresh the short-lived access token before it
+    expires, so agents that run for more than an hour no longer fail with authentication errors.
+  version: 1.0.30
+- breaking: false
+  highlights:
+  - Output schemas on custom tools. outputSchema in TypeScript and output_schema in Python declare a JSON Schema for a custom tool's structured
+    result, advertised to the model as the tool's MCP output schema.
+  version: 1.0.29
+- breaking: false
+  highlights:
+  - Ship the SDK as a single file. Under Bun, @cursor/sdk now resolves to a flat single-file bundle, so bun build --compile works with no import
+    change and no more Cannot find module './986.js' .
+  version: 1.0.28
+- breaking: false
+  highlights:
+  - Restrict the agent's toolset. tools allowlists the built-in tools offered to the model ( [] means text-only), and disallowedTools removes
+    tools while keeping the rest.
+  version: 1.0.27
+- breaking: false
+  highlights:
+  - Log in from the browser in TypeScript. Cursor.auth.login() opens a browser login, mints an API key, and stores it in ~/.cursor/sdk/auth.json
+    ; Cursor.auth.status() and Cursor.auth.logout() round it out.
+  version: 1.0.27
+- breaking: false
+  highlights:
+  - Usage and cost for local agents. agent.getUsage() in TypeScript and agent.get_usage() in Python now work for local agents too, returning a
+    per-turn breakdown.
+  version: 1.0.27
+- breaking: false
+  highlights:
+  - Open PRs as the Cursor GitHub App. cloud.openAsCursorGithubApp in TypeScript and open_as_cursor_github_app in Python control PR authorship.
+  version: 1.0.27
+- breaking: false
+  highlights:
+  - Multi-root local workspaces. Pass local.dirs to load rules, skills, and project context from several folders; cwd stays the single primary
+    working directory.
+  version: 1.0.27
+- breaking: false
+  highlights:
+  - Clearer Python errors. Failures that previously surfaced as a bare "internal error" now carry the underlying message and code.
+  version: 1.0.27
+- breaking: false
+  highlights:
+  - Admin command denylists apply to local runs. Shell commands matching your team's admin denylist are rejected with a policy message before
+    they execute.
+  version: 1.0.27
+- breaking: false
+  highlights:
+  - Warm up a local workspace before the first send. platform.prewarmLocalWorkspace(options) resolves rules, skills, MCP servers, and ignore files
+    ahead of time, so the first send() against that workspace starts immediately.
+  version: 1.0.26
+current_version: 1.0.31
+note: Versioning scheme follows semantic versioning (major.minor.patch).
+docs: https://cursor.com/docs/sdk/changelog

@@ -1,0 +1,106 @@
+generated: '2026-09-25'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 6
+  own: 6
+  other_domain: 0
+  platform: 0
+  roles:
+  - api
+  - community
+  - docs
+  - other
+  - status
+  - website
+hosts:
+- host: api.cursor.com
+  found_by:
+  - apis[]
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: cursor.com
+  role: api
+  relation: own
+- host: cursor.com
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - docs-index
+  - spec-found
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Compliance
+  - Login
+  - APIReference
+  - Website
+  - Documentation
+  - Blog
+  - Pricing
+  - Support
+  - GettingStarted
+  serves:
+  - docs
+  - spec
+  - hosting
+  vendor: vercel
+  registrable_domain: cursor.com
+  role: website
+  relation: own
+- host: docs.cursor.com
+  found_by:
+  - probed
+  - site-links
+  - namespace-probe
+  - well-known
+  types: []
+  serves: []
+  title: Cursor Docs — Agent, Rules, MCP, Skills &amp; CLI
+  status: 200
+  registrable_domain: cursor.com
+  role: docs
+  relation: own
+- host: forum.cursor.com
+  found_by:
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: cursor.com
+  role: community
+  relation: own
+- host: status.cursor.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: cursor.com
+  role: status
+  relation: own
+- host: trust.cursor.com
+  found_by:
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: cursor.com
+  role: other
+  relation: own

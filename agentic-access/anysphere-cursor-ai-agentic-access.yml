@@ -1,0 +1,1385 @@
+generated: '2026-09-25'
+method: generated
+source: openapi/anysphere-cursor-ai-openapi.yaml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 105
+  by_action_class:
+    connected: 52
+    acting: 53
+  by_consequence:
+    read: 52
+    write: 52
+    safety-critical: 1
+  human_in_the_loop_required: 1
+operations:
+- path: /v1/origin/app
+  method: get
+  operationId: OriginService_GetAuthenticatedApp
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/app/installations
+  method: get
+  operationId: OriginService_ListAppInstallations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/app/installations/{installationId}
+  method: get
+  operationId: OriginService_GetAppInstallation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/app/installations/{installationId}
+  method: delete
+  operationId: OriginService_DeleteAppInstallation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/app/installations/{installationId}/access_tokens
+  method: post
+  operationId: OriginService_CreateInstallationAccessToken
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/app/webhook/deliveries
+  method: get
+  operationId: OriginService_ListWebhookDeliveries
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/app/webhook/deliveries:batchRedeliver
+  method: post
+  operationId: OriginService_BatchRedeliverWebhookDeliveries
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/app/webhook/pings
+  method: post
+  operationId: OriginService_PingWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/apps/{appId}
+  method: get
+  operationId: OriginService_GetApp
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/apps/{appId}
+  method: patch
+  operationId: OriginService_UpdateApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/apps/{appId}/signing_keys
+  method: post
+  operationId: OriginService_AddAppSigningKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/apps/{appId}/signing_keys/{kid}
+  method: delete
+  operationId: OriginService_RevokeAppSigningKey
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/origin/installation/repos
+  method: get
+  operationId: OriginService_ListAppInstallationRepositories
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/namespaces
+  method: get
+  operationId: OriginService_ListNamespaces
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/namespaces/{namespaceSlug}/apps
+  method: get
+  operationId: OriginService_ListNamespaceApps
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/namespaces/{namespaceSlug}/apps
+  method: post
+  operationId: OriginService_CreateApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/namespaces/{namespaceSlug}/installations/{installationId}/repos
+  method: post
+  operationId: OriginService_AddAppInstallationRepositories
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/owners/{ownerSlug}/grants
+  method: get
+  operationId: OriginService_ListNamespaceGrants
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/owners/{ownerSlug}/grants
+  method: post
+  operationId: OriginService_UpsertNamespaceGrant
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/owners/{ownerSlug}/grants
+  method: delete
+  operationId: OriginService_DeleteNamespaceGrant
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/owners/{ownerSlug}/ssh-certificate-authorities
+  method: get
+  operationId: OriginService_ListSshCertificateAuthorities
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/owners/{ownerSlug}/ssh-certificate-authorities
+  method: post
+  operationId: OriginService_AddSshCertificateAuthority
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/owners/{ownerSlug}/ssh-certificate-authorities/{certificateAuthorityId}
+  method: delete
+  operationId: OriginService_DeleteSshCertificateAuthority
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/owners/{ownerSlug}/ssh-certificate-authorities:setRequirement
+  method: post
+  operationId: OriginService_SetSshCertificateRequirement
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/rate_limit
+  method: get
+  operationId: OriginService_GetRateLimit
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}
+  method: get
+  operationId: OriginService_ListRepos
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}
+  method: post
+  operationId: OriginService_CreateRepo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}
+  method: get
+  operationId: OriginService_GetRepo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}
+  method: patch
+  operationId: OriginService_UpdateRepo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/branches
+  method: get
+  operationId: OriginService_ListBranches
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/check-runs
+  method: post
+  operationId: OriginService_PostCheckRun
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/check-runs/{checkRunId}
+  method: get
+  operationId: OriginService_GetCheckRun
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/check-runs/{checkRunId}/annotations
+  method: get
+  operationId: OriginService_ListCheckRunAnnotations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/check-runs/{checkRunId}/annotations
+  method: post
+  operationId: OriginService_CreateCheckRunAnnotations
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/check-runs/{checkRunId}/rerequest
+  method: post
+  operationId: OriginService_RerequestCheckRun
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/check-runs:batchUpsert
+  method: post
+  operationId: OriginService_BatchUpsertCheckRuns
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/check-suites/{checkSuiteId}
+  method: get
+  operationId: OriginService_GetCheckSuite
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/check-suites/{checkSuiteId}/check-runs
+  method: get
+  operationId: OriginService_ListCheckRunsForSuite
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/commits
+  method: get
+  operationId: OriginService_ListCommits
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/commits/{sha}
+  method: get
+  operationId: OriginService_GetCommit
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/commits/{sha}/check-runs
+  method: get
+  operationId: OriginService_ListCheckRunsForCommit
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/commits/{sha}/check-suites
+  method: get
+  operationId: OriginService_ListCheckSuitesForCommit
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/commits/{sha}/files
+  method: get
+  operationId: OriginService_ListCommitFiles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/compare/{basehead}
+  method: get
+  operationId: OriginService_CompareCommits
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/compare/{basehead}/files
+  method: get
+  operationId: OriginService_ListComparisonFiles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/contents
+  method: get
+  operationId: OriginService_GetContents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/contents:batchGet
+  method: post
+  operationId: OriginService_BatchGetContents
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/git/blobs/{sha}
+  method: get
+  operationId: OriginService_GetBlob
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/git/commits/{sha}
+  method: get
+  operationId: OriginService_GetGitCommit
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/git/commits:createFromFiles
+  method: post
+  operationId: OriginService_CreateCommitFromFiles
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/git/matching-refs
+  method: get
+  operationId: OriginService_ListMatchingGitRefs_2
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/git/matching-refs/{ref}
+  method: get
+  operationId: OriginService_ListMatchingGitRefs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/git/ref/{ref}
+  method: get
+  operationId: OriginService_GetGitRef
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/git/refs
+  method: post
+  operationId: OriginService_CreateGitRef
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/git/refs/{ref}
+  method: delete
+  operationId: OriginService_DeleteGitRef
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/git/tags/{sha}
+  method: get
+  operationId: OriginService_GetTag
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/git/trees/{sha}
+  method: get
+  operationId: OriginService_GetTree
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/grants
+  method: get
+  operationId: OriginService_ListRepositoryGrants
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/grants
+  method: post
+  operationId: OriginService_UpsertRepositoryGrant
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/grants
+  method: delete
+  operationId: OriginService_DeleteRepositoryGrant
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/labels
+  method: get
+  operationId: OriginService_ListLabels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/labels
+  method: post
+  operationId: OriginService_CreateLabel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/labels/{labelName}
+  method: get
+  operationId: OriginService_GetLabel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/labels/{labelName}
+  method: delete
+  operationId: OriginService_DeleteLabel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/labels/{labelName}
+  method: patch
+  operationId: OriginService_UpdateLabel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/mirror
+  method: delete
+  operationId: OriginService_DetachRepoMirror
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/mirror/transition-jobs/{jobId}
+  method: get
+  operationId: OriginService_GetMirrorTransitionJob
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/mirror/transition-jobs:active
+  method: get
+  operationId: OriginService_GetActiveMirrorTransitionJob
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/mirror:forceCutover
+  method: post
+  operationId: OriginService_ForceRepoMirrorCutover
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/mirror:transition
+  method: post
+  operationId: OriginService_TransitionRepoMirror
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls
+  method: get
+  operationId: OriginService_ListPullRequests
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls
+  method: post
+  operationId: OriginService_CreatePullRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/comments/{commentId}
+  method: get
+  operationId: OriginService_GetPullRequestComment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/comments/{commentId}
+  method: delete
+  operationId: OriginService_DeletePullRequestComment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/comments/{commentId}
+  method: patch
+  operationId: OriginService_UpdatePullRequestComment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/threads/{threadId}
+  method: patch
+  operationId: OriginService_UpdatePullRequestThread
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}
+  method: get
+  operationId: OriginService_GetPullRequest
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}
+  method: patch
+  operationId: OriginService_UpdatePullRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/comments
+  method: get
+  operationId: OriginService_ListPullRequestComments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/comments
+  method: post
+  operationId: OriginService_CreatePullRequestComment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/commits
+  method: get
+  operationId: OriginService_ListPullRequestCommits
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/files
+  method: get
+  operationId: OriginService_ListPullRequestFiles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/labels
+  method: get
+  operationId: OriginService_ListPullRequestLabels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/labels
+  method: put
+  operationId: OriginService_SetPullRequestLabels
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/labels
+  method: post
+  operationId: OriginService_AddPullRequestLabels
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/labels
+  method: delete
+  operationId: OriginService_RemoveAllPullRequestLabels
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/labels/{labelName}
+  method: delete
+  operationId: OriginService_RemovePullRequestLabel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/merge
+  method: post
+  operationId: OriginService_MergePullRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/mergeability
+  method: get
+  operationId: OriginService_GetPullRequestMergeability
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/requested_reviewers
+  method: get
+  operationId: OriginService_ListPullRequestRequestedReviewers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/requested_reviewers
+  method: post
+  operationId: OriginService_RequestPullRequestReviewers
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/requested_reviewers
+  method: delete
+  operationId: OriginService_RemovePullRequestRequestedReviewers
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/reviews
+  method: get
+  operationId: OriginService_ListPullRequestReviews
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/reviews
+  method: post
+  operationId: OriginService_CreatePullRequestReview
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/reviews/{reviewId}
+  method: patch
+  operationId: OriginService_UpdatePullRequestReview
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/pulls/{pullNumber}/reviews/{reviewId}/dismissals
+  method: put
+  operationId: OriginService_DismissPullRequestReview
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/rulesets
+  method: get
+  operationId: OriginService_ListRulesets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/rulesets
+  method: post
+  operationId: OriginService_CreateRuleset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/rulesets/{rulesetId}
+  method: get
+  operationId: OriginService_GetRuleset
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/rulesets/{rulesetId}
+  method: put
+  operationId: OriginService_UpdateRuleset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/rulesets/{rulesetId}
+  method: delete
+  operationId: OriginService_DeleteRuleset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/tarball
+  method: get
+  operationId: OriginService_GetRepoTarball
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}/tarball/{ref}
+  method: get
+  operationId: OriginService_GetRepoTarball_2
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/origin/repos/{ownerSlug}/{repoName}:grep
+  method: post
+  operationId: OriginService_GrepContents
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/origin/repos/{ownerSlug}/{repoName}:syncMirror
+  method: post
+  operationId: OriginService_SyncMirror
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required

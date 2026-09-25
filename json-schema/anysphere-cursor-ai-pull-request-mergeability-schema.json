@@ -1,0 +1,459 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/anysphere-cursor-ai/main/json-schema/anysphere-cursor-ai-pull-request-mergeability-schema.json",
+  "title": "PullRequestMergeability",
+  "description": "Whether a pull request can be merged, and why not when it cannot.",
+  "x-generated": "2026-09-25",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/anysphere-cursor-ai-openapi.yaml#/components/schemas/PullRequestMergeability",
+  "type": "object",
+  "properties": {
+    "pullRequest": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/PullRequestReference"
+        }
+      ],
+      "description": "The pull request the verdict is about.",
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "verdict": {
+      "enum": [
+        "mergeable",
+        "blocked"
+      ],
+      "type": "string",
+      "description": "Overall answer for every pull request in `evaluated_pull_requests`:\n `mergeable` means merging `pull_request` lands all of them (for a stacked\n pull request, the whole stack below it as well). Unrecognized values must\n be treated as `blocked`.",
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PullRequestMergeabilityBlocker"
+      },
+      "description": "Everything preventing the merge, ordered by the pull request they belong\n to (stack root first) and then by kind. Empty when `verdict` is\n `mergeable`. At most one blocker per pull request per kind, except\n `required_checks` (one per state) and `rule_failure` / `ruleset_error`\n (one per distinct message); the same kind can appear for different pull\n requests in the stack. Every blocker's `pull_request` is one of\n `evaluated_pull_requests`.\n\n New kinds are added over time. Decode with unknown values tolerated\n (`ignoreUnknownFields` in protobuf-es, `DiscardUnknown` in Go protojson):\n a blocker whose `kind` postdates your client then decodes with `kind`\n unset and `message` intact, and is still blocking. Strict decoders reject\n the whole response instead.",
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "evaluatedPullRequests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PullRequestReference"
+      },
+      "description": "Pull requests a merge of `pull_request` would land, stack root first and\n ending with `pull_request`. Ancestors that already merged are not listed:\n they are history, not part of the evaluation. Exactly one element for an\n unstacked pull request.",
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "headSha": {
+      "type": "string",
+      "description": "Head commit of `pull_request` that was evaluated.",
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "baseRef": {
+      "type": "string",
+      "description": "Branch the evaluated pull requests merge into: the stack root's base, not\n this pull request's own base when it is stacked.",
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "baseSha": {
+      "type": "string",
+      "description": "Tip commit of `base_ref` at `evaluated_at`. A later push to `base_ref`\n may change the verdict. Empty when the base branch could not be\n determined (for example, an invalid stack).",
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "evaluatedAt": {
+      "type": "string",
+      "description": "When this result was evaluated. Changes after this time are not\n reflected; re-query to pick them up.",
+      "format": "date-time",
+      "x-cursor-visibility": "PREVIEW"
+    }
+  },
+  "x-cursor-visibility": "PREVIEW",
+  "$defs": {
+    "CheckRunReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "name": {
+          "type": "string",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "checkSuite": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/CheckSuiteReference"
+            }
+          ],
+          "description": "Suite the check run belongs to.",
+          "x-cursor-visibility": "PREVIEW"
+        }
+      },
+      "description": "Identity and display coordinates of a check run, for embedding in resources\n that a `repository:checks` read does not gate. Everything else about the run\n (status, conclusion, output, details URL) is `GetCheckRun`.",
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "CheckSuiteReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "CodeownerApprovalBlocker": {
+      "type": "object",
+      "properties": {
+        "requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CodeownerRequirement"
+          },
+          "x-cursor-visibility": "PREVIEW"
+        }
+      },
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "CodeownerRequirement": {
+      "type": "object",
+      "properties": {
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Code owners, any one of whom can satisfy the requirement.",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Changed paths this owner set covers.",
+          "x-cursor-visibility": "PREVIEW"
+        }
+      },
+      "description": "One owner set that still needs an approval.",
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "MergeConflictBlocker": {
+      "type": "object",
+      "properties": {
+        "conflictedPaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Paths that conflict with the base branch. At most 100 are listed.",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "truncated": {
+          "type": "boolean",
+          "description": "Whether more paths conflict than are listed.",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "inheritedFromDownstack": {
+          "type": "boolean",
+          "description": "The conflict comes from a pull request below this one in the stack, so\n this pull request is waiting on that one rather than conflicted itself.",
+          "x-cursor-visibility": "PREVIEW"
+        }
+      },
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "OriginActor": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/$defs/OriginUserActor"
+        },
+        "app": {
+          "$ref": "#/$defs/OriginAppActor"
+        },
+        "serviceAccount": {
+          "$ref": "#/$defs/OriginServiceAccountActor"
+        }
+      },
+      "description": "A user, app, or service account that performed an externally visible action."
+    },
+    "OriginAppActor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The app's registered display name, never empty when present. Omitted on\n payloads whose app could not be resolved and on the first-party Cursor\n facade actor."
+        }
+      }
+    },
+    "OriginServiceAccountActor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "OriginUserActor": {
+      "required": [
+        "email"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Human-readable display name: the account's first and last name, each\n trimmed, joined with a space — exactly the name the product UI renders.\n Omitted when the account has no name; never synthesized from the email,\n the id, or any other field. May also be absent on webhook payloads whose\n actor could not be resolved."
+        },
+        "handle": {
+          "type": "string",
+          "description": "The user's claimed profile handle (the identity behind cursor.com\n /@handle), without the @ prefix. Present only while the user's profile\n is publicly visible; omitted for users without a claimed handle and for\n non-public profiles."
+        }
+      }
+    },
+    "Owner": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "description": "Unique URL-friendly name of the owner."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique ID of the owner namespace."
+        },
+        "type": {
+          "readOnly": true,
+          "enum": [
+            "team",
+            "user"
+          ],
+          "type": "string",
+          "description": "`team` or `user`. Output-only; unset when unknown."
+        }
+      },
+      "description": "The owner of a repo."
+    },
+    "PullRequestMergeabilityBlocker": {
+      "type": "object",
+      "properties": {
+        "pullRequest": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/PullRequestReference"
+            }
+          ],
+          "description": "Pull request in `evaluated_pull_requests` this blocker belongs to.",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "kind": {
+          "enum": [
+            "draft",
+            "closed",
+            "merged",
+            "merge_conflict",
+            "required_checks",
+            "required_approvals",
+            "codeowner_approval",
+            "behind_base",
+            "needs_restack",
+            "restack_pending",
+            "conflict_check_pending",
+            "invalid_stack",
+            "ruleset_error",
+            "rule_failure"
+          ],
+          "type": "string",
+          "description": "Category of the blocker. Never unset on the wire; a client that decodes\n it unset received a kind newer than itself (see `blockers`).",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable statement of the blocker and how to clear it. Never empty:\n what to render when `kind` is unrecognized.",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "requiredChecks": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/RequiredChecksBlocker"
+            }
+          ],
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "requiredApprovals": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/RequiredApprovalsBlocker"
+            }
+          ],
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "codeownerApproval": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/CodeownerApprovalBlocker"
+            }
+          ],
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "mergeConflict": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/MergeConflictBlocker"
+            }
+          ],
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "stackShape": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/StackShapeBlocker"
+            }
+          ],
+          "x-cursor-visibility": "PREVIEW"
+        }
+      },
+      "description": "One condition preventing a merge.",
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "PullRequestReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Immutable Origin change id."
+        },
+        "number": {
+          "type": "string"
+        },
+        "repository": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/RepositoryReference"
+            }
+          ],
+          "description": "Repository reference for this pull request."
+        }
+      },
+      "description": "Stable identity and display coordinates for an Origin pull request."
+    },
+    "RepositoryReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        }
+      },
+      "description": "Stable identity and display coordinates for a repository."
+    },
+    "RequiredApprovalsBlocker": {
+      "type": "object",
+      "properties": {
+        "requiredCount": {
+          "type": "integer",
+          "description": "Approving reviews the repository rules require.",
+          "format": "int32",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "approvedCount": {
+          "type": "integer",
+          "description": "Approving reviews currently counted toward the requirement.",
+          "format": "int32",
+          "x-cursor-visibility": "PREVIEW"
+        }
+      },
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "RequiredCheck": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name the repository rule requires.",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "owner": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/OriginActor"
+            }
+          ],
+          "description": "Principal expected to report the check.",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "checkRun": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/CheckRunReference"
+            }
+          ],
+          "description": "The check run on `head_sha` matching this requirement, by reference.\n Unset when none has been reported (state `missing`). A reference rather\n than the full `CheckRun`: this resource is readable with\n `repository:pull_requests` read alone, while a run's status, conclusion,\n output and details URL are gated by `repository:checks` read\n (`GetCheckRun`); the requirement's state is `RequiredChecksBlocker.state`.",
+          "x-cursor-visibility": "PREVIEW"
+        }
+      },
+      "description": "A check a repository rule requires on the evaluated head.",
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "RequiredChecksBlocker": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "enum": [
+            "missing",
+            "pending",
+            "failing",
+            "action_required"
+          ],
+          "type": "string",
+          "description": "State shared by every check in this blocker.",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequiredCheck"
+          },
+          "description": "Required checks in that state.",
+          "x-cursor-visibility": "PREVIEW"
+        }
+      },
+      "x-cursor-visibility": "PREVIEW"
+    },
+    "StackShapeBlocker": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "enum": [
+            "partially_merged",
+            "cycle",
+            "missing_parent",
+            "cross_repository_parent",
+            "base_branch_missing"
+          ],
+          "type": "string",
+          "x-cursor-visibility": "PREVIEW"
+        },
+        "relatedPullRequests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PullRequestReference"
+          },
+          "description": "Other pull requests involved, when the reason names any.",
+          "x-cursor-visibility": "PREVIEW"
+        }
+      },
+      "x-cursor-visibility": "PREVIEW"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+generated: '2026-09-25'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://cursor.com/docs/models-and-pricing
+sources:
+- https://cursor.com/docs/models-and-pricing
+- https://cursor.com/docs/agent/plan-mode
+name: Anysphere Cursor Ai pricing
+audience: business-product
+pricing_basis: per-seat
+plans:
+- name: Start (India only)
+  price_text: ₹649/mo, tax inclusive
+  price: 649
+  billing_period: monthly
+  description: Start plan for developers in India covering the Cursor Models pool and Cloud Agents.
+- name: Pro
+  price_text: $20/mo
+  price: 20
+  billing_period: monthly
+  description: Pro plan includes unlimited tab completions, extended agent usage limits, Bugbot, and Cloud Agents.
+- name: Pro Plus
+  price_text: $60/mo
+  price: 60
+  billing_period: monthly
+  description: Pro Plus plan includes unlimited tab completions, extended agent usage limits, Bugbot, and Cloud Agents.
+- name: Ultra
+  price_text: $200/mo
+  price: 200
+  billing_period: monthly
+  description: Ultra plan includes unlimited tab completions, extended agent usage limits, Bugbot, and Cloud Agents.
+docs: https://cursor.com/docs/models-and-pricing
