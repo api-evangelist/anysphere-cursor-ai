@@ -15,6 +15,13 @@ created: '2026-09-25'
 modified: '2026-09-25'
 tags:
 - Company
+- Artificial Intelligence
+- Coding
+- Developer Tools
+- Automation
+- Platform
+tags_raw:
+- Company
 - AI
 - Coding
 - Developer-Tools
@@ -26,6 +33,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/anysphere-cursor-ai-capability-edges.yml
+  name: Anysphere Cursor Ai Business Capability Map
 - type: Overlay
   url: overlays/anysphere-cursor-ai-openapi-overlay.yml
 - type: AgenticAccess
