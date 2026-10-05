@@ -1,0 +1,26 @@
+slug: anysphere-cursor-ai
+provider: Anysphere Cursor Ai
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: OriginService
+  spec_file: anysphere-cursor-ai-originservice-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.75
+  evidence: 'schemas: GitRef, Repo, PullRequestFile, PullRequestComment, BranchCommit, CheckSuite, ListPullRequestRequestedReviewersResponse'
+  reason: 'Despite the app-installation and webhook operations shown, the schema surface is a source-control
+    hosting API: repositories, git refs, branch commits, pull requests, requested reviewers and check
+    suites. That is source control and code review practice, i.e. Software Construction Management. Confidence
+    trimmed because a sizeable part of the visible surface is app/credential/webhook plumbing.'
