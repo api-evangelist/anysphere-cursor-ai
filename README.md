@@ -64,5 +64,145 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Anysphere Cursor Ai is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://augment.market/c/anysphere-cursor-ai
+Anysphere Cursor Ai develops advanced AI‑powered coding assistants that help developers build ambitious software faster. The platform offers a desktop IDE, a powerful CLI, and cloud‑based agents that can understand code, generate implementations, and automate repetitive tasks. It integrates with popular version‑control and CI systems, supports multiple large language models, and provides extensive documentation, tutorials, and a community forum for developers.
+
+**Areas:** Company · Artificial Intelligence · Coding · Developer Tools · Automation · Platform
+
+## Anysphere Cursor Ai on APIs.io
+
+Everything profiled for Anysphere Cursor Ai is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/anysphere-cursor-ai/](https://apis.io/providers/anysphere-cursor-ai/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Anysphere Cursor Ai Origin Service API](https://apis.io/apis/anysphere-cursor-ai/anysphere-cursor-ai-originservice-api/) — The OriginService API from Anysphere Cursor Ai — 77 operation(s) for originservice.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Anysphere Cursor Ai Webhooks](https://apis.io/asyncapis/anysphere-cursor-ai/anysphere-cursor-ai-webhooks/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Anysphere Cursor Ai Agentic Access](https://apis.io/agentic-access/anysphere-cursor-ai/anysphere-cursor-ai-agentic-access/)
+
+#### JSON Schema (6)
+
+The data models the API reads and writes.
+
+- [CheckRun](https://apis.io/schemas/anysphere-cursor-ai/anysphere-cursor-ai-check-run/)
+- [CheckRunInput](https://apis.io/schemas/anysphere-cursor-ai/anysphere-cursor-ai-check-run-input/)
+- [MirrorTransitionJob](https://apis.io/schemas/anysphere-cursor-ai/anysphere-cursor-ai-mirror-transition-job/)
+- [PullRequest](https://apis.io/schemas/anysphere-cursor-ai/anysphere-cursor-ai-pull-request/)
+- [PullRequestMergeability](https://apis.io/schemas/anysphere-cursor-ai/anysphere-cursor-ai-pull-request-mergeability/)
+- [Repo](https://apis.io/schemas/anysphere-cursor-ai/anysphere-cursor-ai-repo/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Anysphere Cursor Ai Context](https://apis.io/jsonld/anysphere-cursor-ai/anysphere-cursor-ai-context/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Anysphere Cursor Ai Openapi Overlay](https://apis.io/overlays/anysphere-cursor-ai/anysphere-cursor-ai-openapi-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Anysphere Cursor Ai API Rules](https://apis.io/rules/anysphere-cursor-ai/anysphere-cursor-ai-rules/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Anysphere Cursor Ai Authentication](https://apis.io/security/anysphere-cursor-ai/anysphere-cursor-ai-authentication/)
+- [Anysphere Cursor Ai Domain Security](https://apis.io/security/anysphere-cursor-ai/anysphere-cursor-ai-domain-security/)
+- [Anysphere Cursor Ai Trust Center](https://apis.io/security/anysphere-cursor-ai/anysphere-cursor-ai-trust-center/)
+- [Anysphere Cursor Ai Vulnerability Disclosure](https://apis.io/security/anysphere-cursor-ai/anysphere-cursor-ai-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Anysphere Cursor Ai Plans Pricing](https://apis.io/plans/anysphere-cursor-ai/anysphere-cursor-ai-plans-pricing/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://cursor.com)
+- [Documentation](https://cursor.com/docs)
+- [Getting started](https://cursor.com/docs/get-started/quickstart)
+- [API reference](https://cursor.com/llms.txt)
+- [Pricing](https://cursor.com/pricing)
+- [Support](https://cursor.com/help)
+- [Blog](https://cursor.com/blog)
+- [Compliance](https://cursor.com/security)
+- [Terms of service](https://cursor.com/terms-of-service)
+- [Privacy policy](https://cursor.com/privacy)
+- [Status](https://status.cursor.com/)
+
+## API Evangelist rating
+
+**Kin Score 75.1** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 73.8 |
+| Contract governance | 22.0 |
+| Operational transparency | 50.0 |
+| Developer ergonomics | 49.4 |
+| Access clarity | 92.1 |
+
+**Agent readiness 37.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 32.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/anysphere-cursor-ai/](https://apis.io/providers/anysphere-cursor-ai/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Anysphere Cursor Ai: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/anysphere-cursor-ai/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
